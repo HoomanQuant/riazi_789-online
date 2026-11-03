@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ریاضی نهم | فصل ۱: مجموعه‌ها و احتمال</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1224;--card:#152238;--bd:#2a3f5f;--tx:#f1f5f9;--mu:#94a3b8;--pr:#6366f1;--ok:#10b981;--no:#ef4444;--wa:#f59e0b;--gr:linear-gradient(135deg,#6366f1,#a855f7 45%,#ec4899)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--tx);line-height:1.8;min-height:100vh}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+header{text-align:center;padding:26px 8px 8px}
+h1{font-size:2rem;font-weight:800;background:var(--gr);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--mu)}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+nav button,.btn{font:inherit;font-weight:600;color:var(--tx);background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:9px 16px;cursor:pointer}
+nav button.on,.btn.pri{background:var(--gr);border-color:transparent}
+.btn:focus-visible,nav button:focus-visible,.opt:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}
+.card{background:var(--card);border:1px solid rgba(99,102,241,.25);border-radius:18px;padding:22px;margin-bottom:16px;border-top:3px solid var(--pr)}
+.card h2{font-size:1.25rem;margin-bottom:10px}
+.sec{display:none}.sec.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.tp{background:#1b2c47;border:1px solid var(--bd);border-radius:14px;padding:16px;cursor:pointer;text-align:right;font:inherit;color:var(--tx)}
+.tp b{display:block;font-size:1.05rem}.tp span{color:var(--mu);font-size:.88rem}
+#ex{direction:ltr}.m{direction:ltr;unicode-bidi:isolate;font-weight:600;color:#c4b5fd}
+.tip{background:rgba(245,158,11,.12);border-right:4px solid var(--wa);padding:8px 12px;border-radius:8px;margin:10px 0}
+select,input[type=range],input[type=text]{font:inherit;background:#0f1a30;color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:6px 10px}
+.opt{display:block;width:100%;text-align:right;font:inherit;color:var(--tx);background:#1b2c47;border:2px solid var(--bd);border-radius:12px;padding:10px 14px;margin:8px 0;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(16,185,129,.18)}.opt.wrong{border-color:var(--no);background:rgba(239,68,68,.18)}
+.bar{height:10px;background:#0f1a30;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gr)}
+.dice{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:360px;margin:10px auto}
+.dice div{text-align:center;border-radius:8px;padding:2px 0;background:#0f1a30;font-size:.85rem;color:var(--mu)}
+.dice div.h{background:var(--gr);color:#fff;font-weight:800}
+canvas{width:100%;max-width:340px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--bd)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.big{font-size:2.4rem;font-weight:800;text-align:center}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.2;font-size:.95em}.fr i{font-style:normal;border-bottom:1.5px solid currentColor;padding:0 4px}
+@media(prefers-reduced-motion:no-preference){.sec.on{animation:f .3s}@keyframes f{from{opacity:0;transform:translateY(8px)}}}
+#lg{position:fixed;inset:0;background:rgba(5,10,25,.92);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+#lg .card{width:100%;max-width:380px}#lg label{display:block;margin:8px 0}#lg input{width:100%}
+#lgm{color:#fca5a5;min-height:1.6em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>ریاضی نهم — فصل ۱</h1><p>مجموعه‌ها و احتمال: یاد بگیر، تمرین کن، پیشرفتت را ببین</p></header>
+<div id="who" style="text-align:center;color:var(--mu)"></div><nav id="nav"></nav>
+
+<section id="home" class="sec on">
+ <div class="card"><h2>🌟 چهار قانون طلایی</h2>
+  <p>۱) عضو تکراری فقط یک بار شمرده می‌شود.</p>
+  <p>۲) تعداد زیرمجموعه‌های مجموعهٔ n عضوی: <span class="m">2ⁿ</span> و زیرمجموعه‌های سره: <span class="m">2ⁿ − 1</span></p>
+  <p>۳) <span class="m">n(A ∪ B) = n(A) + n(B) − n(A ∩ B)</span></p>
+  <p>۴) احتمال = تعداد حالت‌های مطلوب ÷ تعداد کل حالت‌ها (همیشه بین ۰ و ۱)</p></div>
+ <div class="card"><h2>🧠 شش مبحث کلیدی</h2><div class="grid" id="tgrid"></div></div>
+</section>
+
+<section id="learn" class="sec"><div id="lbody"></div></section>
+
+<section id="quiz" class="sec"><div class="card" id="qbox"></div></section>
+
+<section id="prog" class="sec"><div class="card"><h2>📈 پیشرفت من</h2><div id="pf"></div>
+ <div class="row"><label>نام: <input type="text" id="nm" maxlength="30" placeholder="نام دانش‌آموز"></label><button class="btn" id="clr">پاک کردن تاریخچه</button></div>
+ <div id="pbody"></div></div></section>
+</div>
+
+<div id="lg"><div class="card"><h2>ورود دانش‌آموز</h2>
+<label>کد کلاس<input type="text" id="lc" maxlength="20" autocomplete="off"></label>
+<label>نام و نام‌خانوادگی<input type="text" id="ln2" maxlength="40" autocomplete="off"></label>
+<label>رمز ۴ رقمی (بار اول خودت انتخاب کن و یادت بماند)<input type="password" id="lp" inputmode="numeric" maxlength="4" autocomplete="off"></label>
+<div id="lgm" role="alert"></div>
+<div class="row"><button class="btn pri" id="lgo">ورود</button><button class="btn" id="lgs">ادامه بدون ورود</button></div>
+<p style="color:var(--mu);font-size:.85rem">بدون ورود، نتیجهٔ آزمون برای معلم ثبت نمی‌شود.</p></div></div>
+<script>
+const FA=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const M=s=>FA(s).replace(/`([^`]+)`/g,'<bdi dir="ltr" class="m">$1</bdi>');
+const $=id=>document.getElementById(id);
+let mem={};
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return mem[k]??null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}};
+const T=[
+['مجموعه و عضو','مجموعه، عضو، تهی، متناهی، مساوی'],
+['زیرمجموعه','شمارش با 2ⁿ و زیرمجموعهٔ سره'],
+['اجتماع، اشتراک، تفاضل','نمودار ون سه‌مجموعه‌ای تعاملی'],
+['نمودار ون و شمارش','فرمول n(A∪B) و مسئله‌های کلاسی'],
+['احتمال تاس و سکه','جدول تعاملی پرتاب دو تاس'],
+['احتمال و مجموعه‌ها','اعداد تصادفی، «یا» و «نه»']];
+const L=[
+`<p>مجموعه یعنی دسته‌ای از چیزهای <b>کاملاً مشخص</b> و <b>غیرتکراری</b>. «۴ گل زیبا» مجموعه نیست، «اعداد اول کمتر از ۱۰» مجموعه است: <span class="m">{2, 3, 5, 7}</span>.</p>
+<div class="tip">برای شمردن اعضا اول ساده کن: <span class="m">{1+2, 3, 2, √4}</span> می‌شود <span class="m">{3, 2}</span> پس n = ۲.</div>
+<p><span class="m">{ }</span> یا <span class="m">∅</span> مجموعهٔ تهی است؛ اما <span class="m">{∅}</span> تک‌عضوی است (یک عضو دارد!). دو مجموعه وقتی مساوی‌اند که اعضایشان دقیقاً یکی باشد.</p>
+<div class="tip">مثال: <span class="m">{7, y−1} = {4, 2x+1}</span> ⇒ x = ۳ و y = ۵.</div>`,
+`<p><span class="m">A ⊆ B</span> یعنی هر عضو A عضو B هم هست. <span class="m">∅ ⊆ A</span> و <span class="m">A ⊆ A</span> همیشه درست‌اند.</p>
+<p>اگر <span class="m">A ⊆ B</span> باشد: <span class="m">A ∪ B = B</span> و <span class="m">A ∩ B = A</span> و <span class="m">A − B = ∅</span>.</p>
+<p>تعداد عضو را با لغزنده تغییر بده:</p>
+<div class="row"><input type="range" id="sl"> <span>n = <b id="sn"></b></span></div>
+<p>زیرمجموعه‌ها: <b id="sa"></b> | زیرمجموعه‌های سره: <b id="sb"></b> | ناتهی: <b id="sc"></b></p>
+<div class="tip">اگر تعداد زیرمجموعه را داده‌اند، آن را به توان ۲ تجزیه کن: ۶۴ = ۲⁶ ⇒ n = ۶.</div>`,
+`<p>ناحیه‌ای که عبارت انتخاب‌شده نشان می‌دهد روی نمودار روشن می‌شود:</p>
+<select id="ex"></select><canvas id="cv" aria-label="نمودار ون سه‌مجموعه‌ای"></canvas>
+<div class="tip"><span class="m">A − B</span> یعنی عضوهای A که در B نیستند. اشتراک = «هم‌زمان»، اجتماع = «دست‌کم یکی».</div>`,
+`<p><span class="m">n(A ∪ B) = n(A) + n(B) − n(A ∩ B)</span></p>
+<p>مثال: ۴۰ نفر؛ ۲۴ ورزشی، ۱۸ علمی، ۸ هر دو. دست‌کم یکی: ۲۴ + ۱۸ − ۸ = ۳۴. فقط ورزشی: ۲۴ − ۸ = ۱۶. هیچ‌کدام: ۴۰ − ۳۴ = ۶.</p>
+<div class="tip">همیشه از «ناحیهٔ مشترک» شروع کن و بعد بقیهٔ ناحیه‌ها را پر کن.</div>`,
+`<p>یک رویداد انتخاب کن تا خانه‌های مطلوب از ۳۶ حالت روشن شوند:</p>
+<select id="ev"></select><div class="dice" id="dc"></div><div class="big" id="pr"></div>
+<div class="tip">سکه + تاس: ۱۲ حالت. دو تاس: ۳۶ حالت. سه فرزند: ۸ حالت.</div>`,
+`<p>برای عدد دورقمی: ۹۰ حالت (۱۰ تا ۹۹). تعداد اعضای دنباله = (آخر − اول) ÷ فاصله + ۱.</p>
+<p>مضرب ۵: ۱۸ عدد ⇒ <span class="m">18/90 = 1/5</span>. مضرب ۴ <b>یا</b> ۶ در ۱ تا ۴۰: ۱۰ + ۶ − ۳ = ۱۳ ⇒ <span class="m">13/40</span>.</p>
+<div class="tip">«یا» یعنی اجتماع (مشترک‌ها را یک بار بشمار)، «نه» یعنی کل − مطلوب.</div>`];
+
+const H=t=>`<h3 style="color:#fbbf24;margin:16px 0 4px">${FA(t)}</h3>`,P=t=>`<p style="margin:6px 0">${W(t)}</p>`,EX=t=>`<div style="background:#0f1a30;border:1px solid var(--bd);border-radius:12px;padding:10px 14px;margin:8px 0">${W(t)}</div>`,E=x=>`<div class="m" style="display:block;text-align:center;margin:4px 0;font-size:1.05rem">${FA(x)}</div>`,mm=x=>`<span class="m">${x}</span>`;
+const W=t=>FA(t).replace(/[۰-۹(][۰-۹+\-−×÷=⇒()\/ ،.…√]*[۰-۹)]/g,'<bdi dir="ltr">$&</bdi>');
+const SV='<svg viewBox="0 0 300 130" style="width:100%;max-width:340px;display:block;margin:8px auto;background:#0f1a30;border-radius:12px"><circle cx="115" cy="65" r="50" fill="#2dd4bf" fill-opacity=".25" stroke="#2dd4bf" stroke-width="2"/><circle cx="185" cy="65" r="50" fill="#818cf8" fill-opacity=".25" stroke="#818cf8" stroke-width="2"/><g fill="#f1f5f9" font-size="15" text-anchor="middle" font-family="Vazirmatn"><text x="85" y="70">۱۶</text><text x="150" y="70">۸</text><text x="215" y="70">۱۰</text><text x="12" y="122" text-anchor="start">بیرون: ۶ نفر</text></g><text x="70" y="20" fill="#2dd4bf" font-size="13" font-family="Vazirmatn">ورزشی</text><text x="200" y="20" fill="#818cf8" font-size="13" font-family="Vazirmatn">علمی</text></svg>';
+const L2=[
+H('مجموعه یعنی چه؟')+P('مجموعه یک دسته از چیزهاست که دو شرط دارد: ۱) کاملاً مشخص باشد؛ یعنی هر کس بخواند دقیقاً همان دسته را بفهمد. ۲) چیز تکراری نداشته باشد.')+EX('✅ «اعداد اول کمتر از ۱۰» مجموعه است: '+mm('{2, 3, 5, 7}')+'<br>❌ «۴ گل زیبا» مجموعه نیست، چون «زیبا» سلیقه‌ای است.')+
+H('اعضا را چطور بشماریم؟')+P('اول هر عضو را ساده کن، بعد عضوهای تکراری را فقط یک بار بشمار.')+EX('مثال: '+mm('{1+2, 3, 2, √4}')+'<br>گام ۱: ۱+۲ = ۳ و √۴ = ۲<br>گام ۲: پس مجموعه می‌شود '+mm('{3, 2}')+'<br>گام ۳: جواب: '+mm('n = 2')+' یعنی دو عضو دارد.')+
+H('سه مجموعهٔ ویژه')+P('تهی: هیچ عضوی ندارد و با '+mm('{ }')+' یا '+mm('∅')+' نشان می‌دهیم. یکانی: دقیقاً یک عضو دارد. متناهی: اعضایش قابل شمارش است.')+'<div class="tip">⚠️ اشتباه رایج: '+FA(mm('{∅}'))+' تهی نیست! مثل کیسه‌ای است که یک جعبهٔ خالی داخلش گذاشته‌ایم؛ یک عضو دارد.</div>'+
+H('دو مجموعهٔ مساوی')+P('وقتی اعضایشان دقیقاً یکی است (ترتیب مهم نیست). برای پیدا کردن x و y، عضوهای هم‌نوع را مساوی هم بگذار.')+EX(mm('{7, y−1} = {4, 2x+1}')+'<br>گام ۱: عدد ۷ باید با '+mm('2x+1')+' برابر باشد (چون ۷ با ۴ فرق دارد)<br>گام ۲: '+mm('2x+1 = 7')+' ⇒ x = ۳<br>گام ۳: '+mm('y−1 = 4')+' ⇒ y = ۵'),
+
+H('زیرمجموعه یعنی چه؟')+P('اگر هر عضو A داخل B هم باشد، می‌گوییم A زیرمجموعهٔ B است و می‌نویسیم '+mm('A ⊆ B')+'. مثلاً «دانش‌آموزان کلاس» زیرمجموعهٔ «دانش‌آموزان مدرسه» است.')+'<div class="tip">دو چیز همیشه درست است: '+mm('A ⊆ A')+' (هر مجموعه زیرمجموعهٔ خودش است) و '+mm('∅ ⊆ A')+' (تهی زیرمجموعهٔ هر مجموعه است).</div>'+P('اگر '+mm('A ⊆ B')+' باشد: ')+EX(mm('A ∪ B = B')+' (اجتماع همان بزرگ‌تر است)<br>'+mm('A ∩ B = A')+' (مشترک همان کوچک‌تر است)<br>'+mm('A − B = ∅')+' (چیزی از A بیرون B نمی‌ماند)')+
+H('زیرمجموعه‌ها را بشمار')+P('مجموعهٔ دو عضوی {a, b} چهار زیرمجموعه دارد: تهی، {a}، {b} و {a, b}. دلیلش: هر عضو دو انتخاب دارد (باشد یا نباشد)، پس برای n عضو می‌شود ۲×۲×…×۲ = ۲ⁿ.')+P('لغزنده را حرکت بده و ببین:')+'<div class="row"><input type="range" id="sl"> <span>n = <b id="sn"></b></span></div><p>همهٔ زیرمجموعه‌ها: <b id="sa"></b> | زیرمجموعهٔ سره (همه به‌جز خود مجموعه): <b id="sb"></b> | زیرمجموعهٔ ناتهی (همه به‌جز تهی): <b id="sc"></b></p>'+'<div class="tip">برعکسش هم مهم است: اگر ۶۴ زیرمجموعه دارد، ۶۴ را به صورت توان ۲ بنویس: ۶۴ = ۲⁶ پس ۶ عضو دارد.</div>',
+
+H('سه کلمهٔ کلیدی')+EX('<b>اجتماع '+FA(mm('A ∪ B'))+'</b> = «یا»: هر چیزی که در A هست یا در B (یا هر دو).<br><b>اشتراک '+FA(mm('A ∩ B'))+'</b> = «و»: فقط چیزهای مشترک.<br><b>تفاضل '+FA(mm('A − B'))+'</b> = «A ولی نه B»: اعضای A که در B نیستند.')+
+H('یک مثال کوچک')+P('فرض کن '+mm('A = {1, 2, 3}')+' و '+mm('B = {3, 4}')+':')+EX(mm('A ∪ B = {1, 2, 3, 4}')+'<br>'+mm('A ∩ B = {3}')+'<br>'+mm('A − B = {1, 2}')+' و '+mm('B − A = {4}'))+
+H('خودت روی نمودار ببین')+P('یک عبارت انتخاب کن؛ قسمت زردرنگ همان ناحیه‌ای است که عبارت نشان می‌دهد:')+'<select id="ex"></select><canvas id="cv" aria-label="نمودار ون سه‌مجموعه‌ای"></canvas><div class="tip">پرانتز را اول حل کن. مثلاً در '+mm('(A ∪ B) − C')+' اول A و B را با هم بردار، بعد هر چه در C است حذف کن.</div>',
+
+H('چرا فرمول؟')+P('اگر n(A) و n(B) را ساده جمع کنیم، اعضای مشترک دو بار شمرده می‌شوند؛ پس یک بار کم می‌کنیم:')+E('n(A ∪ B) = n(A) + n(B) − n(A ∩ B)')+
+H('مثال گام‌به‌گام')+P('در کلاس ۴۰ نفره، ۲۴ نفر در مسابقهٔ ورزشی و ۱۸ نفر در مسابقهٔ علمی شرکت کرده‌اند و ۸ نفر در هر دو. چند نفر در هیچ‌کدام شرکت نکرده‌اند؟')+SV+EX('<b>گام ۱:</b> اشتراک را اول بنویس: ۸ نفر هر دو.<br><b>گام ۲:</b> فقط ورزشی = ۲۴ − ۸ = ۱۶<br><b>گام ۳:</b> فقط علمی = ۱۸ − ۸ = ۱۰<br><b>گام ۴:</b> دست‌کم یکی = ۱۶ + ۸ + ۱۰ = ۳۴<br><b>گام ۵:</b> هیچ‌کدام = ۴۰ − ۳۴ = ۶')+'<div class="tip">همیشه از ناحیهٔ مشترک شروع کن؛ بعد بقیه را با کم کردن به‌دست بیاور.</div>',
+
+H('فرمول احتمال')+E('احتمال = تعداد حالت‌های مطلوب ÷ تعداد همهٔ حالت‌ها')+P('احتمال همیشه بین ۰ (غیرممکن) و ۱ (حتمی) است. مثال: عدد اول در پرتاب تاس: مطلوب {2, 3, 5} یعنی ۳ حالت از ۶ ⇒ ۱/۲.')+
+H('چند حالت داریم؟')+P('یک تاس: ۶ حالت. دو تاس: ۶×۶ = ۳۶. سکه و تاس: ۲×۶ = ۱۲. سه فرزند (پسر/دختر): ۲×۲×۲ = ۸.')+
+H('جدول دو تاس')+P('یک پیشامد انتخاب کن؛ خانه‌های روشن حالت‌های مطلوب‌اند (سطر = تاس اول، ستون = تاس دوم):')+'<select id="ev"></select><div class="dice" id="dc"></div><div class="big" id="pr"></div><div class="tip">برای شمردن حالت‌ها، جدول ۶×۶ را بکش؛ فراموش کردن حالت‌ها رایج‌ترین اشتباه است.</div>',
+
+H('عدد تصادفی دورقمی')+P('عددهای دورقمی از ۱۰ تا ۹۹ هستند: ۹۹ − ۱۰ + ۱ = ۹۰ عدد.')+EX('تعداد عضوهای یک دنباله = (آخر − اول) ÷ فاصله + ۱<br>مثال: مضرب ۵ ← ۱۰، ۱۵، …، ۹۵ ⇒ (۹۵ − ۱۰) ÷ ۵ + ۱ = ۱۸<br>احتمال = ۱۸/۹۰ = ۱/۵')+
+H('«یا» و «نه»')+EX('<b>یا:</b> اجتماع؛ مشترک‌ها را یک بار بشمار.<br>مثال: از ۱ تا ۴۰، مضرب ۴ یا ۶ ← ۱۰ + ۶ − ۳ (مضرب ۱۲ دو بار شمرده شد) = ۱۳ ⇒ ۱۳/۴۰<br><b>نه:</b> کل − مطلوب.<br>مثال: مضرب ۳ نباشد ← ۹۰ − ۳۰ = ۶۰ ⇒ ۶۰/۹۰ = ۲/۳')
+];
+L2[5]=H('۱) همهٔ حالت‌ها را بشمار')+P('عددهای دورقمی از ۱۰ تا ۹۹ هستند. برای شمردن عددهای یک دنباله: «آخری منهای اولی، تقسیم بر فاصله، به‌اضافهٔ ۱».')+E('(99 − 10) ÷ 1 + 1 = 90')+P('پس ۹۰ حالت داریم.')+
+H('۲) مثال: مضرب ۵')+P('مضرب‌های ۵ در اعداد دورقمی: ۱۰، ۱۵، ۲۰، …، ۹۵. فاصلهٔ بین آن‌ها ۵ است:')+E('(95 − 10) ÷ 5 + 1 = 18')+P('احتمال = تعداد مطلوب ÷ تعداد کل:')+E('18/90 = 1/5')+
+H('۳) «یا» یعنی اجتماع')+P('از ۱ تا ۴۰، احتمال مضرب ۴ یا مضرب ۶ بودن چقدر است؟ مضرب ۴: ۱۰ عدد؛ مضرب ۶: ۶ عدد؛ مضرب ۱۲ هم‌مضرب ۴ است هم مضرب ۶، پس دو بار شمرده شده (۳ عدد) و باید یک بار کمش کنیم:')+E('10 + 6 − 3 = 13')+E('13/40')+
+H('۴) «نه» یعنی کل منهای مطلوب')+P('احتمال اینکه عدد دورقمی مضرب ۳ نباشد چقدر است؟ مضرب‌های ۳ در اعداد دورقمی ۳۰ عدد هستند (۱۲ تا ۹۹)، پس:')+E('90 − 30 = 60')+E('60/90 = 2/3')+'<div class="tip">'+FA('نکته: اگر شمردن «مطلوب» سخت است، اول «نامطلوب» را بشمار و از کل کم کن.')+'</div>';
+// nav
+const secs=[['home','🏠 خانه'],['learn','📚 آموزش'],['quiz','🎯 آزمون'],['prog','📈 پیشرفت']];
+secs.forEach(([id,t])=>{const b=document.createElement('button');b.textContent=t;b.dataset.s=id;b.onclick=()=>go(id);$('nav').append(b)});
+function go(id){document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));if(id==='learn'&&!$('lbody').innerHTML)learn(0);if(id==='quiz')setup();if(id==='prog')prog();scrollTo(0,0)}
+T.forEach((t,i)=>{const b=document.createElement('button');b.className='tp';b.innerHTML=`<b>${FA(i+1)}. ${t[0]}</b><span>${t[1]}</span>`;b.onclick=()=>{go('learn');learn(i)};$('tgrid').append(b)});
+
+function learn(i){
+ $('lbody').innerHTML=`<div class="card"><div class="row">${T.map((t,j)=>`<button class="btn ${j===i?'pri':''}" onclick="learn(${j})">${FA(j+1)}</button>`).join('')}</div><h2>${FA(i+1)}. ${T[i][0]}</h2>${L2[i]}</div>`;
+ if(i===1){Object.assign($('sl'),{min:0,max:8,value:3});const u=()=>{const n=+$('sl').value;$('sn').textContent=FA(n);$('sa').textContent=FA(2**n);$('sb').textContent=FA(2**n-1);$('sc').textContent=FA(2**n-1)};$('sl').oninput=u;u()}
+ if(i===2)venn();if(i===4)dice();
+}
+// Venn
+const VX=[['A ∪ B',(a,b,c)=>a||b],['A ∩ B',(a,b)=>a&&b],['A − B',(a,b)=>a&&!b],['B − A',(a,b)=>b&&!a],['(A ∪ B) − C',(a,b,c)=>(a||b)&&!c],['(A ∩ B) − C',(a,b,c)=>a&&b&&!c],['A − (B ∪ C)',(a,b,c)=>a&&!b&&!c],['(B ∩ C) − A',(a,b,c)=>b&&c&&!a],['(B ∪ C) − A',(a,b,c)=>(b||c)&&!a],['A ∩ B ∩ C',(a,b,c)=>a&&b&&c]];
+function venn(){
+ const s=$('ex');s.innerHTML=VX.map((v,i)=>`<option value="${i}">${v[0]}</option>`).join('');
+ const C=[[108,95,'A','#2dd4bf'],[192,95,'B','#818cf8'],[150,165,'C','#fb923c']],cv=$('cv'),x=(cv.width=300,cv.height=250,cv.getContext('2d'));
+ const draw=()=>{const f=VX[+s.value][1],im=x.createImageData(300,250);
+  for(let y=0;y<250;y++)for(let px=0;px<300;px++){const t=C.map(c=>(px-c[0])**2+(y-c[1])**2<=4225),k=(y*300+px)*4,on=f(...t),any=t[0]||t[1]||t[2];
+   const col=on?[251,191,36]:any?[40,58,90]:[15,26,48];im.data.set([...col,255],k)}
+  x.putImageData(im,0,0);x.lineWidth=2;x.font='bold 15px Vazirmatn';C.forEach(c=>{x.strokeStyle=c[3];x.beginPath();x.arc(c[0],c[1],65,0,7);x.stroke()});
+  x.fillStyle='#2dd4bf';x.fillText('A',40,40);x.fillStyle='#818cf8';x.fillText('B',255,40);x.fillStyle='#fb923c';x.fillText('C',240,228)};
+ s.onchange=draw;draw();
+}
+// Dice
+const EV=[['مجموع دو عدد ۷ باشد',(a,b)=>a+b==7],['مجموع مضرب ۴ باشد',(a,b)=>(a+b)%4==0],['دو عدد برابر باشند',(a,b)=>a==b],['دو عدد متفاوت باشند',(a,b)=>a!=b],['حاصل‌ضرب فرد باشد',(a,b)=>a*b%2==1],['دست‌کم یک ۶ بیاید',(a,b)=>a==6||b==6],['برابر باشند و مجموع بیش از ۷',(a,b)=>a==b&&a+b>7],['تاس اول زوج و دوم مضرب ۵',(a,b)=>a%2==0&&b==5]];
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+function dice(){
+ const s=$('ev');s.innerHTML=EV.map((v,i)=>`<option value="${i}">${v[0]}</option>`).join('');
+ const d=()=>{const f=EV[+s.value][1];let h='<div></div>'+[1,2,3,4,5,6].map(i=>`<div>${FA(i)}</div>`).join(''),k=0;
+  for(let a=1;a<=6;a++){h+=`<div>${FA(a)}</div>`;for(let b=1;b<=6;b++){const o=f(a,b);k+=o;h+=`<div class="${o?'h':''}">${FA(a)}،${FA(b)}</div>`}}
+  $('dc').innerHTML=h;const g=gcd(k,36);$('pr').innerHTML=`${FA(k)}/${FA(36)} = <bdi dir="ltr">${FA(k/g)}/${FA(36/g)}</bdi>`};
+ s.onchange=d;d();
+}
+// Quiz bank: [topic, level(0-2), question, right, [wrong x3], explanation]
+const Q=[
+[0,0,'`n({1, 2, 2, 3, 3})` چند است؟','3',['5','2','4'],'عضو تکراری فقط یک بار شمرده می‌شود: {1,2,3}.'],
+[0,0,'کدام عبارت یک مجموعه را مشخص می‌کند؟','اعداد اول کمتر از ۱۰',['چهار گل زیبا','سه عدد زوج متوالی','شهرهای قشنگ ایران'],'مجموعه باید کاملاً مشخص باشد؛ «زیبا» و «متوالی نامشخص» دقیق نیستند.'],
+[0,0,'کدام مجموعه تهی است؟','اعداد طبیعی بین ۴ و ۵',['اعداد صحیح کمتر از صفر','اعداد طبیعی کمتر از ۴','`{∅}`'],'بین ۴ و ۵ عدد طبیعی نداریم. `{∅}` یک عضو دارد.'],
+[0,1,'`{x ∈ Z | −2 < x ≤ 3}` چند عضو دارد؟','5',['4','6','3'],'اعضا: `{−1, 0, 1, 2, 3}`.'],
+[0,2,'اگر `{7, y−1} = {4, 2x+1}` باشد، `x + y` کدام است؟','8',['6','10','9'],'۲x+۱=۷ ⇒ x=۳ ؛ y−۱=۴ ⇒ y=۵ ؛ مجموع ۸.'],
+[1,0,'یک مجموعهٔ ۵ عضوی چند زیرمجموعه دارد؟','32',['10','25','16'],'۲⁵ = ۳۲.'],
+[1,0,'کدام همواره درست است؟','`∅ ⊆ A` برای هر مجموعه A',['`A ⊆ ∅` برای هر مجموعه A','`A ∪ ∅ = ∅`','`A ∩ ∅ = A`'],'مجموعهٔ تهی زیرمجموعهٔ هر مجموعه است.'],
+[1,1,'مجموعه‌ای ۶۳ زیرمجموعهٔ سره دارد. چند عضو دارد؟','6',['5','7','8'],'۲ⁿ − ۱ = ۶۳ ⇒ ۲ⁿ = ۶۴ = ۲⁶.'],
+[1,2,'با افزودن ۳ عضو به A، تعداد زیرمجموعه‌ها ۲۲۴ واحد بیشتر می‌شود. A چند عضو دارد؟','5',['4','3','6'],'۲ⁿ⁺³ − ۲ⁿ = ۷·۲ⁿ = ۲۲۴ ⇒ ۲ⁿ = ۳۲ ⇒ n = ۵.'],
+[2,0,'اگر `A={1,2,3}` و `B={3,4}` باشد، `A ∪ B` کدام است؟','`{1, 2, 3, 4}`',['`{3}`','`{1, 2}`','`{4}`'],'اجتماع یعنی همهٔ اعضای هر دو، بدون تکرار.'],
+[2,0,'اگر `A={1,2,5,7}` و `B={4,7}` باشد، `A − B` کدام است؟','`{1, 2, 5}`',['`{4}`','`{7}`','`{1, 2, 4, 5}`'],'اعضای A که در B نیستند.'],
+[2,1,'اگر `A ⊆ B` باشد، کدام همواره برقرار است؟','`A ∪ B = B`',['`A ∩ B = B`','`A − B = A`','`A ∪ B = A`'],'وقتی A داخل B است، اجتماع همان B می‌شود.'],
+[2,1,'اگر `A={x∈Z | −3<x≤5}` و `B={x∈N | x<5}` باشد، `n(A − B)` چند است؟','4',['3','5','6'],'`A−B = {−2, −1, 0, 5}`.'],
+[3,1,'اگر `n(A)=12` و `n(B)=9` و `n(A ∩ B)=4` باشد، `n(A ∪ B)` چند است؟','17',['21','25','13'],'۱۲ + ۹ − ۴ = ۱۷.'],
+[3,1,'در نمودار ون: فقط A: ۵ ، مشترک: ۴ ، فقط B: ۹. `n(A ∪ B)` چند است؟','18',['22','14','25'],'۵ + ۴ + ۹ = ۱۸.'],
+[3,2,'کلاس ۴۰ نفره: ۲۴ نفر ورزشی، ۱۸ علمی، ۸ هر دو. چند نفر در هیچ‌کدام شرکت نکرده‌اند؟','6',['4','8','10'],'اجتماع = ۲۴+۱۸−۸ = ۳۴ ⇒ ۴۰ − ۳۴ = ۶.'],
+[4,0,'در پرتاب یک تاس، احتمال آمدن عدد اول چقدر است؟','`1/2`',['`1/3`','`2/3`','`1/6`'],'اعداد ۲، ۳، ۵ ⇒ ۳ از ۶.'],
+[4,1,'در پرتاب دو تاس، احتمال مجموع ۷ چقدر است؟','`1/6`',['`1/9`','`7/36`','`5/36`'],'۶ حالت از ۳۶.'],
+[4,1,'در پرتاب دو تاس، احتمال فرد بودن حاصل‌ضرب چقدر است؟','`1/4`',['`1/2`','`3/4`','`1/3`'],'هر دو فرد: ۳×۳ = ۹ حالت از ۳۶.'],
+[4,2,'در پرتاب دو تاس، احتمال متفاوت بودن دو عدد چقدر است؟','`5/6`',['`1/6`','`11/36`','`1/3`'],'برابر: ۶ حالت؛ متفاوت: ۳۰ حالت از ۳۶.'],
+[4,2,'سکه و تاس: احتمال «رو» و عدد زوج چقدر است؟','`1/4`',['`1/6`','`1/3`','`1/2`'],'۳ حالت از ۱۲.'],
+[5,1,'از اعداد دورقمی یکی تصادفی انتخاب می‌شود. احتمال مضرب ۵ بودن چقدر است؟','`1/5`',['`1/9`','`2/9`','`1/10`'],'۱۸ مضرب از ۹۰ عدد.'],
+[5,1,'کیسه‌ای ۳ مهرهٔ قرمز، ۲ آبی و ۲ سفید دارد. احتمال آبی نبودن چقدر است؟','`5/7`',['`2/7`','`3/7`','`4/7`'],'۷ − ۲ = ۵ از ۷.'],
+[5,2,'از ۱ تا ۴۰ یک عدد انتخاب می‌کنیم. احتمال مضرب ۴ یا ۶ بودن؟','`13/40`',['`2/5`','`7/20`','`3/8`'],'۱۰ + ۶ − ۳ (مضرب ۱۲) = ۱۳.'],
+[5,2,'احتمال آنکه عدد دورقمی مضرب ۷ و فرد باشد؟','`1/15`',['`7/45`','`13/90`','`1/6`'],'۲۱، ۳۵، ۴۹، ۶۳، ۷۷، ۹۱ ⇒ ۶ از ۹۰.'],
+[0,1,'کدام مجموعه یکانی (تک‌عضوی) است؟','مجموعهٔ اعداد زوج اول',['اعداد طبیعی کمتر از ۳','`{ }`','اعداد صحیح بین ۱ و ۴'],'تنها عدد زوج اول ۲ است: `{2}`.'],
+[1,1,'مجموعهٔ ۴ عضوی چند زیرمجموعهٔ سره دارد؟','15',['16','8','14'],'۲⁴ − ۱ = ۱۵.'],
+[2,0,'اگر `A={3,7,8,9}` و `B={3,5,6,7}` باشد، `A ∩ B` کدام است؟','`{3, 7}`',['`{3, 5, 6, 7, 8, 9}`','`{8, 9}`','`{5, 6}`'],'اشتراک یعنی اعضای مشترک.'],
+[2,2,'اگر `A={1,2,3}` و `C={x²+1 | x∈A}` و `B={x∈Z | −2<x≤2}` باشد، `n(B ∩ (A ∪ C))` چند است؟','2',['1','3','4'],'`C={2,5,10}` ، `A∪C={1,2,3,5,10}` ، `B={−1,0,1,2}` ⇒ اشتراک `{1,2}`.'],
+[3,0,'اگر `A ⊆ B` باشد، `n(A ∩ B)` برابر است با','`n(A)`',['`n(B)`','`n(A) + n(B)`','صفر'],'اشتراک همان A می‌شود.'],
+[3,2,'در کلاسی ۳۰ نفره، ۱۸ نفر فوتبال و ۱۴ نفر والیبال بازی می‌کنند و ۵ نفر هیچ‌کدام. چند نفر هر دو را بازی می‌کنند؟','7',['4','9','11'],'اجتماع = ۳۰ − ۵ = ۲۵ ⇒ ۱۸ + ۱۴ − ۲۵ = ۷.'],
+[4,0,'احتمال آمدن عدد ۷ در پرتاب یک تاس چقدر است؟','صفر',['`1/6`','`1/7`','یک'],'پیشامد غیرممکن است.'],
+[4,1,'تعداد حالت‌های پرتاب هم‌زمان یک سکه و یک تاس چند است؟','12',['8','36','6'],'۲ × ۶ = ۱۲.'],
+[5,0,'احتمال هر پیشامد همواره عددی در کدام بازه است؟','۰ تا ۱',['۱ تا ۱۰۰','−۱ تا ۱','۰ تا ۲'],'حداقل صفر (غیرممکن) و حداکثر یک (حتمی).'],
+[5,1,'دو تاس: احتمال آنکه مجموع دو عدد مضرب ۴ باشد چقدر است؟','`1/4`',['`1/3`','`1/6`','`5/36`'],'مجموع ۴ (۳ حالت)، ۸ (۵ حالت) و ۱۲ (۱ حالت) ⇒ ۹ از ۳۶.']];
+const LV=['آسان','متوسط','سخت','ترکیبی'];
+let S=null;
+function setup(){
+ S=null;$('qbox').innerHTML=`<h2>🎯 آزمون تعاملی</h2><p>سطح و تعداد سؤال را انتخاب کن:</p>
+ <div class="row">${LV.map((l,i)=>`<button class="btn ${i==3?'pri':''}" data-l="${i}">${l}</button>`).join('')}</div>
+ <div class="row"><label>مبحث: <select id="qt"><option value="-1">همهٔ مبحث‌ها</option>${T.map((t,i)=>`<option value="${i}">${t[0]}</option>`).join('')}</select></label></div><div class="row"><label>تعداد: <select id="qn"><option>5</option><option selected>10</option><option>15</option></select></label></div>`;
+ document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>start(+b.dataset.l));
+}
+function shuf(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+function start(l){
+ const tp=+$('qt').value;let p=(l==3?Q:Q.filter(q=>q[1]==l)).filter(q=>tp<0||q[0]==tp);if(!p.length){$('qbox').insertAdjacentHTML('beforeend','<div class="tip">برای این ترکیب سؤالی نداریم؛ سطح یا مبحث دیگری انتخاب کن.</div>');return}const n=Math.min(+$('qn').value,p.length);
+ S={l,qs:shuf(p).slice(0,n),i:0,ok:0,t:{},w:[]};ask();
+}
+function ask(){
+ const q=S.qs[S.i],o=shuf([q[3],...q[4]]);
+ $('qbox').innerHTML=`<div class="bar"><i style="width:${S.i/S.qs.length*100}%"></i></div>
+ <p style="color:var(--mu);margin-top:6px">سؤال ${FA(S.i+1)} از ${FA(S.qs.length)} — ${T[q[0]][0]}</p>
+ <h2>${M(q[2])}</h2><div id="os">${o.map(x=>`<button class="opt">${M(x)}</button>`).join('')}</div><div id="fb"></div>`;
+ document.querySelectorAll('.opt').forEach((b,k)=>b.onclick=()=>pick(b,o[k]===q[3],q,o.indexOf(q[3])));
+}
+function pick(b,ok,q,ri){
+ document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;x.style.cursor='default'});
+ b.classList.add(ok?'right':'wrong');
+ document.querySelectorAll('.opt')[ri].classList.add('right');
+ const t=S.t[q[0]]||(S.t[q[0]]=[0,0]);t[1]++;if(ok){S.ok++;t[0]++}else S.w.push(q);
+ const last=S.i==S.qs.length-1;
+ $('fb').innerHTML=`<div class="tip">${ok?'✅ آفرین!':'❌ نادرست.'} ${M(q[5])}</div><button class="btn pri" id="nx">${last?'دیدن نتیجه':'سؤال بعدی'}</button>`;
+ $('nx').onclick=()=>{S.i++;last?finish():ask()};$('nx').focus();
+}
+function finish(){
+ const n=S.qs.length,pc=Math.round(S.ok/n*100);
+ const h=JSON.parse(ls.get('r9c1')||'[]');h.push({d:new Date().toISOString(),l:S.l,n,ok:S.ok,t:S.t});ls.set('r9c1',JSON.stringify(h.slice(-50)));
+ $('qbox').innerHTML=`<h2>🏁 نتیجه</h2><div class="big">${FA(S.ok)} از ${FA(n)} (${FA(pc)}٪)</div>
+ <p style="text-align:center">${pc>=80?'عالی! آمادهٔ امتحانی 🎉':pc>=50?'خوب است؛ مبحث‌های ضعیف را دوباره بخوان.':'نگران نباش؛ بخش «آموزش» را مرور کن و دوباره امتحان بده.'}</p>
+ ${S.w.length?'<h3>مرور اشتباه‌ها</h3>'+S.w.map(q=>`<div class="tip">${M(q[2])}<br>✔ ${M(q[3])}<br>${M(q[5])}</div>`).join(''):''}<div class="row" style="justify-content:center"><button class="btn pri" id="again">آزمون جدید</button><button class="btn" id="gp">پیشرفت من</button></div>`;
+ $('again').onclick=setup;$('gp').onclick=()=>go('prog');
+ sendResult({l:S.l,n,ok:S.ok,t:S.t});
+}
+function prog(){
+ prof();
+ $('clr').onclick=()=>{ls.set('r9c1','[]');prog()};
+ const h=JSON.parse(ls.get('r9c1')||'[]');
+ if(!h.length){$('pbody').innerHTML='<div class="tip">هنوز آزمونی نداده‌ای. از بخش «آزمون» شروع کن.</div>';return}
+ const ta={};h.forEach(r=>Object.entries(r.t).forEach(([k,v])=>{const a=ta[k]||(ta[k]=[0,0]);a[0]+=v[0];a[1]+=v[1]}));
+ const tot=h.reduce((s,r)=>s+r.ok,0),all=h.reduce((s,r)=>s+r.n,0);
+ $('pbody').innerHTML=`<p>${FA(h.length)} آزمون | میانگین درستی: <b>${FA(Math.round(tot/all*100))}٪</b></p>${chart(h)}<h3>عملکرد در هر مبحث</h3>`+
+ T.map((t,i)=>{const a=ta[i];const p=a?Math.round(a[0]/a[1]*100):0;return `<p>${t[0]} <span style="color:var(--mu)">${a?FA(p)+'٪ ('+FA(a[0])+'/'+FA(a[1])+')':'—'}</span></p><div class="bar"><i style="width:${p}%"></i></div>`}).join('')+
+ `<h3>آخرین آزمون‌ها</h3>`+h.slice(-8).reverse().map(r=>`<p>${new Date(r.d).toLocaleDateString('fa-IR')} — ${LV[r.l]} — ${FA(r.ok)} از ${FA(r.n)}</p>`).join('');
+}
+const PF=[['fn','نام'],['ln','نام خانوادگی'],['fa','نام پدر'],['sc','مدرسه'],['ci','شهر'],['kl','کلاس']];
+function getP(){try{return JSON.parse(ls.get('r9p')||'{}')}catch(e){return {}}}
+function chart(h){const p=h.slice(-20).map(r=>r.ok/r.n*100);if(p.length<2)return '';const st=300/(p.length-1),q=p.map((v,i)=>[(i*st).toFixed(1),(100-v).toFixed(1)]);return `<h3>روند درصد آزمون‌ها</h3><svg viewBox="-6 -8 312 118" style="width:100%;max-width:420px;background:#0f1a30;border-radius:12px" role="img" aria-label="نمودار روند"><polyline fill="none" stroke="#a855f7" stroke-width="2.5" points="${q.map(x=>x.join(',')).join(' ')}"/>${q.map(x=>`<circle cx="${x[0]}" cy="${x[1]}" r="3.5" fill="#ec4899"/>`).join('')}</svg>`}
+function prof(){
+ const o=$('nm');if(o)o.parentNode.remove();
+ const p=getP(),b=$('pf');
+ b.innerHTML='<div class="row">'+PF.map(f=>`<label>${f[1]}: <input type="text" maxlength="30" data-f="${f[0]}" style="width:130px"></label>`).join('')+'</div><div class="row"><button class="btn" id="bcsv">خروجی CSV</button><button class="btn" id="bbk">پشتیبان‌گیری</button><button class="btn" id="brs">بازیابی</button></div><textarea id="io" rows="6" style="display:none;width:100%;direction:ltr"></textarea><p id="ioh" style="color:var(--mu)"></p>';
+ b.querySelectorAll('[data-f]').forEach(i=>{i.value=p[i.dataset.f]||'';i.oninput=()=>{p[i.dataset.f]=i.value.trim();ls.set('r9p',JSON.stringify(p))}});
+ const h=()=>JSON.parse(ls.get('r9c1')||'[]'),show=(t,m)=>{const a=$('io');a.style.display='block';a.dataset.m='';a.value=t;a.select();$('ioh').textContent=m};
+ $('bcsv').onclick=()=>{if(!p.fn||!p.ln){$('ioh').textContent='برای خروجی، نام و نام خانوادگی را وارد کن.';return}
+  const c=v=>{let s=String(v);if(/^[=+\-@]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'};
+  const rows=[['نام','نام خانوادگی','نام پدر','مدرسه','شهر','کلاس','تاریخ','سطح','تعداد سؤال','درست','درصد']].concat(h().map(r=>[p.fn,p.ln,p.fa||'',p.sc||'',p.ci||'',p.kl||'',r.d.slice(0,10),LV[r.l],r.n,r.ok,Math.round(r.ok/r.n*100)]));
+  show(rows.map(r=>r.map(c).join(',')).join('\n'),'متن CSV را کپی کن و در یک فایل .csv یا در اکسل بچسبان.')};
+ $('bbk').onclick=()=>show(JSON.stringify({p,h:h()}),'این متن را کپی و نگه دار؛ برای بازیابی همین‌جا بچسبان.');
+ $('brs').onclick=()=>{const a=$('io');if(a.dataset.m!=='r'||!a.value.trim()){a.style.display='block';a.value='';a.dataset.m='r';$('ioh').textContent='متن پشتیبان را بچسبان و دوباره «بازیابی» را بزن.';return}
+  try{const d=JSON.parse(a.value);if(!Array.isArray(d.h))throw 0;const cur=h(),ks=new Set(cur.map(r=>r.d));d.h.forEach(r=>{if(r&&r.d&&r.n>0&&!ks.has(r.d))cur.push({d:String(r.d),l:+r.l||0,n:+r.n,ok:+r.ok||0,t:r.t&&typeof r.t==='object'?r.t:{}})});cur.sort((x,y)=>x.d<y.d?-1:1);ls.set('r9c1',JSON.stringify(cur.slice(-50)));if(d.p&&typeof d.p==='object')ls.set('r9p',JSON.stringify(d.p));prog()}catch(e){$('ioh').textContent='متن پشتیبان معتبر نیست.'}};
+}
+const SB='https://qwpmbprjdwrxwhwgdekt.supabase.co',KEY='sb_publishable_p8FrC24bNtoAlgyxoFvPsQ_tFj0L9fB',CH='g9-c1';
+async function rpc(fn,b){const r=await fetch(SB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify(b)});const t=await r.text();if(!r.ok){let m='';try{m=JSON.parse(t).message||''}catch(e){}throw new Error(m||('HTTP '+r.status))}return t?JSON.parse(t):null}
+const ERR={'wrong pin':'رمز اشتباه است.','bad class':'کد کلاس معتبر نیست.','bad pin':'رمز باید دقیقاً ۴ رقم باشد.'};
+const ses=()=>{try{return JSON.parse(ls.get('r9s')||'null')}catch(e){return null}};
+function who(){const x=ses();$('who').innerHTML=x?`👤 ${x.name.replace(/</g,'&lt;')} — <a href="#" id="out" style="color:var(--mu)">خروج</a>`:'مهمان (نتیجه ثبت نمی‌شود) — <a href="#" id="inn" style="color:var(--mu)">ورود</a>';
+ const o=$('out')||$('inn');o.onclick=e=>{e.preventDefault();if(x)ls.set('r9s','null');$('lg').style.display='flex'}}
+$('lgs').onclick=()=>{$('lg').style.display='none';who()};
+$('lgo').onclick=async()=>{const code=$('lc').value.trim(),name=$('ln2').value.trim(),pin=$('lp').value.trim();
+ if(!code||name.length<3||!/^\d{4}$/.test(pin)){$('lgm').textContent='کد کلاس، نام کامل و رمز ۴ رقمی را وارد کن.';return}
+ $('lgm').textContent='در حال ورود…';
+ try{const id=await rpc('join_class',{p_code:code,p_name:name,p_pin:pin});ls.set('r9s',JSON.stringify({sid:id,pin,name}));$('lg').style.display='none';who();flush()}
+ catch(e){$('lgm').textContent=ERR[e.message]||(e.message.startsWith('HTTP')||e.name==='TypeError'?'ارتباط با سرور برقرار نشد. اینترنت را بررسی کن.':'ورود انجام نشد: '+e.message)}};
+const qget=()=>{try{return JSON.parse(ls.get('r9q')||'[]')}catch(e){return[]}};
+async function flush(){const x=ses();if(!x)return 0;let q=qget(),left=[];
+ for(const r of q){try{await rpc('submit_result',{p_sid:x.sid,p_pin:x.pin,p_chapter:CH,p_level:r.l,p_total:r.n,p_correct:r.ok,p_by_topic:r.t})}catch(e){left.push(r)}}
+ ls.set('r9q',JSON.stringify(left));return left.length}
+async function sendResult(r){const x=ses();
+ $('qbox').insertAdjacentHTML('beforeend','<p id="sst" style="text-align:center;color:var(--mu)"></p>');const el=$('sst');
+ if(!x){el.textContent='نتیجه برای معلم ثبت نشد (بدون ورود).';return}
+ const q=qget();q.push(r);ls.set('r9q',JSON.stringify(q));el.textContent='در حال ثبت نتیجه…';
+ const left=await flush();el.textContent=left?'ثبت انجام نشد؛ نتیجه نگه داشته شد و بعداً دوباره ارسال می‌شود.':'✅ نتیجه برای معلم ثبت شد.'}
+go('home');who();if(!ses())$('lg').style.display='flex';else flush();
+</script>
+</body>
+</html>
