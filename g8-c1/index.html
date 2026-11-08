@@ -1,0 +1,2797 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ریاضی هشتم | فصل ۱: عددهای صحیح و گویا</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #ec4899;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --bg: #0b1224;
+  --card: #152238;
+  --card-hover: #1e3350;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #2a3f5f;
+  --easy: #10b981;
+  --medium: #f59e0b;
+  --hard: #ef4444;
+  --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 45%, #ec4899 100%);
+  --glow: 0 0 40px rgba(99,102,241,0.25);
+  --radius: 20px;
+  --shadow-card: 0 10px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(99,102,241,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Vazirmatn', 'Vazir', 'IRANSans', Tahoma, 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.bg-pattern {
+  position: fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(ellipse 80% 50% at 15% 10%, rgba(99,102,241,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 45% at 85% 80%, rgba(236,72,153,0.16) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(16,185,129,0.08) 0%, transparent 55%),
+    radial-gradient(circle at 70% 20%, rgba(168,85,247,0.08) 0%, transparent 35%);
+}
+.bg-pattern::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(148,163,184,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+header {
+  text-align: center;
+  padding: 36px 20px 22px;
+  position: relative;
+}
+header h1 {
+  font-size: 2.35rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 4px 20px rgba(99,102,241,0.35));
+}
+header p { color: var(--text-muted); font-size: 1.08rem; font-weight: 500; }
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(236,72,153,0.18));
+  color: #c4b5fd;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  margin-top: 12px;
+  border: 1px solid rgba(167,139,250,0.35);
+  box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+  font-weight: 600;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 25px 0 30px;
+}
+.nav-btn {
+  background: rgba(21, 34, 56, 0.85);
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+}
+.nav-btn:hover {
+  border-color: rgba(99,102,241,0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(99,102,241,0.2);
+  background: rgba(99,102,241,0.15);
+}
+.nav-btn.active {
+  background: var(--gradient);
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(99,102,241,0.4);
+  color: #fff;
+}
+.nav-btn .icon { font-size: 1.25rem; }
+
+/* Cards */
+.card {
+  background: linear-gradient(165deg, rgba(30,45,70,0.95) 0%, rgba(21,34,56,0.98) 100%);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(99,102,241,0.18);
+  box-shadow: var(--shadow-card);
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gradient);
+  opacity: 0.7;
+}
+.card:hover {
+  border-color: rgba(99,102,241,0.4);
+  box-shadow: 0 14px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.2);
+  transform: translateY(-2px);
+}
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+}
+.card h3 {
+  font-size: 1.15rem;
+  color: #c4b5fd;
+  margin: 18px 0 10px;
+  font-weight: 700;
+}
+.section { display: none; animation: fadeIn 0.4s ease; }
+.section.active { display: block; }
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(12px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* Strategy grid */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.strategy-card {
+  background: linear-gradient(160deg, rgba(36,52,80,0.9), rgba(15,23,42,0.95));
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 18px;
+  padding: 24px 18px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+.strategy-card::before {
+  content: '';
+  position: absolute;
+  top:0; left:0; right:0;
+  height: 4px;
+  background: var(--gradient);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.strategy-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(99,102,241,0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.strategy-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(129,140,248,0.55);
+  box-shadow: 0 16px 40px rgba(99,102,241,0.28);
+}
+.strategy-card:hover::before,
+.strategy-card:hover::after { opacity:1; }
+.strategy-card .num {
+  width: 48px; height: 48px;
+  background: var(--gradient);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1.15rem;
+  margin: 0 auto 14px;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.4);
+  color: #fff;
+}
+.strategy-card h4 { font-size: 1.08rem; margin-bottom: 8px; font-weight: 700; }
+.strategy-card p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; }
+
+/* Strategy detail */
+.strategy-detail { display: none; }
+.strategy-detail.active { display: block; }
+.example-box {
+  background: linear-gradient(145deg, rgba(99,102,241,0.12), rgba(15,23,42,0.4));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 16px 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.example-box .label {
+  display: inline-block;
+  background: var(--gradient);
+  color: white;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+}
+.answer-box {
+  background: linear-gradient(145deg, rgba(16,185,129,0.12), rgba(15,23,42,0.35));
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 14px;
+  line-height: 1.9;
+}
+.answer-box .step {
+  margin: 8px 0;
+  padding-right: 10px;
+  border-right: 3px solid rgba(16,185,129,0.35);
+}
+.answer-box .final {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: rgba(16,185,129,0.22);
+  border-radius: 12px;
+  font-weight: 800;
+  color: #34d399;
+  text-align: center;
+  font-size: 1.05rem;
+  box-shadow: 0 0 20px rgba(16,185,129,0.15);
+}
+.tip-box {
+  background: linear-gradient(145deg, rgba(245,158,11,0.14), rgba(15,23,42,0.3));
+  border: 1px solid rgba(245,158,11,0.35);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin: 18px 0;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 14px rgba(245,158,11,0.08);
+}
+.tip-box strong { color: #fbbf24; }
+.back-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-family: inherit;
+  cursor: pointer;
+  margin-bottom: 18px;
+  transition: all 0.2s;
+}
+.back-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* Quiz setup */
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 24px 0;
+}
+.level-card {
+  background: linear-gradient(160deg, rgba(30,45,70,0.9), rgba(15,23,42,0.95));
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 26px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+.level-card:hover, .level-card.selected {
+  transform: scale(1.04) translateY(-3px);
+}
+.level-card.easy:hover, .level-card.easy.selected { border-color: var(--easy); box-shadow: 0 0 28px rgba(16,185,129,0.3); background: linear-gradient(160deg, rgba(16,185,129,0.12), rgba(15,23,42,0.95)); }
+.level-card.medium:hover, .level-card.medium.selected { border-color: var(--medium); box-shadow: 0 0 28px rgba(245,158,11,0.3); background: linear-gradient(160deg, rgba(245,158,11,0.12), rgba(15,23,42,0.95)); }
+.level-card.hard:hover, .level-card.hard.selected { border-color: var(--hard); box-shadow: 0 0 28px rgba(239,68,68,0.3); background: linear-gradient(160deg, rgba(239,68,68,0.12), rgba(15,23,42,0.95)); }
+.level-card .emoji { font-size: 2.4rem; margin-bottom: 10px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+.level-card h3 { margin-bottom: 6px; font-weight: 800; }
+.level-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+.q-count {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.q-count button {
+  background: rgba(21,34,56,0.9);
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 11px 22px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.q-count button:hover {
+  border-color: rgba(99,102,241,0.6);
+  background: rgba(99,102,241,0.15);
+}
+.q-count button.selected {
+  background: var(--gradient);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.35);
+}
+
+.start-quiz-btn {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin: 24px auto 0;
+  background: var(--gradient);
+  border: none;
+  color: white;
+  padding: 17px 32px;
+  border-radius: 18px;
+  font-family: inherit;
+  font-size: 1.18rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+.start-quiz-btn::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition: left 0.6s;
+}
+.start-quiz-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(99,102,241,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.start-quiz-btn:hover::after { left: 120%; }
+.start-quiz-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.start-quiz-btn:disabled::after { display: none; }
+
+/* Quiz UI */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.progress-bar-wrap {
+  flex: 1;
+  min-width: 150px;
+  height: 10px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--gradient);
+  border-radius: 10px;
+  transition: width 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
+  box-shadow: 0 0 12px rgba(99,102,241,0.5);
+}
+.score-display {
+  background: linear-gradient(135deg, rgba(99,102,241,0.22), rgba(236,72,153,0.12));
+  padding: 8px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.08rem;
+  border: 1px solid rgba(99,102,241,0.3);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.15);
+}
+.question-card {
+  background: linear-gradient(165deg, rgba(30,45,70,0.95), rgba(21,34,56,0.98));
+  border-radius: 22px;
+  padding: 28px;
+  border: 1px solid rgba(99,102,241,0.2);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
+}
+.q-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.q-tag {
+  padding: 3px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.q-tag.level-easy { background: rgba(16,185,129,0.2); color: #34d399; }
+.q-tag.level-medium { background: rgba(245,158,11,0.2); color: #fbbf24; }
+.q-tag.level-hard { background: rgba(239,68,68,0.2); color: #f87171; }
+.q-tag.strategy { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+.question-text {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 22px;
+  line-height: 1.8;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.option {
+  background: rgba(15,23,42,0.7);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 15px 18px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.02rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.option:hover { border-color: rgba(99,102,241,0.7); background: rgba(99,102,241,0.12); transform: translateX(-4px); }
+.option.selected { border-color: var(--primary); background: rgba(99,102,241,0.22); box-shadow: 0 0 0 3px rgba(99,102,241,0.2); }
+.option.correct { border-color: var(--success); background: rgba(16,185,129,0.22); box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
+.option.wrong { border-color: var(--danger); background: rgba(239,68,68,0.18); box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+.option .opt-letter {
+  width: 36px; height: 36px;
+  background: rgba(51,65,85,0.9);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+.option.selected .opt-letter { background: var(--primary); color: #fff; }
+.option.correct .opt-letter { background: var(--success); color: #fff; }
+.option.wrong .opt-letter { background: var(--danger); color: #fff; }
+
+.quiz-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s;
+}
+.btn-primary {
+  background: var(--gradient);
+  color: white;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.35);
+  border: none;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(99,102,241,0.45); }
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--primary); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+.feedback {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 500;
+  display: none;
+  line-height: 1.8;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #34d399; }
+.feedback.wrong { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+.feedback small { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.92rem; }
+
+/* Result */
+.result-card {
+  text-align: center;
+  padding: 40px 28px;
+}
+.result-card .big-score {
+  font-size: 4.2rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 16px 0;
+  filter: drop-shadow(0 6px 24px rgba(99,102,241,0.4));
+}
+.stars { font-size: 2.6rem; margin: 14px 0; letter-spacing: 8px; filter: drop-shadow(0 4px 12px rgba(251,191,36,0.4)); }
+.motivational {
+  font-size: 1.25rem;
+  margin: 16px 0;
+  color: #c4b5fd;
+  font-weight: 600;
+}
+.result-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+}
+.stat .num { font-size: 1.8rem; font-weight: 800; }
+.stat .label { font-size: 0.85rem; color: var(--text-muted); }
+
+.diagram-box {
+  background: linear-gradient(160deg, rgba(15,23,42,0.75), rgba(30,41,59,0.5));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 14px;
+  padding: 18px;
+  margin: 14px 0;
+  text-align: center;
+  overflow-x: auto;
+  box-shadow: inset 0 0 30px rgba(99,102,241,0.05);
+}
+.diagram-box svg {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+.diagram-caption {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* Steps */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.step {
+  background: linear-gradient(160deg, rgba(99,102,241,0.12), rgba(15,23,42,0.5));
+  border: 1px solid rgba(99,102,241,0.28);
+  border-radius: 16px;
+  padding: 18px 14px;
+  text-align: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.step:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(99,102,241,0.2); }
+.step .step-num {
+  width: 40px; height: 40px;
+  background: var(--gradient);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.4);
+  font-size: 1.05rem;
+}
+
+/* Confetti */
+.confetti-container {
+  position: fixed; inset:0; pointer-events: none; z-index: 999;
+  overflow: hidden;
+}
+.confetti {
+  position: absolute;
+  width: 10px; height: 10px;
+  opacity: 0.9;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+@keyframes softPulse {
+  0%, 100% { box-shadow: 0 10px 30px rgba(99,102,241,0.4), inset 0 1px 0 rgba(255,255,255,0.2); }
+  50% { box-shadow: 0 12px 36px rgba(236,72,153,0.45), inset 0 1px 0 rgba(255,255,255,0.25); }
+}
+.start-quiz-btn:not(:disabled) {
+  animation: softPulse 2.8s ease-in-out infinite;
+}
+.start-quiz-btn:hover:not(:disabled) {
+  animation: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 36px 20px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-top: 48px;
+  border-top: 1px solid rgba(99,102,241,0.15);
+  background: linear-gradient(180deg, transparent, rgba(99,102,241,0.04));
+  line-height: 1.9;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.65rem; }
+  header { padding: 24px 12px 16px; }
+  .level-cards { grid-template-columns: 1fr 1fr; }
+  .strategy-grid { grid-template-columns: 1fr 1fr; }
+  .question-text { font-size: 1.05rem; }
+  .nav-btn { padding: 10px 14px; font-size: 0.88rem; }
+  .card { padding: 20px 14px; }
+}
+@media (max-width: 400px) {
+  .strategy-grid { grid-template-columns: 1fr; }
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: center;
+}
+th { background: rgba(99,102,241,0.2); }
+
+/* ===== Progress tracking ===== */
+.student-box { max-width: 420px; margin: 20px auto 0; text-align: center; }
+.student-box label { display:block; font-weight:600; margin-bottom:8px; color:#a5b4fc; }
+.student-box input, .pg-toolbar select {
+  width: 100%; background: var(--bg); color: var(--text); border: 2px solid var(--border);
+  border-radius: 12px; padding: 10px 14px; font-family: inherit; font-size: 1rem; text-align: center;
+}
+.pg-toolbar select { width: auto; min-width: 180px; padding: 8px 14px; }
+.student-box input:focus, .pg-toolbar select:focus { outline: none; border-color: var(--primary); }
+.pg-toolbar { display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin: 14px 0 22px; }
+.pg-toolbar .grp { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.pg-chip { background: var(--bg); border: 2px solid var(--border); color: var(--text-muted); padding: 6px 16px; border-radius: 20px; font-family: inherit; font-size: .9rem; cursor: pointer; transition: all .2s; }
+.pg-chip:hover { border-color: var(--primary); color: var(--text); }
+.pg-chip.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+.pg-profile { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 18px; padding: 14px; border-radius: 16px; background: linear-gradient(135deg, rgba(99,102,241,.14), rgba(236,72,153,.08)); border: 1px solid rgba(167,139,250,.3); }
+.pg-profile .pf { background: rgba(15,23,42,.55); border: 1px solid rgba(99,102,241,.2); border-radius: 12px; padding: 10px 14px; min-width: 0; }
+.pg-profile .pf small { display:block; color: var(--text-muted); font-size: .78rem; font-weight: 500; margin-bottom: 2px; }
+.pg-profile .pf strong { display:block; font-size: 1.02rem; font-weight: 700; color: #e0e7ff; line-height: 1.6; white-space: normal; overflow-wrap: anywhere; word-break: normal; }
+.pg-profile .pf.wide { grid-column: 1 / -1; }
+.pg-profile .pf.wide strong { font-size: 1.2rem; color: #fff; }
+.pg-profile .pf strong.na { color: var(--text-muted); font-weight: 500; }
+.pg-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.pg-stat { background: rgba(99,102,241,.1); border: 1px solid rgba(99,102,241,.25); border-radius: 14px; padding: 14px 10px; text-align: center; }
+.pg-stat b { display:block; font-size: 1.7rem; font-weight: 800; color: #c7d2fe; line-height: 1.3; }
+.pg-stat span { font-size: .85rem; color: var(--text-muted); }
+.pg-insight { border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; font-weight: 600; border: 1px solid; }
+.pg-insight.up { background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.35); color: #6ee7b7; }
+.pg-insight.down { background: rgba(239,68,68,.1); border-color: rgba(239,68,68,.3); color: #fca5a5; }
+.pg-insight.flat { background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.3); color: #fcd34d; }
+.pg-insight small { display:block; font-weight: 400; color: var(--text-muted); margin-top: 4px; }
+.pg-chart { background: rgba(15,23,42,.55); border: 1px solid var(--border); border-radius: 14px; padding: 12px 8px 6px; direction: ltr; }
+.pg-legend { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; font-size:.82rem; color: var(--text-muted); margin: 10px 0 4px; }
+.pg-legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-left:5px; vertical-align:middle; }
+.pg-legend i.ln { width:18px; height:0; border-top:2px dashed #f472b6; border-radius:0; }
+.pg-srow { display:grid; grid-template-columns: minmax(120px, 190px) 1fr 120px; gap: 12px; align-items:center; margin: 10px 0; }
+.pg-sname { font-size: .92rem; }
+.pg-sbar { height: 12px; background: var(--bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.pg-sbar div { height: 100%; border-radius: 8px; transition: width .6s; }
+.pg-sval { font-size: .88rem; font-weight: 700; }
+.pg-sval small { color: var(--text-muted); font-weight: 400; }
+.pg-delta { display:inline-block; font-size:.75rem; padding:1px 8px; border-radius:10px; margin-right:6px; font-weight:700; }
+.pg-delta.up { background: rgba(16,185,129,.2); color:#6ee7b7; }
+.pg-delta.down { background: rgba(239,68,68,.18); color:#fca5a5; }
+.pg-actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top: 22px; }
+.pg-empty { text-align:center; padding: 36px 10px; color: var(--text-muted); }
+.pg-empty .big { font-size: 3rem; }
+.pg-warn { background: rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.3); color:#fcd34d; border-radius:10px; padding:10px 14px; font-size:.85rem; margin-bottom:14px; }
+.result-compare { display:none; margin: 14px auto 0; max-width: 460px; background: rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.3); border-radius: 12px; padding: 12px 16px; line-height: 1.9; }
+.pg-tablewrap { overflow-x:auto; }
+.pg-mini-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+.pg-mini { background: rgba(15,23,42,.55); border: 1px solid var(--border); border-radius: 14px; padding: 12px 10px 6px; }
+.pg-mini-h { display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding: 0 6px 4px; font-size:.92rem; font-weight:600; }
+.pg-mini-h small { color: var(--text-muted); font-weight:400; font-size:.78rem; }
+.pg-mini svg { direction: ltr; display:block; }
+.pg-mini .nodata { color: var(--text-muted); font-size:.82rem; text-align:center; padding: 34px 8px; }
+@media (max-width: 600px) { .pg-srow { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ===== v4: accessibility & quiz additions ===== */
+:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 2px; }
+.level-cards { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.level-card.mixed:hover, .level-card.mixed.selected { border-color: #38bdf8; box-shadow: 0 0 28px rgba(56,189,248,0.35); background: linear-gradient(160deg, rgba(56,189,248,0.12), rgba(15,23,42,0.95)); }
+.level-card { cursor: pointer; }
+button.option { font-family: inherit; color: inherit; text-align: right; width: 100%; }
+button.option:disabled { opacity: 1; color: inherit; cursor: default; }
+.q-count button:disabled { opacity: .4; cursor: not-allowed; }
+.quiz-notice { min-height: 1.4em; text-align: center; color: #fcd34d; font-size: .9rem; margin: 10px 0 0; }
+.score-note { color: var(--text-muted); font-size: .88rem; margin: -6px auto 10px; max-width: 520px; line-height: 1.9; }
+.rv-wrap { text-align: right; margin: 18px auto 0; max-width: 700px; }
+.rv-wrap h3 { margin-bottom: 10px; }
+details.rv { background: rgba(15,23,42,.55); border: 1px solid var(--border); border-radius: 12px; margin: 8px 0; padding: 10px 14px; }
+details.rv summary { cursor: pointer; font-weight: 600; line-height: 1.8; }
+details.rv .rv-body { margin-top: 8px; font-size: .92rem; line-height: 1.9; }
+details.rv .rv-ok { color: #34d399; } details.rv .rv-bad { color: #f87171; } details.rv .rv-ex { color: var(--text-muted); }
+.rv-tag { display:inline-block; font-size:.72rem; padding:1px 8px; border-radius:10px; margin-left:6px; }
+.rv-tag.wrong { background: rgba(239,68,68,.2); color:#fca5a5; } .rv-tag.skip { background: rgba(245,158,11,.2); color:#fcd34d; }
+.pg-warn.ok { background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.35); color: #6ee7b7; }
+.pg-note { color: var(--text-muted); font-size: .82rem; margin: 8px 4px 0; line-height: 1.9; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+/* ===== v4.1: mobile fit for lesson cards, diagrams and tables ===== */
+.diagram-box svg { min-width: 300px; width: 100%; }
+.diagram-box table { width: 100%; table-layout: auto; }
+@media (max-width: 600px) {
+  .container { padding: 10px 6px; }
+  .card { padding: 16px 12px; border-radius: 16px; }
+  .example-box { padding: 12px 8px; }
+  .diagram-box { padding: 8px 2px; }
+  .diagram-box table { font-size: .8rem !important; min-width: 0 !important; margin: 0 auto; }
+  .diagram-box th, .diagram-box td { padding: 6px 4px; }
+  .answer-box .step, .step { padding-left: 10px; padding-right: 10px; }
+}
+
+/* ===== v4.2: student full name ===== */
+.student-box { max-width: 640px; }
+.student-box .name-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: right; }
+.student-box { max-width: 640px; }
+@media (min-width: 700px) {
+  .student-box .name-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+.student-box .name-grid label { font-weight: 500; font-size: .88rem; margin-bottom: 4px; color: var(--text-muted); }
+.student-box input.invalid { border-color: #ef4444; }
+.student-box input { text-align: right; }
+.field-error { color: #fca5a5; min-height: 1.4em; font-size: .88rem; margin: 8px 0 0; text-align: center; }
+.known-students { margin-top: 12px; text-align: right; }
+.known-students select { width: 100%; background: var(--bg); color: var(--text); border: 2px solid var(--border); border-radius: 12px; padding: 8px 12px; font-family: inherit; font-size: .95rem; }
+.pg-rename { margin-top: 14px; padding: 14px; border: 1px solid var(--border); border-radius: 14px; background: rgba(15,23,42,.55); }
+.pg-rename[hidden] { display: none; }
+.pg-rename .name-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pg-rename input { width: 100%; background: var(--bg); color: var(--text); border: 2px solid var(--border); border-radius: 12px; padding: 8px 12px; font-family: inherit; font-size: 1rem; }
+.pg-rename label { display: block; font-size: .85rem; color: var(--text-muted); margin-bottom: 4px; }
+@media (max-width: 480px) { .student-box .name-grid, .pg-rename .name-grid { grid-template-columns: 1fr; } }
+.mth{direction:ltr;unicode-bidi:isolate;display:inline-block}
+/* کسر استاندارد: صورت بالا، خط کسر، مخرج پایین */
+.mf{direction:ltr;unicode-bidi:isolate}
+.frac{display:inline-grid;grid-template-columns:auto;grid-template-rows:1fr 1fr;vertical-align:middle;margin:0 .14em;line-height:1.25;font-size:.95em}
+.frac>.fn,.frac>.fd{display:block;padding:0 .24em;white-space:nowrap;text-align:center}
+.frac>.fn{align-self:end;border-bottom:.09em solid currentColor;padding-bottom:.05em}
+.frac>.fd{align-self:start;padding-top:.07em}
+.frac .frac{font-size:.9em}
+.mf.blk{display:block;text-align:center;margin:6px 0;max-width:100%;overflow-x:auto}
+/* کادر توضیح کامل (کسر تلسکوپی و چندطبقه) */
+.explain-box{background:linear-gradient(145deg,rgba(56,189,248,.10),rgba(15,23,42,.3));border:1px solid rgba(56,189,248,.35);border-radius:14px;padding:14px 18px;margin:18px 0;font-size:.95rem;line-height:2}
+.explain-box h3{margin:0 0 8px;font-size:1.05rem;color:#7dd3fc}
+.explain-box p{margin:6px 0}
+.explain-box b{color:#e0f2fe}
+.explain-box .xs{background:rgba(15,23,42,.45);border-right:3px solid #38bdf8;border-radius:10px;padding:10px 14px;margin:10px 0}
+.explain-box .ln{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:8px 0;overflow-x:auto}
+.explain-box .eq{direction:ltr;unicode-bidi:isolate;display:inline-block;font-size:1.05rem;white-space:nowrap}
+.explain-box .ann{font-size:.88rem;color:#94a3b8}
+.diagram-box svg.sm{min-width:0;width:auto;max-width:100%}
+#lg{position:fixed;inset:0;background:rgba(5,10,25,.93);display:none;align-items:center;justify-content:center;padding:16px;z-index:9999}
+#lg .box{width:100%;max-width:380px;background:#152238;border:1px solid #2a3f5f;border-radius:18px;padding:22px;color:#f1f5f9;font-family:inherit}
+#lg label{display:block;margin:8px 0}#lg input{width:100%;font:inherit;background:#0f1a30;color:#f1f5f9;border:1px solid #2a3f5f;border-radius:10px;padding:8px 10px}
+#lg .r{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}#lg button{font:inherit;font-weight:600;color:#fff;background:#1b2c47;border:2px solid #2a3f5f;border-radius:12px;padding:8px 14px;cursor:pointer}#lg button.p{background:linear-gradient(135deg,#6366f1,#ec4899);border-color:transparent}
+#lgm{color:#fca5a5;min-height:1.6em}#who{text-align:center;color:#94a3b8;margin:6px 0}#sst{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#152238;border:1px solid #2a3f5f;color:#f1f5f9;border-radius:12px;padding:8px 16px;z-index:9998;display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style id="theme-ink-saffron">
+:root{
+ --primary:#2bb5a0; --primary-dark:#1e8f7e; --secondary:#e0715a; --success:#3fa796; --warning:#2bb5a0; --danger:#d9534f;
+ --bg:#0a0f12; --card:#11181c; --card-hover:#18232a; --text:#eaf2f3; --text-muted:#9fb0b6; --border:#26343b;
+ --easy:#3fa796; --medium:#2bb5a0; --hard:#d9634f;
+ --gradient:linear-gradient(135deg,#5eead4 0%,#2bb5a0 45%,#e0715a 100%);
+ --glow:0 0 30px rgba(43,181,160,.15); --radius:14px;
+ --shadow-card:0 14px 40px rgba(0,0,0,.45),0 0 0 1px rgba(43,181,160,.14);
+ --serif:'Vazirmatn',sans-serif;
+}
+body{font-family:'Vazirmatn','Vazir',Tahoma,sans-serif;line-height:1.85;background:var(--bg)}
+h1,h2,h3,h4,.card h2,.card h3,.strategy-card h4,.level-card h3,.big-score{font-family:var(--serif)!important;font-weight:700;letter-spacing:0}
+.bg-pattern{background:
+ radial-gradient(ellipse 70% 45% at 12% 0%,rgba(43,181,160,.14),transparent 60%),
+ radial-gradient(ellipse 60% 40% at 92% 100%,rgba(224,113,90,.12),transparent 60%),
+ radial-gradient(ellipse 50% 40% at 50% 55%,rgba(63,167,150,.05),transparent 60%)}
+.bg-pattern::after{background-image:linear-gradient(rgba(234,242,243,.025) 1px,transparent 1px);background-size:100% 36px;opacity:.7}
+header{padding:44px 20px 18px}
+header h1{font-size:2.6rem;font-weight:700;line-height:1.25;filter:none;background:linear-gradient(180deg,#ffffff,#a6f0e3 60%,#4fd1bb);-webkit-background-clip:text;background-clip:text}
+header h1::after{content:"";display:block;width:84px;height:2px;margin:14px auto 0;background:linear-gradient(90deg,transparent,#2bb5a0,transparent)}
+header p{color:var(--text-muted);font-weight:400;letter-spacing:.01em}
+.badge{background:transparent;color:#7fdccb;border:1px solid rgba(43,181,160,.5);box-shadow:none;font-weight:500;letter-spacing:.02em}
+.nav{gap:6px;border-bottom:1px solid var(--border);padding-bottom:0;margin:22px 0 28px}
+.nav-btn{background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;color:var(--text-muted);padding:12px 18px;font-weight:500;backdrop-filter:none;box-shadow:none;transition:color .2s,border-color .2s,background .2s}
+.nav-btn:hover{background:rgba(43,181,160,.07);color:var(--text);transform:none;box-shadow:none;border-color:rgba(43,181,160,.4)}
+.nav-btn.active{background:transparent;color:#8eeadb;border-color:#2bb5a0;transform:none;box-shadow:none}
+.card,.question-card,.result-card,.student-box{background:linear-gradient(180deg,#141c20,#0f1519);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-card)}
+.card::before{background:linear-gradient(90deg,transparent,#2bb5a0,transparent)!important;opacity:.6}
+.card h2{font-size:1.6rem;color:#8eeadb}
+.card h3{font-size:1.25rem}
+.strategy-card,.level-card{background:#121a1e;border:1px solid var(--border);border-radius:12px;box-shadow:none;transition:transform .25s,border-color .25s,background .25s}
+.strategy-card:hover,.level-card:hover,.level-card.selected{background:#18232a;border-color:rgba(43,181,160,.6);transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.strategy-card .num{font-family:var(--serif);background:transparent!important;color:#2bb5a0!important;border:1px solid rgba(43,181,160,.55);box-shadow:none!important;font-weight:700}
+.strategy-card h4{font-size:1.1rem;color:var(--text)}
+.diagram-box,.example-box,.answer-box,.tip-box{border-radius:12px}
+.example-box{background:#0f1519;border:1px solid var(--border);border-right:3px solid #2bb5a0}
+.answer-box{background:rgba(63,167,150,.08);border:1px solid rgba(63,167,150,.35)}
+.tip-box{background:rgba(43,181,160,.07);border:1px solid rgba(43,181,160,.35)}
+.diagram-box{background:#0d1317;border:1px solid var(--border)}
+.step{background:#121a1e;border:1px solid var(--border);border-radius:10px}
+.step:hover{border-color:rgba(43,181,160,.5)}
+.step .step-num{background:#2bb5a0;color:#04201c;font-weight:700}
+.option{background:#11181c;border:1px solid var(--border);border-radius:10px;transition:border-color .2s,background .2s,transform .2s}
+.option:hover{background:#18232a;border-color:rgba(43,181,160,.6);transform:translateX(-3px)}
+.option.selected{border-color:#2bb5a0;background:rgba(43,181,160,.1)}
+.option .opt-letter{background:#1d2a30;color:#7fdccb;font-family:var(--serif);font-size:1rem;border-radius:8px}
+.option.selected .opt-letter{background:#2bb5a0;color:#04201c}
+.question-text{font-family:'Vazirmatn',sans-serif;font-weight:600;line-height:1.9}
+.q-tag{border-radius:6px;font-weight:500}
+.q-tag.strategy{background:rgba(43,181,160,.12);color:#7fdccb;border:1px solid rgba(43,181,160,.3)}
+.progress-bar-wrap{background:#1b262b;border-radius:99px}
+.progress-bar{background:var(--gradient)!important;box-shadow:none}
+.btn-primary,.start-quiz-btn{background:var(--gradient)!important;color:#04201c!important;font-weight:700;border-radius:10px;box-shadow:0 8px 22px rgba(43,181,160,.22)}
+.btn-primary:hover,.start-quiz-btn:hover{box-shadow:0 12px 28px rgba(43,181,160,.34)}
+.btn-secondary,.back-btn,.q-count button,.pg-chip{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:10px}
+.btn-secondary:hover,.back-btn:hover,.q-count button:hover,.pg-chip:hover{border-color:#2bb5a0;background:rgba(43,181,160,.08)}
+.q-count button.selected,.pg-chip.on{background:rgba(43,181,160,.16);border-color:#2bb5a0;color:#8eeadb}
+.stat,.pg-stat,.pg-profile .pf{background:#11181c;border:1px solid var(--border);border-radius:10px}
+.big-score,.stat .num{color:#8eeadb}
+input,select{background:#0d1317;color:var(--text);border:1px solid var(--border)!important;border-radius:10px}
+input:focus,select:focus{border-color:#2bb5a0!important;box-shadow:0 0 0 3px rgba(43,181,160,.18)!important;outline:none}
+::selection{background:#2bb5a0;color:#04201c}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#2d3d45;border-radius:8px}::-webkit-scrollbar-track{background:#0a0f12}
+</style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+<div class="confetti-container" id="confetti"></div>
+
+<div class="container">
+  <header>
+    <h1>📐 ریاضی هشتم — فصل ۱</h1>
+    <p>🔢 عددهای صحیح و گویا — یاد بگیر، تمرین کن، پیشرفتت را ببین!</p>
+    <span class="badge">آموزشی + تعاملی + آزمون هوشمند + نمودار پیشرفت</span>
+  </header>
+
+  <div id="who"></div>
+  <nav class="nav">
+    <button class="nav-btn active" data-section="home"><span class="icon">🏠</span> خانه</button>
+    <button class="nav-btn" data-section="learn"><span class="icon">📚</span> آموزش مبحث‌ها</button>
+    <button class="nav-btn" data-section="quiz"><span class="icon">🎯</span> آزمون</button>
+    <button class="nav-btn" data-section="progress"><span class="icon">📈</span> پیشرفت من</button>
+    <button class="nav-btn" data-section="about"><span class="icon">ℹ️</span> راهنما</button>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home" class="section active">
+    <div class="card">
+      <h2>🌟 چهار قانون طلایی عددهای گویا</h2>
+      <p style="margin-bottom:18px; color:var(--text-muted);">هر مسئله‌ای مثل یک بازی فکری است! با این <strong>۴ قانون</strong> می‌توانی قهرمان عددهای گویا شوی:</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">۱</div><strong>جمع هم‌علامت‌ها</strong><br><small>عددها را جمع کن، علامت مشترک را بگذار</small></div>
+        <div class="step"><div class="step-num">۲</div><strong>جمع ناهم‌علامت‌ها</strong><br><small>کم کن، علامت عدد بزرگ‌تر را بگذار</small></div>
+        <div class="step"><div class="step-num">۳</div><strong>تفریق = جمع قرینه</strong><br><small>a − b را به a + (−b) تبدیل کن</small></div>
+        <div class="step"><div class="step-num">۴</div><strong>تقسیم = ضرب در معکوس</strong><br><small>هم‌علامت مثبت، ناهم‌علامت منفی</small></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🧠 هشت مبحث کلیدی</h2>
+      <p style="color:var(--text-muted); margin-bottom:16px;">روی هر کارت کلیک کن و مثال‌های جذاب را ببین. لازم نیست قانون‌ها را حفظ کنی — مهم این است که بلد باشی از آن‌ها استفاده کنی! ✨</p>
+      <div class="strategy-grid" id="home-strategies"></div>
+    </div>
+    <div style="text-align:center; margin-top:30px;">
+      <button class="start-quiz-btn" onclick="document.querySelector('[data-section=quiz]').click()">🚀 برو به آزمون و امتیاز بگیر!</button>
+    </div>
+  </section>
+
+  <!-- LEARN -->
+  <section id="learn" class="section">
+    <div id="strategy-list">
+      <div class="card">
+        <h2>📚 آموزش ۸ مبحث عددهای صحیح و گویا</h2>
+        <p style="color:var(--text-muted);">روی هر مبحث کلیک کن تا جزئیات، مثال و پاسخ گام‌به‌گام آن را ببینی.</p>
+        <div class="strategy-grid" id="learn-strategies"></div>
+      </div>
+    </div>
+    <div id="strategy-details"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="section">
+    <div id="quiz-setup">
+      <div class="card">
+        <h2>🎯 آزمون تعاملی</h2>
+        <p style="color:var(--text-muted); margin-bottom:8px;">سطح سختی را انتخاب کن، تعداد سؤالات را مشخص کن و شروع کن!</p>
+        <p style="color:var(--text-muted); font-size:0.9rem;">هر بار سؤالات به صورت تصادفی از بانک سؤالات انتخاب می‌شوند — پس هر آزمون متفاوت است!</p>
+        
+        <div class="student-box">
+          <label>👤 مشخصات دانش‌آموز (برای ثبت نتایج)</label>
+          <div class="name-grid">
+            <div><label for="studentFirst">نام</label><input id="studentFirst" type="text" maxlength="25" placeholder="مثلاً: علی" autocomplete="given-name" aria-describedby="nameError"></div>
+            <div><label for="studentLast">نام خانوادگی</label><input id="studentLast" type="text" maxlength="25" placeholder="مثلاً: زارع" autocomplete="family-name" aria-describedby="nameError"></div>
+            <div><label for="studentFather">نام پدر</label><input id="studentFather" type="text" maxlength="25" placeholder="مثلاً: محمد" autocomplete="additional-name"></div>
+            <div><label for="studentSchool">نام مدرسه</label><input id="studentSchool" type="text" maxlength="40" placeholder="مثلاً: گلشن"></div>
+            <div><label for="studentCity">نام شهر</label><input id="studentCity" type="text" maxlength="30" placeholder="مثلاً: میبد"></div>
+            <div><label for="studentClass">نام کلاس</label><input id="studentClass" type="text" maxlength="30" placeholder="مثلاً: هشتم ب"></div>
+          </div>
+          <div class="known-students" id="knownStudentsWrap" style="display:none">
+            <label for="knownStudents">یا یکی از دانش‌آموزان قبلی را انتخاب کن:</label>
+            <select id="knownStudents"></select>
+          </div>
+          <p class="field-error" id="nameError" role="alert"></p>
+        </div>
+
+        <h3 style="text-align:center; margin-top:24px;">سطح سختی</h3>
+        <div class="level-cards" role="radiogroup" aria-label="سطح سختی">
+          <div class="level-card easy" data-level="easy" role="radio" tabindex="0" aria-checked="false">
+            <div class="emoji">🌱</div>
+            <h3>ساده</h3>
+            <p>سؤالات پایه و مستقیم</p>
+          </div>
+          <div class="level-card medium selected" data-level="medium" role="radio" tabindex="0" aria-checked="true">
+            <div class="emoji">🔥</div>
+            <h3>متوسط</h3>
+            <p>ترکیبی و کمی چالش‌برانگیز</p>
+          </div>
+          <div class="level-card hard" data-level="hard" role="radio" tabindex="0" aria-checked="false">
+            <div class="emoji">💎</div>
+            <h3>سخت</h3>
+            <p>چندمرحله‌ای و مفهومی</p>
+          </div>
+          <div class="level-card mixed" data-level="mixed" role="radio" tabindex="0" aria-checked="false">
+            <div class="emoji">🎲</div>
+            <h3>ترکیبی</h3>
+            <p>سؤال‌هایی از هر سه سطح (سطح هر سؤال نمایش داده می‌شود)</p>
+          </div>
+        </div>
+
+        <h3 style="text-align:center;">تعداد سؤالات</h3>
+        <div class="q-count">
+          <button data-count="5">۵ سؤال</button>
+          <button data-count="8" class="selected">۸ سؤال</button>
+          <button data-count="12">۱۲ سؤال</button>
+          <button data-count="15">۱۵ سؤال</button>
+        </div>
+
+        <p class="quiz-notice" id="quizNotice" role="status" aria-live="polite"></p>
+
+        <button class="start-quiz-btn" id="startQuizBtn">شروع آزمون 🚀</button>
+      </div>
+    </div>
+
+    <div id="quiz-area" style="display:none;">
+      <div class="quiz-header">
+        <div class="score-display">امتیاز: <span id="liveScore">۰</span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+        <div style="font-weight:600;"><span id="qNum">۱</span> / <span id="qTotal">۸</span></div>
+      </div>
+      <div class="question-card" id="questionCard"></div>
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" id="skipBtn">رد کردن</button>
+        <button class="btn btn-primary" id="nextBtn" disabled>سؤال بعدی</button>
+      </div>
+    </div>
+
+    <div id="quiz-result" style="display:none;">
+      <div class="card result-card">
+        <h2>🏁 نتیجه آزمون</h2>
+        <div class="stars" id="resultStars"></div>
+        <div class="big-score" id="resultScore">۰٪</div>
+        <p class="motivational" id="resultMsg"></p>
+        <div class="result-compare" id="resultCompare"></div>
+        <div class="result-stats">
+          <div class="stat"><div class="num" id="statCorrect">۰</div><div class="label">پاسخ درست</div></div>
+          <div class="stat"><div class="num" id="statWrong">۰</div><div class="label">پاسخ غلط</div></div>
+          <div class="stat"><div class="num" id="statSkipped">۰</div><div class="label">ردشده</div></div>
+          <div class="stat"><div class="num" id="statTotal">۰</div><div class="label">کل سؤالات</div></div>
+        </div>
+        <p class="score-note" id="scoreNote"></p>
+        <div id="reviewBox"></div>
+        <div style="margin-top:28px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <button class="btn btn-primary" id="retryWrongBtn" style="display:none;">تمرین دوبارهٔ اشتباهات 🔁</button>
+          <button class="btn btn-primary" onclick="resetQuiz()">آزمون دوباره 🔄</button>
+          <button class="btn btn-secondary" onclick="document.querySelector('[data-section=progress]').click()">نمودار پیشرفت من 📈</button>
+          <button class="btn btn-secondary" onclick="document.querySelector('[data-section=learn]').click()">مرور آموزش 📚</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section id="progress" class="section">
+    <div class="card">
+      <h2>📈 پیشرفت یادگیری</h2>
+      <div class="pg-toolbar">
+        <div class="grp"><label for="pgStudent" style="color:var(--text-muted);">دانش‌آموز:</label><select id="pgStudent"></select></div>
+        <div class="grp" id="pgChips">
+          <button class="pg-chip on" data-lv="all">همه سطح‌ها</button>
+          <button class="pg-chip" data-lv="easy">ساده</button>
+          <button class="pg-chip" data-lv="medium">متوسط</button>
+          <button class="pg-chip" data-lv="hard">سخت</button>
+          <button class="pg-chip" data-lv="mixed">ترکیبی</button>
+        </div>
+      </div>
+      <div id="pgMsg" class="pg-warn" role="status" aria-live="polite" style="display:none"></div>
+      <div id="pgBody"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="card">
+      <h2>ℹ️ راهنمای استفاده</h2>
+      <ul style="list-style:none; padding:0; line-height:2.2;">
+        <li>✅ از بخش <strong>آموزش مبحث‌ها</strong> هر ۸ مبحث را با مثال گام‌به‌گام یاد بگیر.</li>
+        <li>✅ در بخش <strong>آزمون</strong> سطح و تعداد سؤال را انتخاب کن.</li>
+        <li>✅ هر بار سؤالات به صورت تصادفی از بانک بزرگ (۲۹۹ سؤال در سه سطح) انتخاب می‌شوند.</li>
+        <li>✅ بعد از هر پاسخ، بازخورد فوری و توضیح واضح می‌گیری.</li>
+        <li>✅ در پایان آزمون امتیاز، ستاره و پیام تشویقی دریافت می‌کنی.</li>
+        <li>✅ نتیجهٔ هر آزمون (کامل‌شده) خودکار ثبت می‌شود و در بخش <strong>پیشرفت من</strong> روند نمره و نقاط قوت و ضعف هر مبحث را در نمودار می‌بینی.</li>
+        <li>✅ نتایج روی همین مرورگر ذخیره می‌شوند. با «پشتیبان‌گیری» یک فایل JSON بگیر تا اگر داده‌های مرورگر پاک شد بتوانی بازیابی کنی؛ برای معلم هم می‌توانی CSV بگیری.</li>
+        <li>✅ سؤال‌های ردشده نمره نمی‌گیرند و غلط هم حساب نمی‌شوند؛ پس از آزمون می‌توانی اشتباهات را مرور و دوباره تمرین کنی (آزمون تمرینی در نمودار ثبت نمی‌شود).</li>
+        <li>✅ هدف این اپ، تمرین و لذت بردن از ریاضی است — اشتباه کردن بخشی از یادگیری است!</li>
+      </ul>
+      
+      <h3 style="margin-top:24px;">حریم خصوصی و ذخیره داده</h3>
+      <ul style="list-style:none; padding:0; line-height:2;">
+        <li>🔒 نام، نام پدر، مدرسه، شهر، کلاس و نتایج آزمون‌ها فقط در <strong>حافظه محلی همین مرورگر</strong> ذخیره می‌شوند و به هیچ سروری ارسال نمی‌گردند.</li>
+        <li>📥 با «پشتیبان‌گیری JSON» یا «CSV» می‌توانی نسخه پشتیبان بگیری و در دستگاه دیگر بازیابی کنی.</li>
+        <li>🗑️ امکان پاک‌کردن نتایج هر دانش‌آموز یا همه داده‌ها وجود دارد.</li>
+        <li>⚠️ اگر داده‌های مرورگر پاک شود یا در حالت ناشناس کار کنی، سوابق از بین می‌روند — حتماً پشتیبان بگیر.</li>
+      </ul>
+      <h3 style="margin-top:24px;">۸ مبحث:</h3>
+      <ol style="padding-right:20px; line-height:2;"><li>عددهای گویا و محور</li><li>قرینه و معکوس</li><li>جمع و تفریق</li><li>ضرب و تقسیم</li><li>اولویت عملیات</li><li>گرد کردن و تقریب</li><li>مقایسه و ترتیب</li><li>الگوها و ترفندها</li></ol>
+    </div>
+  </section>
+</div>
+
+<footer>
+  ساخته شده توسط <strong>علیرضا هومان</strong> برای دانش‌آموزان کلاس هشتم<br>
+  فصل ۱ ریاضی — عددهای صحیح و گویا
+</footer>
+
+<div id="lg"><div class="box"><h2>ورود دانش‌آموز</h2>
+<label>کلاس<select id="lc" style="width:100%;font:inherit;background:#0f1a30;color:#f1f5f9;border:1px solid #2a3f5f;border-radius:10px;padding:8px 10px"><option value="">در حال بارگذاری…</option></select></label>
+<label>نام و نام‌خانوادگی<input type="text" id="ln2" maxlength="40" autocomplete="off"></label>
+<label>رمز ۴ رقمی (بار اول خودت انتخاب کن و یادت بماند)<input type="password" id="lp" inputmode="numeric" maxlength="4" autocomplete="off"></label>
+<div id="lgm" role="alert"></div>
+<div class="r"><button class="p" id="lgo">ورود</button><button id="lgs">ادامه بدون ورود</button></div>
+<p style="color:#94a3b8;font-size:.85rem">بدون ورود، نتیجهٔ آزمون برای معلم ثبت نمی‌شود.</p></div></div><div id="sst"></div>
+<script>
+// ==================== DATA ====================
+const faN = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]).replace("-", "−");
+function nl(lo, hi, jumps, marks) {
+  jumps = jumps || []; marks = marks || [];
+  const x = v => 30 + (v - lo) * 44, W = 60 + (hi - lo) * 44, y = 70;
+  let s = `<svg viewBox="0 0 ${W} 120" xmlns="http://www.w3.org/2000/svg" style="max-width:${Math.min(W, 560)}px"><line x1="10" y1="${y}" x2="${W - 10}" y2="${y}" stroke="#94a3b8" stroke-width="2"/>`;
+  for (let v = lo; v <= hi; v++) s += `<line x1="${x(v)}" y1="${y - 5}" x2="${x(v)}" y2="${y + 5}" stroke="#94a3b8" stroke-width="2"/><text x="${x(v)}" y="${y + 24}" fill="${v === 0 ? "#fbbf24" : "#cbd5e1"}" font-size="14" text-anchor="middle">\u2066${faN(v)}\u2069</text>`;
+  jumps.forEach(([a, b]) => { const c = b > a ? "#4ade80" : "#f87171", m = (x(a) + x(b)) / 2, h = 18 + Math.abs(b - a) * 5;
+    s += `<path d="M${x(a)} ${y} Q${m} ${y - h * 2} ${x(b)} ${y}" fill="none" stroke="${c}" stroke-width="3"/><text x="${m}" y="${y - h - 4}" fill="${c}" font-size="14" font-weight="700" text-anchor="middle">\u2066${b > a ? "+" : "−"}${faN(Math.abs(b - a))}\u2069</text>`; });
+  marks.forEach(v => s += `<circle cx="${x(v)}" cy="${y}" r="7" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2"/>`);
+  return s + "</svg>";
+}
+// محور تکمیلی برای مثال ۱ مبحث ۱: مقدار تقریبی دو سر + طبیعی/حسابی/صحیح با رنگ‌های جدا
+function nlApprox() {
+  const lo = -3, hi = 5, S = 70, X0 = 70, W = 700, H = 292, y = 242;
+  const x = v => X0 + (v - lo) * S;
+  const iso = t => "\u2066" + t + "\u2069", rtl = t => "\u2067" + t + "\u2069";
+  const K = { nat: "#4ade80", whole: "#fbbf24", int: "#c4b5fd", ap: "#38bdf8", mute: "#94a3b8", txt: "#e2e8f0" };
+  const inR = v => v >= -2 && v <= 4;
+  const col = v => !inR(v) ? K.mute : v >= 1 ? K.nat : v === 0 ? K.whole : K.int;
+  let g = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px" role="img" aria-label="محور عددی با مقدار تقریبی دو سر و دسته‌بندی عددهای طبیعی، حسابی و صحیح">`;
+  // کمانک‌های رنگی بالای محور
+  const br = (a, b, yy, c, name, nums) => {
+    g += `<path d="M${x(a)} ${yy + 10} V${yy} H${x(b)} V${yy + 10}" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+    g += `<text x="${(x(a) + x(b)) / 2}" y="${yy - 10}" fill="${c}" font-size="16" font-weight="700" text-anchor="middle">${rtl(name + ": " + iso(nums.map(faN).join("، ")) + " (" + faN(nums.length) + " عدد)")}</text>`;
+  };
+  br(-2, 4, 48, K.int, "صحیح", [-2, -1, 0, 1, 2, 3, 4]);
+  br(0, 4, 100, K.whole, "حسابی", [0, 1, 2, 3, 4]);
+  br(1, 4, 152, K.nat, "طبیعی", [1, 2, 3, 4]);
+  // محور
+  g += `<line x1="15" y1="${y}" x2="${W - 15}" y2="${y}" stroke="#94a3b8" stroke-width="2"/>`;
+  for (let v = lo; v <= hi; v++) {
+    g += `<line x1="${x(v)}" y1="${y - 6}" x2="${x(v)}" y2="${y + 6}" stroke="#94a3b8" stroke-width="2"/>`;
+    if (inR(v)) g += `<circle cx="${x(v)}" cy="${y}" r="5" fill="${col(v)}"/>`;
+    g += `<text x="${x(v)}" y="${y + 28}" fill="${col(v)}" font-size="16" font-weight="${inR(v) ? 700 : 400}" text-anchor="middle">${iso(faN(v))}</text>`;
+  }
+  // دو نقطهٔ تقریبی با برچسب «عدد مخلوط ≈ اعشار» (کسر استاندارد)
+  const ap = (val, w, n, d, dec) => {
+    const cx = x(val), c = Math.max(cx, 100), b = 190;
+    g += `<line x1="${cx}" y1="${y - 10}" x2="${cx}" y2="${b + 22}" stroke="${K.ap}" stroke-width="2" stroke-dasharray="3 3"/>`;
+    g += `<circle cx="${cx}" cy="${y}" r="8" fill="${K.ap}" stroke="#e0f2fe" stroke-width="2"/>`;
+    g += `<text x="${c - 78}" y="${b + 6}" fill="${K.txt}" font-size="18" font-weight="700" text-anchor="middle">${iso(w)}</text>`;
+    g += `<text x="${c - 42}" y="${b - 5}" fill="${K.txt}" font-size="15" font-weight="700" text-anchor="middle">${iso(faN(n))}</text>`;
+    g += `<line x1="${c - 52}" y1="${b}" x2="${c - 32}" y2="${b}" stroke="${K.txt}" stroke-width="1.6"/>`;
+    g += `<text x="${c - 42}" y="${b + 16}" fill="${K.txt}" font-size="15" font-weight="700" text-anchor="middle">${iso(faN(d))}</text>`;
+    g += `<text x="${c - 10}" y="${b + 6}" fill="${K.ap}" font-size="18" font-weight="700" text-anchor="middle">≈</text>`;
+    g += `<text x="${c + 36}" y="${b + 6}" fill="${K.ap}" font-size="18" font-weight="700" text-anchor="middle">${iso(dec)}</text>`;
+  };
+  ap(-2.875, "−" + faN(2), 7, 8, "−" + faN(2) + "٫" + faN(875));
+  ap(4 + 1 / 3, faN(4), 1, 3, faN(4) + "٫" + faN(33));
+  return g + "</svg>";
+}
+// شکل مثال ۲ مبحث ۱: تبدیل عدد مخلوط −۲ ۳/۵ به کسر با «تکه‌های یک‌پنجم»
+function mixedBars() {
+  const cw = 36, ch = 44, y0 = 50, X0 = 52, GAP = 24, W = 690, H = 285;
+  const iso = t => "\u2066" + t + "\u2069", rtl = t => "\u2067" + t + "\u2069";
+  const K = { whole: "#38bdf8", part: "#fbbf24", minus: "#f472b6", fin: "#34d399", txt: "#e2e8f0", mute: "#64748b" };
+  const gx = i => X0 + i * (5 * cw + GAP);
+  let g = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px" role="img" aria-label="سه نوار که هر کدام به پنج قسمت مساوی تقسیم شده‌اند؛ دو نوار کامل و سه قسمت از نوار سوم، روی هم سیزده تکهٔ یک‌پنجم">`;
+  const T = (x, y, size, fill, txt, w) => `<text x="${x}" y="${y}" fill="${fill}" font-size="${size}" font-weight="${w || 700}" text-anchor="middle">${txt}</text>`;
+  // علامت منفی
+  g += T(24, y0 + 32, 40, K.minus, iso("−"));
+  // سه گروه نوار
+  let n = 0;
+  for (let gi = 0; gi < 3; gi++) {
+    const filled = gi < 2 ? 5 : 3, c = gi < 2 ? K.whole : K.part;
+    for (let k = 0; k < 5; k++) {
+      const x = gx(gi) + k * cw;
+      if (k < filled) { n++; g += `<rect x="${x}" y="${y0}" width="${cw}" height="${ch}" rx="4" fill="${c}" stroke="#0f172a" stroke-width="2.5"/>` + T(x + cw / 2, y0 + 28, 15, "#0f172a", iso(faN(n))); }
+      else g += `<rect x="${x + 1}" y="${y0 + 1}" width="${cw - 2}" height="${ch - 2}" rx="4" fill="none" stroke="${K.mute}" stroke-width="2" stroke-dasharray="4 3"/>`;
+    }
+  }
+  // عنوان بالای هر نوار
+  g += T(gx(0) + 90, y0 - 14, 15, K.whole, rtl("۱ واحد کامل = ۵ تکه"));
+  g += T(gx(1) + 90, y0 - 14, 15, K.whole, rtl("۱ واحد کامل = ۵ تکه"));
+  g += T(gx(2) + 90, y0 - 14, 15, K.part, rtl("۳ تکه از ۵ تکه"));
+  // کمانک زیر نوارها
+  const under = (a, b, yy, c, label) => {
+    g += `<path d="M${a} ${yy} V${yy + 9} H${b} V${yy}" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>` + T((a + b) / 2, yy + 32, 16, c, label);
+  };
+  under(gx(0), gx(1) + 5 * cw, y0 + ch + 10, K.whole, rtl(iso("۲ × ۵ = ۱۰") + " تکه"));
+  under(gx(2), gx(2) + 3 * cw, y0 + ch + 10, K.part, rtl("+ " + iso("۳") + " تکه"));
+  under(gx(0), gx(2) + 3 * cw, y0 + ch + 70, K.fin, rtl("روی هم " + iso("۱۰ + ۳ = ۱۳") + " تکهٔ یک‌پنجم"));
+  // معادلهٔ پایانی با کسر استاندارد
+  const e = 255, fr = (cx, nu, de, c1, c2) =>
+    T(cx, e - 6, 20, c1, iso(nu)) + `<line x1="${cx - 15}" y1="${e - 6}" x2="${cx + 15}" y2="${e - 6}" stroke="${K.txt}" stroke-width="2"/>` + T(cx, e + 20, 20, c2, iso(de));
+  const m = W / 2;
+  g += T(m - 98, e + 8, 26, K.minus, iso("−")) + T(m - 74, e + 8, 26, K.whole, iso("۲")) + fr(m - 44, "۳", "۵", K.part, K.txt);
+  g += T(m, e + 8, 26, K.txt, "=") + T(m + 38, e + 8, 26, K.minus, iso("−")) + fr(m + 72, "۱۳", "۵", K.fin, K.txt);
+  return g + "</svg>";
+}
+// شکل مثال مقایسهٔ چند کسر: هم‌مخرج کردن روی مخرج ۱۲ و جای کسرها روی محور بین ۰ و ۱
+function cmpFracs() {
+  const S = 50, X0 = 40, W = 780, H = 250, y = 135;
+  const x = k => X0 + k * S;
+  const iso = t => "\u2066" + t + "\u2069", rtl = t => "\u2067" + t + "\u2069";
+  const pts = [[7, 7, 12, "#38bdf8"], [8, 2, 3, "#a78bfa"], [9, 3, 4, "#fbbf24"], [10, 5, 6, "#4ade80"]];
+  const T = (px, py, size, fill, txt, w) => `<text x="${px}" y="${py}" fill="${fill}" font-size="${size}" font-weight="${w || 700}" text-anchor="middle">${txt}</text>`;
+  const fr = (cx, bar, n, d, c) => T(cx, bar - 7, 18, c, iso(faN(n))) + `<line x1="${cx - 17}" y1="${bar}" x2="${cx + 17}" y2="${bar}" stroke="${c}" stroke-width="2"/>` + T(cx, bar + 19, 18, c, iso(faN(d)));
+  let g = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px" role="img" aria-label="محور از صفر تا یک که به دوازده قسمت مساوی تقسیم شده و جای هفت‌دوازدهم، دو‌سوم، سه‌چهارم و پنج‌ششم روی آن مشخص است">`;
+  // محور و خط‌های تقسیم (دوازدهم‌ها)
+  g += `<line x1="${x(0) - 16}" y1="${y}" x2="${x(12) + 16}" y2="${y}" stroke="#94a3b8" stroke-width="2"/>`;
+  for (let k = 0; k <= 12; k++) g += `<line x1="${x(k)}" y1="${y - (k % 12 ? 5 : 8)}" x2="${x(k)}" y2="${y + (k % 12 ? 5 : 8)}" stroke="#94a3b8" stroke-width="2"/>`;
+  g += T(x(0), y + 30, 16, "#fbbf24", iso(faN(0))) + T(x(12), y + 30, 16, "#cbd5e1", iso(faN(1)));
+  // ردیف بالا: شکل اصلی کسرها؛ ردیف پایین: هم‌مخرج ۱۲
+  pts.forEach(([k, n, d, c]) => {
+    g += `<line x1="${x(k)}" y1="${y - 14}" x2="${x(k)}" y2="${y - 38}" stroke="${c}" stroke-width="2" stroke-dasharray="3 3"/>`;
+    g += fr(x(k), 82, n, d, c);
+    g += `<circle cx="${x(k)}" cy="${y}" r="8" fill="${c}" stroke="#0f172a" stroke-width="2"/>`;
+    g += `<line x1="${x(k)}" y1="${y + 14}" x2="${x(k)}" y2="${y + 48}" stroke="${c}" stroke-width="2" stroke-dasharray="3 3"/>`;
+    g += fr(x(k), 208, k, 12, c);
+  });
+  g += T(x(3.2), 82 + 5, 15, "#94a3b8", rtl("کسرهای داده‌شده"), 600);
+  g += T(x(3.2), 208 + 5, 15, "#94a3b8", rtl("همه با مخرج " + iso(faN(12))), 600);
+  return g + "</svg>";
+}
+const st = t => `<div class="step">${t}</div>`, fin = t => `<div class="final">✅ ${t}</div>`;
+const UL = l => `<ul style="line-height:2.1;padding-right:20px">${l.map(x => `<li>${x}</li>`).join("")}</ul>`;
+const DG = (svg, cap) => `<div class="diagram-box">${svg}<div class="diagram-caption">${cap}</div></div>`;
+const NUMS = ["①", "②", "③", "④", "⑤", "⑥"];
+const E = (q, steps, final, diagram) => ({ q, diagram, a: steps.map((s, i) => st(NUMS[i] + " " + s)).join("") + fin(final) });
+const S = (id, name, icon, desc, body, mistake, tip, examples) => ({ id, name, icon, desc, body, mistake, tip, examples });
+const strategies = [
+S(1, "عددهای گویا و محور", "🔢",
+ "عدد گویا عددی است که بتوان آن را به صورت کسر a/b نوشت (b ≠ 0). عددهای طبیعی، حسابی و صحیح همه گویا هستند؛ مثلاً 5 = 5/1 و −3 = −3/1 و 0.25 = 1/4. روی محور، بین هر دو عدد گویا بی‌شمار عدد گویای دیگر وجود دارد.",
+ DG(nl(-4, 4, [], [-3, 2]), "عددهای صحیح روی محور؛ بین هر دو عدد صحیح متوالی بی‌شمار عدد گویا هست") +
+ UL(["<b>طبیعی:</b> 1، 2، 3، … &nbsp;|&nbsp; <b>حسابی:</b> طبیعی‌ها و صفر &nbsp;|&nbsp; <b>صحیح:</b> حسابی‌ها و قرینهٔ طبیعی‌ها (−1، −2، …)", "هر عدد طبیعی حسابی است، هر حسابی صحیح است و هر صحیح گویا است.", "برای شمردن عددهای صحیح «بین» دو عدد، اول جای هر دو را روی محور پیدا کن و خود دو سر را نشمار (اگر دو سر صحیح بودند).", "عدد مخلوط را قبل از هر کاری به کسر تبدیل کن: −2 3/5 = −(2×5+3)/5 = −13/5."]),
+ "عدد 0 طبیعی نیست؛ ولی حسابی، صحیح و گویا است. همچنین هیچ‌وقت نگو «بین −2 و 3 فقط عددهای صحیح وجود دارد»؛ بین آن‌ها بی‌شمار کسر و اعشار هم هست.",
+ "برای شمردن، اول مقدار تقریبی دو سر را به صورت اعشاری بنویس (مثلاً −2 7/8 ≈ −2.875)، بعد عددهای صحیح داخل بازه را فهرست کن.",
+ [E("بین دو عدد −2 7/8 و 4 1/3 چند عدد طبیعی، حسابی، صحیح و گویا وجود دارد؟", ["−2 7/8 ≈ −2.875 و 4 1/3 ≈ 4.33" + DG(nlApprox(), "مقدار تقریبی دو سر (آبی)؛ عددهای صحیح بنفش، حسابی زرد و طبیعی سبز"), "صحیح‌ها: −2، −1، 0، 1، 2، 3، 4 ← 7 عدد", "حسابی‌ها (بدون منفی‌ها): 0 تا 4 ← 5 عدد، طبیعی‌ها: 1 تا 4 ← 4 عدد"], "طبیعی 4، حسابی 5، صحیح 7 و گویا بی‌شمار", nl(-3, 5, [], [-2, 4])),
+  E("عدد مخلوط −2 3/5 را به کسر تبدیل کن.", ["قسمت صحیح × مخرج + صورت: 2 × 5 + 3 = 13", "مخرج همان 5 می‌ماند و علامت منفی را حفظ می‌کنیم."], "−13/5", mixedBars()),
+  E("نشان بده 0.25 عددی گویا است.", ["0.25 = 25/100", "ساده می‌کنیم: 25/100 = 1/4 که کسری با مخرج غیرصفر است."], "پس 0.25 گویا است")]),
+S(2, "قرینه و معکوس", "🪞",
+ "قرینهٔ عدد a برابر −a است (فاصلهٔ برابر تا صفر، سمت مخالف) و جمع هر عدد با قرینه‌اش صفر است. معکوس عدد a/b برابر b/a است (a ≠ 0) و حاصل‌ضرب هر عدد در معکوسش 1 است.",
+ UL(["قرینهٔ 5 می‌شود −5 و قرینهٔ −3/4 می‌شود 3/4.", "معکوس 3/4 می‌شود 4/3؛ معکوس −2 می‌شود −1/2؛ معکوس 0.5 می‌شود 2.", "<b>صفر معکوس ندارد</b>؛ چون هیچ عددی ضربدر صفر 1 نمی‌شود.", "فقط 1 و −1 با معکوس خودشان برابرند.", "«قرینهٔ معکوس» یعنی اول معکوس بگیر، بعد قرینهٔ نتیجه را بنویس.", "با تقسیم 1 بر هر عدد گویای غیرصفر، معکوس آن عدد به دست می‌آید."]),
+ "حاصل‌ضرب عدد در معکوسش +1 است نه −1؛ و جمع عدد با قرینه‌اش 0 است نه 1. همچنین معکوس عدد منفی، منفی می‌ماند (معکوس −2 برابر −1/2 است، نه 1/2).",
+ "اگر خواستی قرینهٔ معکوس را حساب کنی دو مرحله بنویس: اول معکوس، بعد علامت را عوض کن.",
+ [E("قرینهٔ معکوس عدد −3/7 را بنویس.", ["معکوس −3/7 برابر −7/3 است (علامت می‌ماند).", "قرینهٔ −7/3 برابر +7/3 است."], "7/3"),
+  E("معکوس عدد −2 3/5 را بنویس.", ["اول مخلوط را کسر می‌کنیم: −2 3/5 = −13/5", "معکوس: جای صورت و مخرج عوض می‌شود."], "−5/13"),
+  E("قرینهٔ معکوس مجموع بزرگ‌ترین صحیح منفی و کوچک‌ترین صحیح مثبت را بیاب.", ["بزرگ‌ترین صحیح منفی −1 و کوچک‌ترین صحیح مثبت 1 است.", "مجموع: −1 + 1 = 0", "صفر معکوس ندارد، پس قرینهٔ معکوس هم تعریف نشده است."], "وجود ندارد"),
+  E("دو عدد گویا مثال بزن که با معکوس خودشان برابر باشند.", ["شرط: a = 1/a یعنی a × a = 1", "فقط 1 × 1 = 1 و (−1) × (−1) = 1 این شرط را دارند.", (() => {
+    const rows = [
+      ["1", "1", "1 × 1 = 1", 1], ["−1", "−1", "(−1) × (−1) = 1", 1],
+      ["2", "1/2", "2 × 2 = 4", 0], ["−3", "−1/3", "(−3) × (−3) = 9", 0],
+      ["1/2", "2", "(1/2) × (1/2) = 1/4", 0], ["−2/3", "−3/2", "(−2/3) × (−2/3) = 4/9", 0],
+      ["0", "ندارد", "—", 0, "نه (معکوس ندارد)"]];
+    const td = "padding:6px 10px;border:1px solid rgba(148,163,184,.3);text-align:center;font-size:1rem;font-weight:400;line-height:1.5";
+    return "عددهای دیگر را هم امتحان کن؛ فقط وقتی a × a = 1 شود، عدد با معکوسش برابر است:" +
+      "<div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;margin:10px 0;font-size:1rem'>" +
+      "<tr style='background:rgba(99,102,241,.22)'><th style='" + td + "'>عدد a</th><th style='" + td + "'>معکوس آن</th><th style='" + td + "'>حاصل a × a</th><th style='" + td + "'>برابر معکوس است؟</th></tr>" +
+      rows.map(r => "<tr style='background:" + (r[3] ? "rgba(16,185,129,.18)" : "rgba(239,68,68,.10)") + "'><td style='" + td + "'>" + r[0] + "</td><td style='" + td + "'>" + r[1] + "</td><td style='" + td + "'>" + r[2] + "</td><td style='" + td + ";color:" + (r[3] ? "#34d399" : "#f87171") + "'><span style='font-size:.8em'>" + (r[3] ? "✅" : "❌") + "</span> " + (r[4] || (r[3] ? "بله" : "نه")) + "</td></tr>").join("") +
+      "</table></div>عددهای دیگر مثل 2 و 1/2 و −3 هیچ‌وقت با معکوس خودشان برابر نمی‌شوند، و صفر که اصلاً معکوس ندارد."; })()], "1 و −1")]),
+S(3, "جمع و تفریق", "➕",
+ "برای جمع و تفریق عددهای گویا دو مرحله داریم: ۱) تفریق را با «جمع قرینه» جایگزین کن، ۲) قانون جمع را اجرا کن. در کسرها اول باید مخرج‌ها برابر شوند و در اعشاری‌ها ارقام هم‌ارزش زیر هم بیایند.",
+ DG(nl(-3, 4, [[0, 3], [3, -2]]), "(+3) + (−5): ابتدا 3 قدم به راست، سپس 5 قدم به چپ؛ می‌رسیم به −2") +
+ st("<b>هم‌علامت:</b> عددهای بدون علامت را جمع کن و علامت مشترک را بگذار. (−10) + (−3) = −13") +
+ st("<b>ناهم‌علامت:</b> عدد بدون علامت کوچک‌تر را از بزرگ‌تر کم کن و علامت عددی را بگذار که از صفر دورتر است. (−8) + (+14) = +6") +
+ st("<b>تفریق:</b> a − b = a + (−b) &nbsp; و &nbsp; a − (−b) = a + b") +
+ st("<b>کسرها:</b> اول هم‌مخرج کن، بعد صورت‌ها را جمع یا کم کن؛ مخرج ثابت می‌ماند."),
+ "(−8) + (+14) را −22 ننویس! عددهای ناهم‌علامت از هم کم می‌شوند. همچنین −4 − (−6) برابر −10 نیست؛ می‌شود −4 + 6 = +2.",
+ "هر جا عددی را با قرینه‌اش دیدی (مثل −8 + 8) آن‌ها را حذف کن؛ محاسبه کوتاه می‌شود.",
+ [E("حاصل −12 + 19 − 25 را بیاب.", ["از چپ: −12 + 19 = 7 (ناهم‌علامت: 19 − 12 = 7 و علامت عدد بزرگ‌تر مثبت)", "7 − 25 = 7 + (−25) = −18"], "−18"),
+  E("حاصل 2/3 − 3/4 + 1/6 را بیاب.", ["ک.م.م مخرج‌ها 12 است: 2/3 = 8/12 و 3/4 = 9/12 و 1/6 = 2/12", "8/12 − 9/12 + 2/12 = (8 − 9 + 2)/12 = 1/12"], "1/12"),
+  E("حاصل −3.7 − 4.59 را بیاب.", ["−3.7 − 4.59 = −3.7 + (−4.59) که هم‌علامت‌اند.", "3.70 + 4.59 = 8.29 و علامت مشترک منفی است."], "−8.29"),
+  E("میانگین سه عدد −25 و +19 و −12 را بیاب.", ["مجموع: −25 + 19 − 12 = −6 − 12 = −18", "میانگین = مجموع ÷ تعداد = −18 ÷ 3"], "−6")]),
+S(4, "ضرب و تقسیم", "✖️",
+ "ضرب و تقسیم عددهای گویا قانون علامت یکسانی دارند: هم‌علامت ← مثبت، ناهم‌علامت ← منفی. تقسیم یعنی ضرب در معکوس: a ÷ (c/d) = a × d/c. برای کسرها قبل از ضرب «ساده‌سازی» کن.",
+ UL(["(+)(+) = + ، (−)(−) = + ، (+)(−) = − ، (−)(+) = −", "در ضرب چند عدد: تعداد عامل‌های منفی <b>زوج</b> ← جواب مثبت؛ <b>فرد</b> ← جواب منفی.", "ضرب کسرها: صورت × صورت و مخرج × مخرج؛ بهتر است قبل از ضرب ساده کنی.", "تقسیم کسرها: کسر اول × معکوس کسر دوم.", "هر عدد ضربدر صفر، صفر است و صفر ÷ هر عدد غیرصفر = صفر؛ تقسیم بر صفر تعریف نشده است."]),
+ "قانون جمع و ضرب را قاطی نکن: (−3) + (−4) = −7 ولی (−3) × (−4) = +12. در تقسیم کسرها هم معکوس را روی کسر دوم بنویس، نه اول.",
+ "اول علامت جواب را بنویس، بعد عددها را بدون علامت ضرب یا تقسیم کن.",
+ [E("حاصل (2/3) ÷ (−4/9) را بیاب.", ["تقسیم یعنی ضرب در معکوس: (2/3) × (−9/4)", "علامت: ناهم‌علامت ← منفی. عددها: (2 × 9)/(3 × 4) = 18/12", "ساده می‌کنیم: 18/12 = 3/2"], "−3/2"),
+  E("حاصل (−35) ÷ (−50) را بیاب.", ["هم‌علامت‌اند ← مثبت.", "35/50 را بر 5 ساده می‌کنیم."], "7/10"),
+  E("حاصل −[(−9) × 20 × (−4)] ÷ [−100 × (−3)] را بیاب.", ["داخل کروشه دو عامل منفی (زوج) ← مثبت: 9 × 20 × 4 = 720، با منفی بیرون: −720", "مخرج: دو عامل منفی ← مثبت: 100 × 3 = 300", "−720/300 = −12/5 (تقسیم صورت و مخرج بر 60)"], "−12/5"),
+  E("حاصل 21 × (−10) ÷ [−(−30) × 42] را بیاب.", ["صورت: 21 × (−10) = −210", "مخرج: −(−30) = +30 و 30 × 42 = 1260", "−210/1260 = −1/6"], "−1/6")]),
+S(5, "اولویت عملیات", "🧮",
+ "وقتی چند عمل در یک عبارت هست باید ترتیب درست را رعایت کنی؛ وگرنه جواب غلط می‌شود، حتی اگر جمع و ضرب را درست بلد باشی.",
+ st("<b>۱)</b> پرانتز و کروشه (از داخلی‌ترین) &nbsp; ← &nbsp; <b>۲)</b> توان و جذر &nbsp; ← &nbsp; <b>۳)</b> ضرب و تقسیم (چپ به راست) &nbsp; ← &nbsp; <b>۴)</b> جمع و تفریق (چپ به راست)") +
+ "<p>عمل‌های هم‌اولویت مثل × و ÷ را از <b>چپ به راست</b> انجام بده. بهتر است در هر خط فقط یک عمل انجام دهی. برای کسر چندطبقه، اول از داخلی‌ترین کسر شروع کن.</p>",
+ "11 − 7 × 5 ÷ 35 را به صورت (11 − 7) × 5 ÷ 35 حل نکن؛ ضرب و تقسیم قبل از تفریق انجام می‌شوند. همچنین 6 ÷ 3 × 2 برابر 4 است نه 1 (از چپ به راست).",
+ "قبل از شروع، زیر هر عملی که اول انجام می‌شود خط بکش؛ بعد عبارت را دوباره و کوتاه‌تر بنویس.",
+ [E("حاصل 4 × 3² + 10 − 4 × 6 را بیاب.", ["توان: 3² = 9 ← 4 × 9 + 10 − 4 × 6", "ضرب‌ها: 36 + 10 − 24", "از چپ: 46 − 24 = 22"], "22"),
+  E("حاصل 11 − 7 × 5 ÷ 35 + 2 را بیاب.", ["ضرب و تقسیم از چپ: 7 × 5 = 35 و 35 ÷ 35 = 1", "11 − 1 + 2 = 12"], "12"),
+  E("حاصل 3 ÷ (2 ÷ (3/5)) را بیاب.", ["داخلی‌ترین پرانتز: 2 ÷ (3/5) = 2 × 5/3 = 10/3", "3 ÷ (10/3) = 3 × 3/10 = 9/10"], "9/10"),
+  E("حاصل 1 + 1/(1 + 1/(1 + 1/3)) را بیاب.", ["از داخل: 1 + 1/3 = 4/3 ← معکوس: 3/4", "1 + 3/4 = 7/4 ← معکوس: 4/7", "1 + 4/7 = 11/7"], "11/7")]),
+S(6, "گرد کردن و تقریب", "🎯",
+ "برای تخمین سریع، هر عدد را به نزدیک‌ترین عدد صحیح گرد می‌کنیم و بعد محاسبه می‌کنیم. جواب تقریبی با جواب دقیق کمی فرق دارد؛ ولی برای کنترل منطقی بودن جواب بسیار مفید است.",
+ UL(["اگر بخش اعشاری از 0.5 کمتر باشد، عدد پایین گرد می‌شود: 3.4 ≈ 3", "اگر بخش اعشاری 0.5 یا بیشتر باشد، عدد بالا می‌رود: 3.5 ≈ 4 و 5.7 ≈ 6", "برای عدد منفی هم همین‌طور به نزدیک‌ترین صحیح می‌رویم: −7.9 ≈ −8", "برای کسر یا عدد مخلوط، اول مقدار تقریبی کسر را حساب کن (نیم را مبنا بگیر): 13/14 نزدیک 1 است و 1/20 نزدیک 0.", "بعد از گرد کردن فقط عددهای صحیح را با هم جمع و تفریق کن."]),
+ "گرد کردن عدد منفی را اشتباه جهت نده: −2.9 به −3 گرد می‌شود، نه −2. همچنین جواب تقریبی را جواب دقیق ننویس.",
+ "اگر در تخمین جواب با جواب دقیق خیلی فرق داشت، حتماً محاسبهٔ دقیق را دوباره بررسی کن.",
+ [E("با گرد کردن هر عدد، حاصل 2.6 + 3.4 − 5.7 را تقریباً بیاب.", ["2.6 ≈ 3 و 3.4 ≈ 3 و 5.7 ≈ 6", "3 + 3 − 6 = 0"], "تقریباً 0 (جواب دقیق 0.3 است)"),
+  E("حاصل تقریبی −2 13/14 + 5 1/20 − 9 17/19 را بیاب.", ["13/14 نزدیک 1 است ← −2 13/14 ≈ −3", "1/20 نزدیک 0 است ← 5 1/20 ≈ 5", "17/19 نزدیک 1 است ← 9 17/19 ≈ 10", "−3 + 5 − 10 = −8"], "تقریباً −8"),
+  E("حاصل تقریبی −7.9 + (−15.0001) + 12.1 را بیاب.", ["−7.9 ≈ −8 و −15.0001 ≈ −15 و 12.1 ≈ 12", "−8 − 15 + 12 = −11"], "تقریباً −11")]),
+S(7, "مقایسه و ترتیب", "📏",
+ "برای مقایسهٔ عددهای گویا بهتر است همه را به یک شکل (همه اعشاری یا همه کسری هم‌مخرج) بنویسی. روی محور هر عددی که راست‌تر باشد بزرگ‌تر است.",
+ DG(nl(-4, 4, [], [-3, -1, 2]), "عدد راست‌تر بزرگ‌تر است: 2 &gt; −1 &gt; −3") +
+ UL(["هر عدد منفی از هر عدد مثبت و از صفر کوچک‌تر است.", "بین دو عدد منفی، عددی که از صفر دورتر است کوچک‌تر است: −0.5 &lt; −0.25", "اگر صورت دو کسر برابر باشد، کسری که مخرج کوچک‌تر دارد بزرگ‌تر است: 4/0.2 &gt; 4/0.3", "میانگین دو عدد، دقیقاً وسط آن‌ها است: (a + b) ÷ 2", "برای پیدا کردن عددی بین دو عدد، آن‌ها را اعشاری کن و عددی بین‌شان بنویس."]),
+ "نگو −0.5 از −0.25 بزرگ‌تر است چون 0.5 بزرگ‌تر است. روی محور −0.5 سمت چپ −0.25 قرار دارد، پس کوچک‌تر است.",
+ "هر وقت شک کردی، همهٔ عددها را اعشاری بنویس و روی یک محور بگذار.",
+ [E("عددهای −0.75، 0.3، −1/2 و 1/4 را از کوچک به بزرگ مرتب کن.", ["همه را اعشاری می‌کنیم: −0.75، 0.3، −0.5، 0.25", "منفی‌ها: −0.75 &lt; −0.5 ؛ مثبت‌ها: 0.25 &lt; 0.3"], "−0.75 &lt; −1/2 &lt; 1/4 &lt; 0.3"),
+  E("در جای خالی علامت مناسب بگذار: 4/0.2 □ 4/0.3", ["4 ÷ 0.2 = 20", "4 ÷ 0.3 ≈ 13.3"], "20 &gt; 13.3 پس 4/0.2 بزرگ‌تر است"),
+  E("میانگین دو عدد 3/4 و −1/5 را بیاب.", ["مجموع: 3/4 − 1/5 = 15/20 − 4/20 = 11/20", "نصف می‌کنیم: 11/20 ÷ 2 = 11/40"], "11/40"),
+  E("کسرهای 3/4 و 5/6 و 2/3 و 7/12 را از کوچک به بزرگ مرتب کن.", ["مخرج‌ها 4 و 6 و 3 و 12 هستند؛ ک.م.م آن‌ها 12 است، پس همه را هم‌مخرج 12 می‌کنیم.", "3/4 = 9/12 ، 5/6 = 10/12 ، 2/3 = 8/12 و 7/12 همان می‌ماند.", "وقتی مخرج‌ها برابرند، صورت بزرگ‌تر یعنی کسر بزرگ‌تر: 7 &lt; 8 &lt; 9 &lt; 10"], "7/12 &lt; 2/3 &lt; 3/4 &lt; 5/6", cmpFracs())]),
+S(8, "الگوها و ترفندها", "🧩",
+ "در فصل اول چند تکنیک سریع برای محاسبهٔ جمع‌های طولانی وجود دارد. اگر شکل ظاهری عبارت را خوب نگاه کنی، با جفت کردن، حذف کردن یا استفاده از فرمول، آن را در چند خط حل می‌کنی.",
+ UL(["<span class='mth'><b><bdi dir='rtl'>تعداد جمله‌ها</bdi></b> = (<bdi dir='rtl'>آخرین</bdi> − <bdi dir='rtl'>اولین</bdi>) ÷ <bdi dir='rtl'>فاصله</bdi> + 1</span>", "<b>جمع 1 تا n:</b> 1 + 2 + 3 + … + n = (n × (n+1))/2", "<b>جمع عددهای زوج:</b> 2 + 4 + 6 + … + 2n = n × (n+1)", "<b>جمع عددهای فرد:</b> 1 + 3 + 5 + … + (2n−1) = n²", "<b>جمع عددهای متوالی (و هر جمعی با فاصلهٔ ثابت):</b> <span class='mth'><bdi dir='rtl'>جمع</bdi> = <span class='frac'><span class='fn'>(<bdi dir='rtl'>اولین</bdi> + <bdi dir='rtl'>آخرین</bdi>) × <bdi dir='rtl'>تعداد</bdi></span><span class='fd'>2</span></span></span>", "<b>جفت کردن:</b> (1−2) + (3−4) + … هر جفت یک مقدار ثابت می‌دهد.", "<b>کسر تلسکوپی:</b> 1/(n × (n+1)) = 1/n − 1/(n+1) و جمله‌های وسط حذف می‌شوند (توضیح کامل در کادر زیر).", "<b>ضرب زنجیره‌ای:</b> (1/2)(2/3)(3/4)… صورت هر کسر با مخرج کسر قبلی ساده می‌شود.", "<b>کسر چندطبقه:</b> از پایین‌ترین طبقه شروع کن؛ اگر x و y را خواستند، دو طرف را معکوس کن (توضیح کامل در کادر زیر)."]) + "<div class='explain-box'>\n<h3>🔭 کسر تلسکوپی؛ خیلی ساده و قدم‌به‌قدم</h3>\n<p>اسم «تلسکوپی» از تلسکوپ‌های جمع‌شونده آمده است: وقتی جمع را می‌نویسی، همهٔ بخش‌های وسط داخل هم فرو می‌روند و فقط دو سر باقی می‌ماند. جمع‌هایی که جمله‌هایشان مثل 1/(1×2) و 1/(2×3) و 1/(3×4) است از این نوع‌اند.</p>\n<div class='xs'><b>قدم ۱: هر جمله را به یک «تفاضل» بشکن.</b>\n<div class='ln'><span class='eq'>1/(n × (n+1)) = 1/n − 1/(n+1)</span></div>\n<p>چرا درست است؟ سمت راست را هم‌مخرج کن:</p>\n<div class='ln'><span class='eq'>1/n − 1/(n+1) = (n+1)/(n × (n+1)) − n/(n × (n+1)) = 1/(n × (n+1))</span></div>\n<p>امتحان با عدد (n = 3):</p>\n<div class='ln'><span class='eq'>1/(3×4) = 1/12</span></div>\n<div class='ln'><span class='eq'>1/3 − 1/4 = 4/12 − 3/12 = 1/12 ✓</span></div></div>\n<div class='xs'><b>قدم ۲: جمله‌ها را پشت هم بنویس و رنگ‌ها را نگاه کن.</b>\n<p>مثال: این جمع را در نظر بگیر:</p>\n<div class='ln'><span class='eq'>1/(1×2) + 1/(2×3) + 1/(3×4) + 1/(4×5)</span></div>\n<p>هر جمله را با قدم ۱ می‌شکنیم:</p>\n<div class='ln'><span class='eq'>(1 − <span style='color:#fbbf24'>1/2</span>) + (<span style='color:#fbbf24'>1/2</span> − <span style='color:#a78bfa'>1/3</span>) + (<span style='color:#a78bfa'>1/3</span> − <span style='color:#34d399'>1/4</span>) + (<span style='color:#34d399'>1/4</span> − 1/5)</span></div>\n<p>«منفیِ» هر جمله با «مثبتِ» جملهٔ بعدی هم‌رنگ و برابر است؛ هر جفت هم‌رنگ با هم صفر می‌شود (a − a = 0).</p></div>\n<div class='xs'><b>قدم ۳: فقط دو سر می‌ماند.</b>\n<p>«اولین مثبت» و «آخرین منفی» حذف نشدند:</p>\n<div class='ln'><span class='eq'>1 − 1/5 = 5/5 − 1/5 = 4/5</span></div>\n<p>قاعدهٔ کلی:</p>\n<div class='ln'><span class='eq'>1/(1×2) + 1/(2×3) + … + 1/(m × (m+1)) = 1 − 1/(m+1) = m/(m+1)</span></div></div>\n<div class='xs'><b>اگر دو عامل مخرج فاصله داشته باشند</b> (مثل 1/(1×3) و 1/(3×5) با فاصلهٔ 2):\n<div class='ln'><span class='eq'>1/(n × (n+d)) = 1/d × (1/n − 1/(n+d))</span></div>\n<p>همان تفاضل را می‌نویسیم و ضریب 1/d را بیرون می‌گذاریم. امتحان:</p>\n<div class='ln'><span class='eq'>1/(1×3) = 1/2 × (1 − 1/3) = 1/2 × 2/3 = 1/3 ✓</span></div></div>\n<p>⚠️ حذف فقط وقتی انجام می‌شود که جمله‌ها «به هم بچسبند»، یعنی عامل دوم هر مخرج، عامل اول مخرج بعدی باشد (1×2، 2×3، 3×4، …).</p>\n</div>" + "<div class='explain-box'>\n<h3>🏢 کسر چندطبقه؛ خیلی ساده و قدم‌به‌قدم</h3>\n<p>کسر چندطبقه کسری است که در صورت یا مخرجش کسر دیگری نشسته است. خط کسر اصلی (بلندترین خط) یعنی «تقسیم».</p>\n<div class='xs'><b>دو قانون که همیشه لازم می‌شوند:</b>\n<div class='ln'><span class='eq'>1/(a/b) = b/a</span><span class='ann'>تقسیم بر یک کسر یعنی ضرب در معکوس آن؛ مثلاً 1/(4/3) = 3/4</span></div>\n<div class='ln'><span class='eq'>1 + 1/3 = 3/3 + 1/3 = 4/3</span><span class='ann'>جمع در یک طبقه را اول هم‌مخرج کن و به یک کسر تبدیل کن</span></div></div>\n<div class='xs'><b>نوع ۱: مقدار عبارت را بخواهند ← از پایین‌ترین طبقه شروع کن.</b>\n<p>هر بار فقط یک طبقه را ساده کن و عبارت را دوباره بنویس:</p>\n<div class='ln'><span class='eq'>1/(1 + 1/(1 + 1/3))</span></div>\n<div class='ln'><span class='eq'>= 1/(1 + 1/(4/3))</span><span class='ann'>پایین‌ترین طبقه: 1 + 1/3 = 4/3</span></div>\n<div class='ln'><span class='eq'>= 1/(1 + 3/4)</span><span class='ann'>معکوس: 1/(4/3) = 3/4</span></div>\n<div class='ln'><span class='eq'>= 1/(7/4)</span><span class='ann'>جمع: 1 + 3/4 = 4/4 + 3/4 = 7/4</span></div>\n<div class='ln'><span class='eq'>= 4/7</span><span class='ann'>معکوس: 1/(7/4) = 4/7</span></div></div>\n<div class='xs'><b>نوع ۲: x و y را بخواهند ← دو طرف را معکوس کن و قسمت صحیح را جدا کن.</b>\n<p>مثال: معادلهٔ زیر را حل کن (x و y عددهای طبیعی‌اند):</p>\n<div class='ln'><span class='eq'>1/(x + 1/y) = 2/17</span></div>\n<div class='ln'><span class='eq'>x + 1/y = 17/2</span><span class='ann'>دو طرف را معکوس کن</span></div>\n<div class='ln'><span class='eq'>17/2 = 8 + 1/2</span><span class='ann'>17 را بر 2 تقسیم کن: خارج‌قسمت 8 و باقی‌مانده 1</span></div>\n<div class='ln'><span class='eq'>x + 1/y = 8 + 1/2</span><span class='ann'>چون 1/y کوچک‌تر از 1 است، x = 8 و 1/y = 1/2 یعنی y = 2</span></div></div>\n<p>⚠️ اشتباه رایج: این تساوی نادرست است (مخرج را جزءبه‌جزء معکوس نکن):</p>\n<div class='ln'><span class='eq'>1/(1/2 + 1/3) ≠ 2 + 3</span></div>\n<p>درست: اول جمع داخل مخرج را حساب کن، بعد معکوس بگیر:</p>\n<div class='ln'><span class='eq'>1/(1/2 + 1/3) = 1/(5/6) = 6/5</span></div>\n</div>",
+ "در فرمول n² مقدار n تعداد جمله‌هاست، نه آخرین عدد؛ برای 1 + 3 + 5 + … + 39 نگو 39². اول تعداد جمله‌ها (n) را حساب کن.",
+ "قبل از محاسبه چند جملهٔ اول و آخر را بنویس تا الگوی جفت‌ها یا حذف‌ها را ببینی.",
+ [E("حاصل 1 + 2 + 3 + … + 100 را بیاب.", ["این جمع 1 تا n است و n = 100.", "فرمول: (n × (n+1))/2 = (100 × 101)/2", "10100 ÷ 2 = 5050"], "5050"),
+  E("حاصل 2 + 4 + 6 + … + 50 را بیاب.", ["جمله‌ها زوج‌اند و آخرین جمله 2n = 50 است، پس n = 25.", "فرمول: n × (n+1) = 25 × 26 = 650"], "650"),
+  E("حاصل 21 + 22 + 23 + … + 40 را بیاب.", ["تعداد جمله‌ها: 40 − 21 + 1 = 20", "<span class='mth'>(<bdi dir='rtl'>اولین</bdi> + <bdi dir='rtl'>آخرین</bdi>) × <bdi dir='rtl'>تعداد</bdi> ÷ 2 = (21 + 40) × 20 ÷ 2</span>", "61 × 20 ÷ 2 = 610"], "610"),
+  E("حاصل 1 + 3 + 5 + … + 39 را بیاب.", ["تعداد جمله‌ها: (39 − 1) ÷ 2 + 1 = 20", "جمع 20 عدد فرد اول برابر 20² است."], "400"),
+  E("حاصل (1−2) + (3−4) + (5−6) + … + (399−400) را بیاب.", ["هر پرانتز برابر −1 است.", "تعداد پرانتزها: 400 ÷ 2 = 200", "200 × (−1) = −200"], "−200"),
+  E("حاصل 1/(1×2) + 1/(2×3) + 1/(3×4) + … + 1/(11×12) را بیاب.", ["هر جمله را به تفاضل می‌نویسیم: 1/1 − 1/2 + 1/2 − 1/3 + … + 1/11 − 1/12", "همهٔ جمله‌های وسط حذف می‌شوند و 1 − 1/12 می‌ماند."], "11/12"),
+  E("حاصل 1/(1×3) + 1/(3×5) + 1/(5×7) + 1/(7×9) را بیاب.", ["فاصلهٔ دو عامل هر مخرج 2 است: 1/(n × (n+2)) = 1/2 × (1/n − 1/(n+2))", "جمع: 1/2 × (1 − 1/3 + 1/3 − 1/5 + 1/5 − 1/7 + 1/7 − 1/9)", "جمله‌های وسط حذف می‌شوند: 1/2 × (1 − 1/9) = 1/2 × 8/9 = 4/9"], "4/9"),
+  E("اگر 1/(x + 1/y) + 3 = 53/17 و x و y عددهای طبیعی باشند، x و y را بیاب.", ["53/17 − 3 = 53/17 − 51/17 = 2/17 ← 1/(x + 1/y) = 2/17", "دو طرف را معکوس می‌کنیم: x + 1/y = 17/2 = 8 1/2", "پس x = 8 و 1/y = 1/2 یعنی y = 2"], "x = 8 و y = 2")])
+];
+
+const TN = ["عددهای گویا و محور", "قرینه و معکوس", "جمع و تفریق", "ضرب و تقسیم", "اولویت عملیات", "گرد کردن و تقریب", "مقایسه و ترتیب", "الگوها و ترفندها"];
+const Q = (level, t, q, right, wrong, explain) => {
+  const o = [right, ...wrong];
+  for (let i = o.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [o[i], o[j]] = [o[j], o[i]]; }
+  return { level, strategy: TN[t], q, options: o, answer: o.indexOf(right), explain };
+};
+const questionBank = [
+// ===== EASY =====
+Q("easy", 0, "چند عدد صحیح در بازهٔ −2 ≤ x ≤ 6 قرار دارد؟", "9", ["7", "8", "10"], "عددها: −2، −1، 0، 1، …، 6 که 9 عدد است."),
+Q("easy", 0, "کدام عدد طبیعی نیست ولی حسابی است؟", "0", ["1", "−1", "1/2"], "عددهای حسابی همان طبیعی‌ها به علاوهٔ صفر هستند."),
+Q("easy", 0, "بین هر دو عدد صحیح متوالی چند عدد گویا وجود دارد؟", "بی‌شمار", ["هیچ", "فقط یکی", "دقیقاً 9 تا"], "بین هر دو عدد گویا بی‌شمار عدد گویای دیگر هست."),
+Q("easy", 1, "کدام عدد معکوس ندارد؟", "0", ["1", "−1", "1/2"], "هیچ عددی ضربدر صفر برابر 1 نمی‌شود."),
+Q("easy", 1, "حاصل‌ضرب هر عدد گویای غیرصفر در معکوسش چند است؟", "1", ["−1", "0", "خود عدد"], "a × (1/a) = 1"),
+Q("easy", 1, "قرینهٔ معکوس عدد −3/7 کدام است؟", "7/3", ["−7/3", "3/7", "−3/7"], "معکوس −3/7 برابر −7/3 و قرینهٔ آن 7/3 است."),
+Q("easy", 2, "حاصل −12 + 19 − 25 کدام است؟", "−18", ["−6", "18", "−56"], "−12 + 19 = 7 و 7 − 25 = −18"),
+Q("easy", 2, "میانگین سه عدد −25 و 19 و −12 کدام است؟", "−6", ["6", "−18", "−4"], "مجموع = −18 و −18 ÷ 3 = −6"),
+Q("easy", 3, "حاصل (−20 ÷ 2) × 10 کدام است؟", "−100", ["100", "−1", "1"], "−20 ÷ 2 = −10 و (−10) × 10 = −100"),
+Q("easy", 3, "حاصل (−35) ÷ (−50) کدام است؟", "7/10", ["−7/10", "10/7", "−10/7"], "هم‌علامت‌اند ← مثبت و 35/50 = 7/10."),
+Q("easy", 4, "حاصل 4 × 3² + 10 − 4 × 6 کدام است؟", "22", ["46", "130", "−22"], "36 + 10 − 24 = 22"),
+Q("easy", 5, "با گرد کردن هر عدد به نزدیک‌ترین صحیح، حاصل 2.6 + 3.4 − 5.7 تقریباً چند است؟", "0", ["1", "−1", "2"], "3 + 3 − 6 = 0"),
+Q("easy", 6, "بزرگ‌ترین عدد صحیح منفی کدام است؟", "−1", ["0", "−100", "وجود ندارد"], "−1 از همهٔ صحیح‌های منفی بزرگ‌تر است؛ ولی کوچک‌ترین صحیح منفی وجود ندارد."),
+Q("easy", 7, "تعداد جمله‌های 1 + 3 + 5 + … + 39 چند تا است؟", "20", ["19", "39", "21"], "(39 − 1) ÷ 2 + 1 = 20"),
+// ===== MEDIUM =====
+Q("medium", 0, "بین دو عدد −2 7/8 و 4 1/3 چند عدد صحیح وجود دارد؟", "7", ["6", "8", "9"], "−2 7/8 ≈ −2.875 و 4 1/3 ≈ 4.33؛ عددها: −2 تا 4 یعنی 7 عدد."),
+Q("medium", 1, "معکوس عدد مخلوط −2 3/5 کدام است؟", "−5/13", ["−13/5", "5/13", "−3/5"], "−2 3/5 = −13/5 و معکوسش −5/13 است."),
+Q("medium", 2, "حاصل 2/3 − 3/4 + 1/6 کدام است؟", "1/12", ["−1/12", "1/6", "5/12"], "با مخرج 12: 8/12 − 9/12 + 2/12 = 1/12"),
+Q("medium", 2, "حاصل −3.7 − 4.59 کدام است؟", "−8.29", ["−0.89", "8.29", "−7.29"], "هم‌علامت‌اند: 3.70 + 4.59 = 8.29 با علامت منفی."),
+Q("medium", 3, "حاصل (2/3) ÷ (−4/9) کدام است؟", "−3/2", ["−8/27", "−2/3", "3/2"], "(2/3) × (−9/4) = −18/12 = −3/2"),
+Q("medium", 3, "حاصل −[(−9) × 20 × (−4)] ÷ [−100 × (−3)] کدام است؟", "−12/5", ["12/5", "−5/12", "−2/5"], "−720/300 = −12/5"),
+Q("medium", 4, "حاصل 11 − 7 × 5 ÷ 35 + 2 کدام است؟", "12", ["10", "−12", "8"], "7 × 5 ÷ 35 = 1 و 11 − 1 + 2 = 12"),
+Q("medium", 4, "حاصل 3 ÷ (2 ÷ (3/5)) کدام است؟", "9/10", ["10/9", "9/5", "2/5"], "2 ÷ (3/5) = 10/3 و 3 ÷ (10/3) = 9/10"),
+Q("medium", 5, "با گرد کردن، حاصل −2 13/14 + 5 1/20 − 9 17/19 تقریباً کدام است؟", "−8", ["−7", "−9", "−6"], "−3 + 5 − 10 = −8"),
+Q("medium", 6, "بزرگ‌ترین عدد میان −0.3 و −1/4 و −1/2 و −0.4 کدام است؟", "−1/4", ["−0.3", "−0.4", "−1/2"], "−1/4 = −0.25 که به صفر نزدیک‌تر است."),
+Q("medium", 6, "در جای خالی کدام علامت درست است؟ 4/0.2 □ 4/0.3", "&gt;", ["&lt;", "=", "قابل مقایسه نیست"], "4/0.2 = 20 و 4/0.3 ≈ 13.3"),
+Q("medium", 6, "میانگین دو عدد 3/4 و −1/5 کدام است؟", "11/40", ["11/20", "7/20", "−11/40"], "مجموع 11/20 است و نصف آن 11/40."),
+Q("medium", 7, "حاصل 1 + 3 + 5 + … + 39 کدام است؟", "400", ["380", "420", "780"], "20 جمله دارد و جمع 20 عدد فرد اول برابر 20² = 400 است."),
+Q("medium", 7, "حاصل (1−2) + (3−4) + … + (399−400) کدام است؟", "−200", ["−400", "200", "−1"], "200 جفت داریم و هر جفت −1 است."),
+// ===== HARD =====
+Q("hard", 1, "قرینهٔ معکوس مجموع بزرگ‌ترین صحیح منفی و کوچک‌ترین صحیح مثبت کدام است؟", "وجود ندارد", ["0", "1", "−1"], "(−1) + 1 = 0 و صفر معکوس ندارد."),
+Q("hard", 1, "کدام دو عدد گویا با معکوس خودشان برابرند؟", "1 و −1", ["0 و 1", "1/2 و 2", "−1 و 0"], "شرط a × a = 1 فقط برای 1 و −1 برقرار است."),
+Q("hard", 0, "کسری مساوی 65/91 بیابید که بزرگ‌ترین شمارندهٔ مشترک صورت و مخرجش 19 باشد.", "95/133", ["65/91", "19/133", "57/133"], "65/91 = 5/7 و ضرب در 19 می‌شود 95/133."),
+Q("hard", 2, "حاصل [−2/9 − 4/15] ÷ [−7/12 − (−5/9)] کدام است؟", "88/5", ["−88/5", "5/88", "22/45"], "اولی −22/45 و دومی −1/36 است؛ (−22/45) × (−36) = 792/45 = 88/5."),
+Q("hard", 3, "حاصل 21 × (−10) ÷ [−(−30) × 42] کدام است؟", "−1/6", ["1/6", "−1/60", "−6"], "−210/1260 = −1/6"),
+Q("hard", 3, "نصفِ قرینهٔ حاصل 1/(1/4 + (−1)/6) کدام است؟", "−6", ["6", "−12", "−3"], "1/4 − 1/6 = 1/12 ← معکوس 12 ← قرینه −12 ← نصف −6"),
+Q("hard", 4, "حاصل 1 + 1/(1 + 1/(1 + 1/3)) کدام است؟", "11/7", ["7/11", "4/7", "7/4"], "از داخل: 4/3 ← 3/4 ← 7/4 ← 4/7 ← 11/7"),
+Q("hard", 4, "حاصل 5 − 3 × 2² ÷ 6 + (−1) × (−4) کدام است؟", "7", ["−1", "9", "15"], "توان: 4؛ 3×4÷6 = 2؛ (−1)×(−4) = 4؛ پس 5 − 2 + 4 = 7."),
+Q("hard", 5, "حاصل تقریبی −7.9 + (−15.0001) + 12.1 کدام است؟", "−11", ["−10", "−12", "−9"], "−8 − 15 + 12 = −11"),
+Q("hard", 6, "کدام عدد بین 1/3 و 1/2 قرار دارد؟", "2/5", ["1/4", "3/5", "1/6"], "1/3 ≈ 0.33 و 1/2 = 0.5 و 2/5 = 0.4"),
+Q("hard", 6, "کدام ترتیب از کوچک به بزرگ درست است؟", "−3/4 &lt; −0.5 &lt; 1/4 &lt; 0.3", ["−0.5 &lt; −3/4 &lt; 1/4 &lt; 0.3", "−3/4 &lt; −0.5 &lt; 0.3 &lt; 1/4", "0.3 &lt; 1/4 &lt; −0.5 &lt; −3/4"], "−0.75 &lt; −0.5 &lt; 0.25 &lt; 0.3"),
+Q("hard", 7, "اگر 1/(x + 1/y) + 3 = 53/17 و x و y طبیعی باشند، x + y چند است؟", "10", ["8", "6", "12"], "x + 1/y = 17/2 = 8 1/2 پس x = 8 و y = 2."),
+Q("hard", 7, "حاصل 1/(1×2) + 1/(2×3) + … + 1/(11×12) کدام است؟", "11/12", ["1/12", "12/11", "1"], "هر جمله 1/n − 1/(n+1) است و حاصل 1 − 1/12 می‌شود."),
+Q("hard", 7, "حاصل (1/2) × (2/3) × (3/4) × … × (99/100) کدام است؟", "1/100", ["99/100", "1/2", "100"], "همهٔ عددهای وسط ساده می‌شوند؛ فقط 1/100 می‌ماند."),
+// ===== بانک تکمیلی =====
+Q("easy", 2, "حاصل (−16) + (−7) کدام است؟", "−23", ["23", "−9", "−13"], "هم‌علامت‌اند: عددهای بدون علامت را جمع می‌کنیم و علامت مشترک را می‌گذاریم. (−16) + (−7) = −23"),
+Q("easy", 2, "حاصل (−6) + (−22) کدام است؟", "−28", ["28", "16", "−18"], "هم‌علامت‌اند: عددهای بدون علامت را جمع می‌کنیم و علامت مشترک را می‌گذاریم. (−6) + (−22) = −28"),
+Q("easy", 2, "حاصل (−18) + 16 کدام است؟", "−2", ["2", "−34", "34"], "ناهم‌علامت‌اند: عدد بدون علامت کوچک‌تر را از بزرگ‌تر کم می‌کنیم و علامت عددی را می‌گذاریم که از صفر دورتر است. (−18) + 16 = −2"),
+Q("easy", 2, "حاصل (−28) + (−25) کدام است؟", "−53", ["53", "−3", "−43"], "هم‌علامت‌اند: عددهای بدون علامت را جمع می‌کنیم و علامت مشترک را می‌گذاریم. (−28) + (−25) = −53"),
+Q("easy", 2, "حاصل (−22) + (−15) کدام است؟", "−37", ["37", "−7", "−27"], "هم‌علامت‌اند: عددهای بدون علامت را جمع می‌کنیم و علامت مشترک را می‌گذاریم. (−22) + (−15) = −37"),
+Q("easy", 2, "حاصل 22 + 3 کدام است؟", "25", ["−25", "19", "35"], "هم‌علامت‌اند: عددهای بدون علامت را جمع می‌کنیم و علامت مشترک را می‌گذاریم. 22 + 3 = 25"),
+Q("easy", 2, "حاصل 12 + (−29) کدام است؟", "−17", ["17", "41", "−7"], "ناهم‌علامت‌اند: عدد بدون علامت کوچک‌تر را از بزرگ‌تر کم می‌کنیم و علامت عددی را می‌گذاریم که از صفر دورتر است. 12 + (−29) = −17"),
+Q("easy", 2, "حاصل (−1) + 2 کدام است؟", "1", ["−1", "−3", "3"], "ناهم‌علامت‌اند: عدد بدون علامت کوچک‌تر را از بزرگ‌تر کم می‌کنیم و علامت عددی را می‌گذاریم که از صفر دورتر است. (−1) + 2 = 1"),
+Q("easy", 3, "حاصل (−5) × (−12) کدام است؟", "60", ["−60", "−17", "70"], "هم‌علامت‌اند ← مثبت؛ 5 × 12 = 60 پس 60"),
+Q("easy", 3, "حاصل (−3) × (−2) کدام است؟", "6", ["−6", "−5", "16"], "هم‌علامت‌اند ← مثبت؛ 3 × 2 = 6 پس 6"),
+Q("easy", 3, "حاصل (−5) × (−4) کدام است؟", "20", ["−20", "−9", "30"], "هم‌علامت‌اند ← مثبت؛ 5 × 4 = 20 پس 20"),
+Q("easy", 3, "حاصل (−3) × 10 کدام است؟", "−30", ["30", "7", "−20"], "ناهم‌علامت‌اند ← منفی؛ 3 × 10 = 30 پس −30"),
+Q("easy", 3, "حاصل (−9) × (−7) کدام است؟", "63", ["−63", "−16", "73"], "هم‌علامت‌اند ← مثبت؛ 9 × 7 = 63 پس 63"),
+Q("easy", 3, "حاصل 9 × (−12) کدام است؟", "−108", ["108", "−3", "−98"], "ناهم‌علامت‌اند ← منفی؛ 9 × 12 = 108 پس −108"),
+Q("easy", 3, "حاصل 18 ÷ (−6) کدام است؟", "−3", ["3", "−108", "−2"], "ناهم‌علامت ← منفی؛ 18 ÷ 6 = 3 پس −3"),
+Q("easy", 3, "حاصل 81 ÷ (−9) کدام است؟", "−9", ["9", "−4", "−8"], "ناهم‌علامت ← منفی؛ 81 ÷ 9 = 9 پس −9"),
+Q("easy", 3, "حاصل 25 ÷ 5 کدام است؟", "5", ["−5", "125", "6"], "هم‌علامت ← مثبت؛ 25 ÷ 5 = 5 پس 5"),
+Q("easy", 3, "حاصل (−56) ÷ (−7) کدام است؟", "8", ["−8", "13", "9"], "هم‌علامت ← مثبت؛ 56 ÷ 7 = 8 پس 8"),
+Q("easy", 1, "معکوس عدد −1/3 کدام است؟", "−3", ["3", "1/3", "−1/3"], "جای صورت و مخرج عوض می‌شود و علامت می‌ماند: −3"),
+Q("easy", 1, "معکوس عدد 1/2 کدام است؟", "2", ["−2", "−1/2", "1/2"], "جای صورت و مخرج عوض می‌شود و علامت می‌ماند: 2"),
+Q("easy", 1, "معکوس عدد 1/4 کدام است؟", "4", ["−4", "−1/4", "1/4"], "جای صورت و مخرج عوض می‌شود و علامت می‌ماند: 4"),
+Q("easy", 1, "معکوس عدد 3/8 کدام است؟", "8/3", ["−8/3", "−3/8", "3/8"], "جای صورت و مخرج عوض می‌شود و علامت می‌ماند: 8/3"),
+Q("medium", 1, "قرینهٔ معکوس عدد 2/3 کدام است؟", "−3/2", ["3/2", "−2/3", "2/3"], "معکوس 2/3 برابر 3/2 است و قرینهٔ آن −3/2"),
+Q("medium", 1, "قرینهٔ معکوس عدد −1/5 کدام است؟", "5", ["−5", "1/5", "−1/5"], "معکوس −1/5 برابر −5 است و قرینهٔ آن 5"),
+Q("medium", 1, "قرینهٔ معکوس عدد −3/5 کدام است؟", "5/3", ["−5/3", "3/5", "−3/5"], "معکوس −3/5 برابر −5/3 است و قرینهٔ آن 5/3"),
+Q("medium", 1, "قرینهٔ معکوس عدد 4/9 کدام است؟", "−9/4", ["9/4", "−4/9", "4/9"], "معکوس 4/9 برابر 9/4 است و قرینهٔ آن −9/4"),
+Q("medium", 1, "قرینهٔ معکوس عدد 1/4 کدام است؟", "−4", ["4", "−1/4", "1/4"], "معکوس 1/4 برابر 4 است و قرینهٔ آن −4"),
+Q("medium", 1, "معکوس قرینهٔ عدد 3/4 کدام است؟", "−4/3", ["4/3", "−3/4", "3/4"], "قرینهٔ 3/4 برابر −3/4 و معکوسش −4/3 است"),
+Q("medium", 1, "معکوس قرینهٔ عدد 4/5 کدام است؟", "−5/4", ["5/4", "−4/5", "4/5"], "قرینهٔ 4/5 برابر −4/5 و معکوسش −5/4 است"),
+Q("medium", 1, "معکوس قرینهٔ عدد 1/2 کدام است؟", "−2", ["2", "−1/2", "1/2"], "قرینهٔ 1/2 برابر −1/2 و معکوسش −2 است"),
+Q("medium", 0, "عدد مخلوط −5 4/7 را به صورت کسر بنویس.", "−39/7", ["39/7", "−27/7", "−9/7"], "5 × 7 + 4 = 39 ← −39/7"),
+Q("medium", 0, "عدد مخلوط −2 5/7 را به صورت کسر بنویس.", "−19/7", ["19/7", "−17/7", "−7/7"], "2 × 7 + 5 = 19 ← −19/7"),
+Q("medium", 0, "عدد مخلوط −1 1/5 را به صورت کسر بنویس.", "−6/5", ["6/5", "−2/5", "−6/1"], "1 × 5 + 1 = 6 ← −6/5"),
+Q("medium", 0, "عدد مخلوط −1 1/8 را به صورت کسر بنویس.", "−9/8", ["9/8", "−2/8", "−9/1"], "1 × 8 + 1 = 9 ← −9/8"),
+Q("easy", 0, "کسر 45/7 را به صورت عدد مخلوط بنویس.", "6 3/7", ["7 3/7", "3 6/7", "6 7/3"], "45 ÷ 7: خارج‌قسمت 6 و باقیمانده 3 ← 6 3/7"),
+Q("medium", 0, "عدد مخلوط −6 2/4 را به صورت کسر ساده‌شده بنویس.", "−13/2", ["13/2", "−16/4", "−8/4"], "6 × 4 + 2 = 26 ← −26/4 = −13/2 (پس از ساده کردن)"),
+Q("easy", 3, "کسر −30/36 را تا حد امکان ساده کن.", "−5/6", ["−6/6", "−6/5", "−5/36"], "صورت و مخرج را بر 6 تقسیم می‌کنیم: −5/6"),
+Q("easy", 3, "کسر −15/30 را تا حد امکان ساده کن.", "−1/2", ["−2/2", "−2", "−1/30"], "صورت و مخرج را بر 15 تقسیم می‌کنیم: −1/2"),
+Q("easy", 3, "کسر 9/18 را تا حد امکان ساده کن.", "1/2", ["2/2", "2", "1/18"], "صورت و مخرج را بر 9 تقسیم می‌کنیم: 1/2"),
+Q("easy", 3, "کسر −7/14 را تا حد امکان ساده کن.", "−1/2", ["−2/2", "−2", "−1/14"], "صورت و مخرج را بر 7 تقسیم می‌کنیم: −1/2"),
+Q("easy", 3, "کسر 132/144 را تا حد امکان ساده کن.", "11/12", ["12/12", "12/11", "11/144"], "صورت و مخرج را بر 12 تقسیم می‌کنیم: 11/12"),
+Q("easy", 1, "در تساوی (−1/2) × □ = 1 عدد مناسب کدام است؟", "−2", ["2", "−1/2", "1/2"], "حاصل‌ضرب هر عدد در معکوسش 1 است؛ معکوس −1/2 برابر −2 است"),
+Q("easy", 1, "در تساوی □ + (−1/2) = 0 عدد مناسب کدام است؟", "1/2", ["−1/2", "2", "0"], "جمع هر عدد با قرینه‌اش صفر است؛ قرینهٔ −1/2 برابر 1/2 است"),
+Q("easy", 1, "در تساوی (−1/6) × □ = 1 عدد مناسب کدام است؟", "−6", ["6", "−1/6", "1/6"], "حاصل‌ضرب هر عدد در معکوسش 1 است؛ معکوس −1/6 برابر −6 است"),
+Q("easy", 1, "در تساوی □ + (−1/6) = 0 عدد مناسب کدام است؟", "1/6", ["−1/6", "6", "0"], "جمع هر عدد با قرینه‌اش صفر است؛ قرینهٔ −1/6 برابر 1/6 است"),
+Q("easy", 1, "در تساوی (−2/3) × □ = 1 عدد مناسب کدام است؟", "−3/2", ["3/2", "−2/3", "2/3"], "حاصل‌ضرب هر عدد در معکوسش 1 است؛ معکوس −2/3 برابر −3/2 است"),
+Q("easy", 1, "در تساوی □ + (−2/3) = 0 عدد مناسب کدام است؟", "2/3", ["−2/3", "3/2", "0"], "جمع هر عدد با قرینه‌اش صفر است؛ قرینهٔ −2/3 برابر 2/3 است"),
+Q("easy", 1, "در تساوی (−5/8) × □ = 1 عدد مناسب کدام است؟", "−8/5", ["8/5", "−5/8", "5/8"], "حاصل‌ضرب هر عدد در معکوسش 1 است؛ معکوس −5/8 برابر −8/5 است"),
+Q("easy", 1, "در تساوی □ + (−5/8) = 0 عدد مناسب کدام است؟", "5/8", ["−5/8", "8/5", "0"], "جمع هر عدد با قرینه‌اش صفر است؛ قرینهٔ −5/8 برابر 5/8 است"),
+Q("easy", 1, "در تساوی (−1/3) × □ = 1 عدد مناسب کدام است؟", "−3", ["3", "−1/3", "1/3"], "حاصل‌ضرب هر عدد در معکوسش 1 است؛ معکوس −1/3 برابر −3 است"),
+Q("easy", 1, "در تساوی □ + (−1/3) = 0 عدد مناسب کدام است؟", "1/3", ["−1/3", "3", "0"], "جمع هر عدد با قرینه‌اش صفر است؛ قرینهٔ −1/3 برابر 1/3 است"),
+Q("easy", 1, "در تساوی (−1/5) × □ = 1 عدد مناسب کدام است؟", "−5", ["5", "−1/5", "1/5"], "حاصل‌ضرب هر عدد در معکوسش 1 است؛ معکوس −1/5 برابر −5 است"),
+Q("easy", 1, "در تساوی □ + (−1/5) = 0 عدد مناسب کدام است؟", "1/5", ["−1/5", "5", "0"], "جمع هر عدد با قرینه‌اش صفر است؛ قرینهٔ −1/5 برابر 1/5 است"),
+Q("easy", 3, "حاصل‌ضرب 5 عدد غیرصفر که 3 تا از آن‌ها منفی است، چه علامتی دارد؟", "منفی", ["مثبت", "صفر", "نمی‌توان گفت"], "تعداد عامل‌های منفی 3 و فرد است ← حاصل منفی"),
+Q("easy", 3, "حاصل‌ضرب 6 عدد غیرصفر که 4 تا از آن‌ها منفی است، چه علامتی دارد؟", "مثبت", ["منفی", "صفر", "نمی‌توان گفت"], "تعداد عامل‌های منفی 4 و زوج است ← حاصل مثبت"),
+Q("easy", 3, "حاصل‌ضرب 5 عدد غیرصفر که 5 تا از آن‌ها منفی است، چه علامتی دارد؟", "منفی", ["مثبت", "صفر", "نمی‌توان گفت"], "تعداد عامل‌های منفی 5 و فرد است ← حاصل منفی"),
+Q("easy", 3, "حاصل‌ضرب 7 عدد غیرصفر که 2 تا از آن‌ها منفی است، چه علامتی دارد؟", "مثبت", ["منفی", "صفر", "نمی‌توان گفت"], "تعداد عامل‌های منفی 2 و زوج است ← حاصل مثبت"),
+Q("easy", 3, "حاصل‌ضرب 7 عدد غیرصفر که 7 تا از آن‌ها منفی است، چه علامتی دارد؟", "منفی", ["مثبت", "صفر", "نمی‌توان گفت"], "تعداد عامل‌های منفی 7 و فرد است ← حاصل منفی"),
+Q("easy", 3, "حاصل‌ضرب 9 عدد غیرصفر که 6 تا از آن‌ها منفی است، چه علامتی دارد؟", "مثبت", ["منفی", "صفر", "نمی‌توان گفت"], "تعداد عامل‌های منفی 6 و زوج است ← حاصل مثبت"),
+Q("medium", 6, "کدام عدد بزرگ‌ترین است؟", "7/5", ["−3/2", "−9/8", "5/4"], "همه را اعشاری می‌کنیم: −3/2 ≈ −1.5، −9/8 ≈ −1.12، 5/4 ≈ 1.25، 7/5 ≈ 1.4 ← بزرگ‌ترین 7/5"),
+Q("easy", 6, "کدام عدد کوچک‌ترین است؟", "1/5", ["1", "1.1", "15/8"], "همه را اعشاری می‌کنیم: 1/5 ≈ 0.2، 1 ≈ 1.0، 1.1 ≈ 1.1، 15/8 ≈ 1.88 ← کوچک‌ترین 1/5"),
+Q("medium", 2, "حاصل −2 − 4 + (−9) کدام است؟", "−15", ["−7", "3", "15"], "−2 − 4 = −2 + −4 = −6؛ بعد −6 + (−9) = −15"),
+Q("medium", 2, "حاصل −20 − 3 + (−18) کدام است؟", "−41", ["−35", "−5", "41"], "−20 − 3 = −20 + −3 = −23؛ بعد −23 + (−18) = −41"),
+Q("medium", 2, "حاصل −23 − 14 + 4 کدام است؟", "−33", ["−5", "−41", "33"], "−23 − 14 = −23 + −14 = −37؛ بعد −37 + 4 = −33"),
+Q("medium", 2, "حاصل 24 − 8 + (−14) کدام است؟", "2", ["18", "30", "−2"], "24 − 8 = 24 + −8 = 16؛ بعد 16 + (−14) = 2"),
+Q("medium", 2, "حاصل −5 − (−12) + (−4) کدام است؟", "3", ["−21", "11", "−3"], "−5 − (−12) = −5 + 12 = 7؛ بعد 7 + (−4) = 3"),
+Q("medium", 2, "حاصل 19 − (−17) + (−17) کدام است؟", "19", ["−15", "53", "−19"], "19 − (−17) = 19 + 17 = 36؛ بعد 36 + (−17) = 19"),
+Q("medium", 2, "حاصل −2 − (−9) + 19 کدام است؟", "26", ["8", "−12", "−26"], "−2 − (−9) = −2 + 9 = 7؛ بعد 7 + 19 = 26"),
+Q("medium", 2, "حاصل 17 − (−15) + (−20) کدام است؟", "12", ["−18", "52", "−12"], "17 − (−15) = 17 + 15 = 32؛ بعد 32 + (−20) = 12"),
+Q("medium", 2, "حاصل 1/2 + 2/3 کدام است؟", "7/6", ["3/5", "−1/6", "−7/6"], "مخرج مشترک 6 است: (3 + 4)/6 = 7/6"),
+Q("medium", 2, "حاصل (−3/8) − 2/3 کدام است؟", "−25/24", ["−5/11", "7/24", "25/24"], "مخرج مشترک 24 است: ((−9) + (−16))/24 = −25/24"),
+Q("medium", 2, "حاصل 7/9 + 1/2 کدام است؟", "23/18", ["8/11", "5/18", "−23/18"], "مخرج مشترک 18 است: (14 + 9)/18 = 23/18"),
+Q("medium", 2, "حاصل 7/10 + 2/3 کدام است؟", "41/30", ["9/13", "1/30", "−41/30"], "مخرج مشترک 30 است: (21 + 20)/30 = 41/30"),
+Q("medium", 2, "حاصل −1/2 − 1/6 کدام است؟", "−2/3", ["−1/4", "−1/3", "2/3"], "مخرج مشترک 6 است: ((−3) + (−1))/6 = −4/6 = −2/3"),
+Q("medium", 2, "حاصل 1/8 − 3/4 کدام است؟", "−5/8", ["−1/6", "7/8", "5/8"], "مخرج مشترک 8 است: (1 + (−6))/8 = −5/8"),
+Q("medium", 2, "حاصل 1/8 + 2/5 کدام است؟", "21/40", ["3/13", "−11/40", "−21/40"], "مخرج مشترک 40 است: (5 + 16)/40 = 21/40"),
+Q("medium", 2, "حاصل (−3/5) − 1/2 کدام است؟", "−11/10", ["−4/7", "−1/10", "11/10"], "مخرج مشترک 10 است: ((−6) + (−5))/10 = −11/10"),
+Q("medium", 2, "حاصل 3/4 + 1/8 کدام است؟", "7/8", ["1/3", "5/8", "−7/8"], "مخرج مشترک 8 است: (6 + 1)/8 = 7/8"),
+Q("hard", 2, "حاصل 2/5 − 1/4 − 1/2 کدام است؟", "−7/20", ["0", "23/20", "7/20"], "مخرج مشترک 20 است: (8 + (−5) + (−10))/20 = −7/20"),
+Q("hard", 2, "حاصل (−4/5) + 2/3 + 1/4 کدام است؟", "7/60", ["−1/12", "−103/60", "−7/60"], "مخرج مشترک 60 است: ((−48) + 40 + 15)/60 = 7/60"),
+Q("hard", 2, "حاصل −1/2 − 3/4 − 1/3 کدام است؟", "−19/12", ["−5/9", "7/12", "19/12"], "مخرج مشترک 12 است: ((−6) + (−9) + (−4))/12 = −19/12"),
+Q("hard", 2, "حاصل 9/10 − 1/3 + 1/4 کدام است؟", "49/60", ["9/17", "59/60", "−49/60"], "مخرج مشترک 60 است: (54 + (−20) + 15)/60 = 49/60"),
+Q("hard", 2, "حاصل −8/9 + 1/10 + 1/2 کدام است؟", "−13/45", ["−2/7", "−67/45", "13/45"], "مخرج مشترک 90 است: ((−80) + 9 + 45)/90 = −26/90 = −13/45"),
+Q("hard", 2, "حاصل (−5/6) + 3/4 + 1/2 کدام است؟", "5/12", ["−1/12", "−25/12", "−5/12"], "مخرج مشترک 12 است: ((−10) + 9 + 6)/12 = 5/12"),
+Q("medium", 3, "حاصل (−7/9) × (1/6) کدام است؟", "−7/54", ["−11/18", "−14/3", "7/54"], "علامت: منفی؛ صورت × صورت و مخرج × مخرج و ساده‌سازی: −7/54"),
+Q("medium", 3, "حاصل 1/2 ÷ (−1/4) کدام است؟", "−2", ["−1/8", "−1/2", "2"], "تقسیم یعنی ضرب در معکوس: 1/2 × (−4) = −2"),
+Q("medium", 3, "حاصل (−3/4) × (1/4) کدام است؟", "−3/16", ["−1/2", "−3", "3/16"], "علامت: منفی؛ صورت × صورت و مخرج × مخرج و ساده‌سازی: −3/16"),
+Q("medium", 3, "حاصل 2/5 ÷ (2/9) کدام است؟", "9/5", ["4/45", "5/9", "−9/5"], "تقسیم یعنی ضرب در معکوس: 2/5 × 9/2 = 9/5"),
+Q("medium", 3, "حاصل 5/8 × (5/6) کدام است؟", "25/48", ["35/24", "3/4", "−25/48"], "علامت: مثبت؛ صورت × صورت و مخرج × مخرج و ساده‌سازی: 25/48"),
+Q("medium", 3, "حاصل (−3/4) ÷ (1/2) کدام است؟", "−3/2", ["−3/8", "−2/3", "3/2"], "تقسیم یعنی ضرب در معکوس: (−3/4) × 2 = −3/2"),
+Q("medium", 3, "حاصل (−3/4) × (−2/3) کدام است؟", "1/2", ["−17/12", "9/8", "−1/2"], "علامت: مثبت؛ صورت × صورت و مخرج × مخرج و ساده‌سازی: 1/2"),
+Q("medium", 3, "حاصل 1/3 ÷ (2/3) کدام است؟", "1/2", ["2/9", "2", "−1/2"], "تقسیم یعنی ضرب در معکوس: 1/3 × 3/2 = 1/2"),
+Q("medium", 3, "حاصل (−1/3) × (1/2) کدام است؟", "−1/6", ["1/6", "−2/3", "5/6"], "علامت: منفی؛ صورت × صورت و مخرج × مخرج و ساده‌سازی: −1/6"),
+Q("medium", 3, "حاصل 1/5 ÷ (1/2) کدام است؟", "2/5", ["1/10", "5/2", "−2/5"], "تقسیم یعنی ضرب در معکوس: 1/5 × 2 = 2/5"),
+Q("hard", 3, "حاصل (−1/2) × (1/2) ÷ (−1/4) کدام است؟", "1", ["1/16", "−1/4", "−1"], "از چپ به راست: (−1/2) × 1/2 = −1/4 و بعد ÷ (−1/4) یعنی × −4 ← 1"),
+Q("hard", 3, "حاصل 1/3 × (1/2) ÷ (1/2) کدام است؟", "1/3", ["1/12", "1/6", "−1/3"], "از چپ به راست: 1/3 × 1/2 = 1/6 و بعد ÷ 1/2 یعنی × 2 ← 1/3"),
+Q("hard", 3, "حاصل (−1/5) × (−5/6) ÷ (4/5) کدام است؟", "5/24", ["2/15", "1/6", "−5/24"], "از چپ به راست: (−1/5) × (−5/6) = 1/6 و بعد ÷ 4/5 یعنی × 5/4 ← 5/24"),
+Q("hard", 3, "حاصل 1/4 × (1/5) ÷ (3/4) کدام است؟", "1/15", ["3/80", "1/20", "−1/15"], "از چپ به راست: 1/4 × 1/5 = 1/20 و بعد ÷ 3/4 یعنی × 4/3 ← 1/15"),
+Q("hard", 4, "حاصل −6 + 3 × (11 − 22) ÷ 3 کدام است؟", "−17", ["−16", "17", "−19"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← −17"),
+Q("hard", 4, "حاصل −8 + 7 × (11 − 20) ÷ 7 کدام است؟", "−17", ["−16", "17", "−15"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← −17"),
+Q("hard", 4, "حاصل 36 ÷ 12 − (8 − 11) × 5 کدام است؟", "18", ["19", "−18", "28"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 18"),
+Q("hard", 4, "حاصل (11 − 23) × 8 + 3 × (−3) کدام است؟", "−105", ["−104", "105", "−103"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← −105"),
+Q("medium", 4, "حاصل 7 × 5² − 11 × 2 کدام است؟", "153", ["154", "−153", "155"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 153"),
+Q("medium", 4, "حاصل 12 × 7² − 11 × 4 کدام است؟", "544", ["545", "−544", "546"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 544"),
+Q("medium", 4, "حاصل 9 × 2² − 2 × 9 کدام است؟", "18", ["19", "−18", "28"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 18"),
+Q("medium", 4, "حاصل 81 − 9 × 8 ÷ 8 + 7 کدام است؟", "79", ["80", "−79", "81"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 79"),
+Q("medium", 4, "حاصل 15 − 3 × 12 ÷ 12 + 2 کدام است؟", "14", ["15", "−14", "24"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 14"),
+Q("hard", 4, "حاصل (12 − 23) × 5 + 2 × (−6) کدام است؟", "−67", ["−66", "67", "−57"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← −67"),
+Q("medium", 4, "حاصل 5 + 7 × 6 − 3 کدام است؟", "44", ["69", "45", "−44"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 44"),
+Q("medium", 4, "حاصل 10 × 4² − 8 × 12 کدام است؟", "64", ["65", "−64", "74"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 64"),
+Q("hard", 4, "حاصل 8 ÷ 4 − (9 − 11) × 4 کدام است؟", "10", ["11", "−10", "20"], "اول پرانتز و توان، بعد ضرب و تقسیم از چپ به راست، آخر جمع و تفریق ← 10"),
+Q("medium", 0, "بین دو عدد −1 3/8 و 4 1/5 چند عدد صحیح وجود دارد؟", "6", ["7", "5", "8"], "عددهای صحیح: −1 تا 4 یعنی 6 عدد"),
+Q("medium", 0, "بین دو عدد −1 1/8 و 7 2/3 چند عدد صحیح وجود دارد؟", "9", ["10", "8", "11"], "عددهای صحیح: −1 تا 7 یعنی 9 عدد"),
+Q("medium", 0, "بین دو عدد −3/5 و 3 4/5 چند عدد صحیح وجود دارد؟", "4", ["5", "3", "6"], "عددهای صحیح: 0 تا 3 یعنی 4 عدد"),
+Q("medium", 0, "بین دو عدد −3 1/4 و 4 1/3 چند عدد صحیح وجود دارد؟", "8", ["9", "7", "10"], "عددهای صحیح: −3 تا 4 یعنی 8 عدد"),
+Q("medium", 0, "بین دو عدد −6 1/3 و 3 3/5 چند عدد صحیح وجود دارد؟", "10", ["11", "9", "12"], "عددهای صحیح: −6 تا 3 یعنی 10 عدد"),
+Q("medium", 0, "بین دو عدد −4 2/5 و 5 3/8 چند عدد صحیح وجود دارد؟", "10", ["11", "9", "12"], "عددهای صحیح: −4 تا 5 یعنی 10 عدد"),
+Q("medium", 0, "بین دو عدد −1 3/8 و 7 2/3 چند عدد صحیح وجود دارد؟", "9", ["10", "8", "11"], "عددهای صحیح: −1 تا 7 یعنی 9 عدد"),
+Q("medium", 0, "بین دو عدد −2 4/5 و 6 چند عدد صحیح وجود دارد؟", "8", ["9", "7", "10"], "عددهای صحیح: −2 تا 5 یعنی 8 عدد"),
+Q("medium", 0, "بین دو عدد −3 3/5 و 7 1/3 چند عدد صحیح وجود دارد؟", "11", ["12", "10", "13"], "عددهای صحیح: −3 تا 7 یعنی 11 عدد"),
+Q("medium", 0, "بین دو عدد −2 1/3 و 8 چند عدد صحیح وجود دارد؟", "10", ["11", "9", "12"], "عددهای صحیح: −2 تا 7 یعنی 10 عدد"),
+Q("medium", 0, "بین دو عدد −3 1/3 و 7 1/3 چند عدد صحیح وجود دارد؟", "11", ["12", "10", "13"], "عددهای صحیح: −3 تا 7 یعنی 11 عدد"),
+Q("medium", 0, "بین دو عدد −5 1/3 و 7 2/5 چند عدد صحیح وجود دارد؟", "13", ["14", "12", "15"], "عددهای صحیح: −5 تا 7 یعنی 13 عدد"),
+Q("medium", 0, "بین دو عدد −2 1/3 و 2 2/5 چند عدد صحیح وجود دارد؟", "5", ["6", "4", "7"], "عددهای صحیح: −2 تا 2 یعنی 5 عدد"),
+Q("medium", 0, "بین دو عدد −3 2/3 و 6 1/2 چند عدد صحیح وجود دارد؟", "10", ["11", "9", "12"], "عددهای صحیح: −3 تا 6 یعنی 10 عدد"),
+Q("medium", 0, "بین دو عدد −6 1/2 و 3 چند عدد صحیح وجود دارد؟", "9", ["10", "8", "11"], "عددهای صحیح: −6 تا 2 یعنی 9 عدد"),
+Q("medium", 0, "بین دو عدد −2 1/3 و 4 2/3 چند عدد صحیح وجود دارد؟", "7", ["8", "6", "9"], "عددهای صحیح: −2 تا 4 یعنی 7 عدد"),
+Q("medium", 0, "بین دو عدد −6 2/5 و 2 3/8 چند عدد صحیح وجود دارد؟", "9", ["10", "8", "11"], "عددهای صحیح: −6 تا 2 یعنی 9 عدد"),
+Q("medium", 0, "بین دو عدد −2 4/5 و 3 1/8 چند عدد صحیح وجود دارد؟", "6", ["7", "5", "8"], "عددهای صحیح: −2 تا 3 یعنی 6 عدد"),
+Q("medium", 0, "بین دو عدد −1 و 5 1/4 چند عدد صحیح وجود دارد؟", "6", ["7", "5", "8"], "عددهای صحیح: 0 تا 5 یعنی 6 عدد"),
+Q("medium", 0, "بین دو عدد −1 2/3 و 2 3/5 چند عدد صحیح وجود دارد؟", "4", ["5", "3", "6"], "عددهای صحیح: −1 تا 2 یعنی 4 عدد"),
+Q("medium", 0, "بین دو عدد −4 1/4 و 3 3/8 چند عدد صحیح وجود دارد؟", "8", ["9", "7", "10"], "عددهای صحیح: −4 تا 3 یعنی 8 عدد"),
+Q("medium", 0, "بین دو عدد −1 3/5 و 7 2/5 چند عدد صحیح وجود دارد؟", "9", ["10", "8", "11"], "عددهای صحیح: −1 تا 7 یعنی 9 عدد"),
+Q("medium", 0, "بین دو عدد −3 و 3 1/3 چند عدد صحیح وجود دارد؟", "6", ["7", "5", "8"], "عددهای صحیح: −2 تا 3 یعنی 6 عدد"),
+Q("medium", 0, "بین دو عدد −5 2/5 و 7 2/5 چند عدد صحیح وجود دارد؟", "13", ["14", "12", "15"], "عددهای صحیح: −5 تا 7 یعنی 13 عدد"),
+Q("medium", 0, "بین دو عدد −3 3/8 و 5 2/3 چند عدد صحیح وجود دارد؟", "9", ["10", "8", "11"], "عددهای صحیح: −3 تا 5 یعنی 9 عدد"),
+Q("medium", 0, "بین دو عدد −1 1/4 و 5 4/5 چند عدد صحیح وجود دارد؟", "7", ["8", "6", "9"], "عددهای صحیح: −1 تا 5 یعنی 7 عدد"),
+Q("medium", 0, "بین دو عدد −3 1/3 و 2 1/3 چند عدد صحیح وجود دارد؟", "6", ["7", "5", "8"], "عددهای صحیح: −3 تا 2 یعنی 6 عدد"),
+Q("medium", 0, "بین دو عدد −4/5 و 2 4/5 چند عدد صحیح وجود دارد؟", "3", ["4", "2", "5"], "عددهای صحیح: 0 تا 2 یعنی 3 عدد"),
+Q("medium", 0, "بین دو عدد −3 1/3 و 6 1/3 چند عدد صحیح وجود دارد؟", "10", ["11", "9", "12"], "عددهای صحیح: −3 تا 6 یعنی 10 عدد"),
+Q("medium", 0, "بین دو عدد −4 1/2 و 4 4/5 چند عدد صحیح وجود دارد؟", "9", ["10", "8", "11"], "عددهای صحیح: −4 تا 4 یعنی 9 عدد"),
+Q("medium", 2, "میانگین عددهای 18 و −3 و 3 و 17 کدام است؟", "35/4", ["41/4", "35", "−35/4"], "مجموع = 35 و ÷ 4 ← 35/4"),
+Q("medium", 2, "میانگین عددهای 8 و 20 و −8 و −20 و −9 کدام است؟", "−9/5", ["13", "−9", "9/5"], "مجموع = −9 و ÷ 5 ← −9/5"),
+Q("medium", 2, "میانگین عددهای 7 و 16 و 1 و 11 کدام است؟", "35/4", ["35", "−35/4", "39/4"], "مجموع = 35 و ÷ 4 ← 35/4"),
+Q("medium", 2, "میانگین عددهای −16 و 7 و −14 کدام است؟", "−23/3", ["37/3", "−23", "23/3"], "مجموع = −23 و ÷ 3 ← −23/3"),
+Q("medium", 2, "میانگین عددهای −9 و −14 و 20 و 19 کدام است؟", "4", ["31/2", "16", "−4"], "مجموع = 16 و ÷ 4 ← 4"),
+Q("medium", 2, "میانگین عددهای −19 و 2 و 18 و −4 کدام است؟", "−3/4", ["43/4", "−3", "3/4"], "مجموع = −3 و ÷ 4 ← −3/4"),
+Q("easy", 5, "با گرد کردن هر عدد به نزدیک‌ترین صحیح، حاصل −5.3 + 8.8 + (−6.9) تقریباً چند است؟", "−3", ["−2", "−4", "−1"], "گرد شده‌ها: −5، 9، −7 ← مجموع −3"),
+Q("easy", 5, "با گرد کردن هر عدد به نزدیک‌ترین صحیح، حاصل −8.6 + 5.9 + (−7.7) تقریباً چند است؟", "−11", ["−10", "−12", "−9"], "گرد شده‌ها: −9، 6، −8 ← مجموع −11"),
+Q("medium", 5, "با گرد کردن هر عدد به نزدیک‌ترین صحیح، حاصل 3.6 + 1.2 + 0.9 تقریباً چند است؟", "6", ["7", "5", "8"], "گرد شده‌ها: 4، 1، 1 ← مجموع 6"),
+Q("medium", 5, "با گرد کردن هر عدد به نزدیک‌ترین صحیح، حاصل 4 + 2.4 + 8.4 تقریباً چند است؟", "14", ["15", "13", "16"], "گرد شده‌ها: 4، 2، 8 ← مجموع 14"),
+Q("medium", 5, "با گرد کردن هر عدد به نزدیک‌ترین صحیح، حاصل −7.4 + 4.9 + (−5.7) تقریباً چند است؟", "−8", ["−7", "−9", "−6"], "گرد شده‌ها: −7، 5، −6 ← مجموع −8"),
+Q("medium", 5, "با گرد کردن هر عدد به نزدیک‌ترین صحیح، حاصل 1 + (−8.9) + 1.8 تقریباً چند است؟", "−6", ["−5", "−7", "−4"], "گرد شده‌ها: 1، −9، 2 ← مجموع −6"),
+Q("medium", 2, "دمای هوا صبح −4.5 درجه بود. تا ظهر 9.5 درجه افزایش یافت و تا شب 4.25 درجه کاهش یافت. دمای شب چند درجه است؟", "0.75", ["9.25", "−0.75", "−18.25"], "−4.5 + 9.5 − 4.25 = 0.75"),
+Q("medium", 2, "دمای هوا صبح −4.5 درجه بود. تا ظهر 8.25 درجه افزایش یافت و تا شب 7.25 درجه کاهش یافت. دمای شب چند درجه است؟", "−3.5", ["11", "3.5", "−20"], "−4.5 + 8.25 − 7.25 = −3.5"),
+Q("medium", 2, "دمای هوا صبح −2.5 درجه بود. تا ظهر 8.25 درجه افزایش یافت و تا شب 6.75 درجه کاهش یافت. دمای شب چند درجه است؟", "−1", ["12.5", "1", "−17.5"], "−2.5 + 8.25 − 6.75 = −1"),
+Q("medium", 2, "دمای هوا صبح −2.5 درجه بود. تا ظهر 8.25 درجه افزایش یافت و تا شب 7.25 درجه کاهش یافت. دمای شب چند درجه است؟", "−1.5", ["13", "1.5", "−18"], "−2.5 + 8.25 − 7.25 = −1.5"),
+Q("hard", 2, "غواصی در عمق 15 متری زیر سطح دریا است. او 4.75 متر بالا می‌آید و سپس 6.5 متر پایین می‌رود. عمق نهایی او (با عدد منفی) چند متر است؟", "−16.75", ["16.75", "−13.25", "−7.25"], "−15 + 4.75 − 6.5 = −16.75"),
+Q("hard", 2, "غواصی در عمق 12.5 متری زیر سطح دریا است. او 5.5 متر بالا می‌آید و سپس 7.25 متر پایین می‌رود. عمق نهایی او (با عدد منفی) چند متر است؟", "−14.25", ["14.25", "−10.75", "−3.25"], "−12.5 + 5.5 − 7.25 = −14.25"),
+Q("hard", 2, "غواصی در عمق 8.5 متری زیر سطح دریا است. او 5.5 متر بالا می‌آید و سپس 6.5 متر پایین می‌رود. عمق نهایی او (با عدد منفی) چند متر است؟", "−9.5", ["9.5", "−7.5", "1.5"], "−8.5 + 5.5 − 6.5 = −9.5"),
+Q("medium", 6, "در تساوی −2/7 = x/14 مقدار x کدام است؟", "−4", ["4", "1", "−1"], "ضرب طرفین و وسطین: x × 7 = −2 × 14 ← x = −4"),
+Q("medium", 6, "در تساوی −4/3 = x/45 مقدار x کدام است؟", "−60", ["60", "4/15", "−15/4"], "ضرب طرفین و وسطین: x × 3 = −4 × 45 ← x = −60"),
+Q("medium", 6, "در تساوی −7/3 = x/12 مقدار x کدام است؟", "−28", ["28", "7/4", "−4/7"], "ضرب طرفین و وسطین: x × 3 = −7 × 12 ← x = −28"),
+Q("medium", 6, "در تساوی −4/7 = x/21 مقدار x کدام است؟", "−12", ["12", "4/3", "−3/4"], "ضرب طرفین و وسطین: x × 7 = −4 × 21 ← x = −12"),
+Q("medium", 7, "حاصل 1 + 3 + 5 + … + 17 کدام است؟", "81", ["90", "289", "80"], "9 جمله دارد و جمع 9 عدد فرد اول برابر 9² = 81 است"),
+Q("medium", 7, "حاصل 1 + 3 + 5 + … + 23 کدام است؟", "144", ["156", "529", "143"], "12 جمله دارد و جمع 12 عدد فرد اول برابر 12² = 144 است"),
+Q("medium", 7, "حاصل 1 + 3 + 5 + … + 29 کدام است؟", "225", ["240", "841", "224"], "15 جمله دارد و جمع 15 عدد فرد اول برابر 15² = 225 است"),
+Q("medium", 7, "حاصل 1 + 3 + 5 + … + 35 کدام است؟", "324", ["342", "1225", "323"], "18 جمله دارد و جمع 18 عدد فرد اول برابر 18² = 324 است"),
+Q("hard", 7, "حاصل 1 + 3 + 5 + … + 49 کدام است؟", "625", ["650", "2401", "624"], "25 جمله دارد و جمع 25 عدد فرد اول برابر 25² = 625 است"),
+Q("hard", 7, "حاصل 1 + 3 + 5 + … + 59 کدام است؟", "900", ["930", "3481", "899"], "30 جمله دارد و جمع 30 عدد فرد اول برابر 30² = 900 است"),
+Q("hard", 7, "حاصل 1 + 3 + 5 + … + 69 کدام است؟", "1225", ["1260", "4761", "1224"], "35 جمله دارد و جمع 35 عدد فرد اول برابر 35² = 1225 است"),
+Q("hard", 7, "حاصل 1 + 3 + 5 + … + 79 کدام است؟", "1600", ["1640", "6241", "1599"], "40 جمله دارد و جمع 40 عدد فرد اول برابر 40² = 1600 است"),
+Q("hard", 7, "حاصل 1 + 3 + 5 + … + 99 کدام است؟", "2500", ["2550", "9801", "2499"], "50 جمله دارد و جمع 50 عدد فرد اول برابر 50² = 2500 است"),
+Q("medium", 7, "حاصل 1 − 2 + 3 − 4 + … + 59 − 60 کدام است؟", "−30", ["30", "−60", "0"], "30 جفت (فرد − زوج) داریم و هر جفت −1 است ← −30"),
+Q("medium", 7, "حاصل 1 − 2 + 3 − 4 + … + 99 − 100 کدام است؟", "−50", ["50", "−100", "0"], "50 جفت (فرد − زوج) داریم و هر جفت −1 است ← −50"),
+Q("hard", 7, "حاصل 1 − 2 + 3 − 4 + … + 199 − 200 کدام است؟", "−100", ["100", "−200", "0"], "100 جفت (فرد − زوج) داریم و هر جفت −1 است ← −100"),
+Q("hard", 7, "حاصل 1 − 2 + 3 − 4 + … + 239 − 240 کدام است؟", "−120", ["120", "−240", "0"], "120 جفت (فرد − زوج) داریم و هر جفت −1 است ← −120"),
+Q("hard", 7, "حاصل 1 − 2 + 3 − 4 + … + 399 − 400 کدام است؟", "−200", ["200", "−400", "0"], "200 جفت (فرد − زوج) داریم و هر جفت −1 است ← −200"),
+Q("hard", 7, "حاصل 1/(1×2) + 1/(2×3) + … + 1/(8×9) کدام است؟", "8/9", ["1/9", "9/8", "1"], "هر جمله 1/k − 1/(k+1) است؛ مجموع 1 − 1/9 = 8/9"),
+Q("hard", 7, "حاصل 1/(1×2) + 1/(2×3) + … + 1/(14×15) کدام است؟", "14/15", ["1/15", "15/14", "1"], "هر جمله 1/k − 1/(k+1) است؛ مجموع 1 − 1/15 = 14/15"),
+Q("hard", 7, "حاصل 1/(1×2) + 1/(2×3) + … + 1/(19×20) کدام است؟", "19/20", ["1/20", "20/19", "1"], "هر جمله 1/k − 1/(k+1) است؛ مجموع 1 − 1/20 = 19/20"),
+Q("hard", 7, "حاصل 1/(1×2) + 1/(2×3) + … + 1/(24×25) کدام است؟", "24/25", ["1/25", "25/24", "1"], "هر جمله 1/k − 1/(k+1) است؛ مجموع 1 − 1/25 = 24/25"),
+Q("hard", 7, "حاصل (1/2) × (2/3) × (3/4) × … × (19/20) کدام است؟", "1/20", ["19/20", "1/2", "1/19"], "عددهای وسط ساده می‌شوند و 1/20 می‌ماند"),
+Q("hard", 7, "حاصل (1/2) × (2/3) × (3/4) × … × (49/50) کدام است؟", "1/50", ["49/50", "1/2", "1/49"], "عددهای وسط ساده می‌شوند و 1/50 می‌ماند"),
+Q("hard", 7, "حاصل (1/2) × (2/3) × (3/4) × … × (59/60) کدام است؟", "1/60", ["59/60", "1/2", "1/59"], "عددهای وسط ساده می‌شوند و 1/60 می‌ماند"),
+Q("hard", 7, "حاصل (1/2) × (2/3) × (3/4) × … × (149/150) کدام است؟", "1/150", ["149/150", "1/2", "1/149"], "عددهای وسط ساده می‌شوند و 1/150 می‌ماند"),
+Q("hard", 7, "حاصل 3 − 6 + 9 − 12 + … + 27 − 30 کدام است؟", "−15", ["15", "−30", "−18"], "5 جفت داریم و هر جفت −3 است ← −15"),
+Q("hard", 7, "حاصل 3 − 6 + 9 − 12 + … + 51 − 54 کدام است؟", "−27", ["27", "−54", "−30"], "9 جفت داریم و هر جفت −3 است ← −27"),
+Q("hard", 7, "حاصل 3 − 6 + 9 − 12 + … + 63 − 66 کدام است؟", "−33", ["33", "−66", "−36"], "11 جفت داریم و هر جفت −3 است ← −33"),
+Q("hard", 7, "حاصل 3 − 6 + 9 − 12 + … + 87 − 90 کدام است؟", "−45", ["45", "−90", "−48"], "15 جفت داریم و هر جفت −3 است ← −45"),
+Q("hard", 7, "حاصل 3 − 6 + 9 − 12 + … + 117 − 120 کدام است؟", "−60", ["60", "−120", "−63"], "20 جفت داریم و هر جفت −3 است ← −60"),
+Q("medium", 7, "تعداد جمله‌های 5 + 10 + 15 + … + 50 چند تا است؟", "10", ["11", "9", "50"], "(50 − 5) ÷ 5 + 1 = 10"),
+Q("medium", 7, "تعداد جمله‌های 5 + 10 + 15 + … + 100 چند تا است؟", "20", ["21", "19", "100"], "(100 − 5) ÷ 5 + 1 = 20"),
+Q("medium", 7, "تعداد جمله‌های 5 + 10 + 15 + … + 150 چند تا است؟", "30", ["31", "29", "150"], "(150 − 5) ÷ 5 + 1 = 30"),
+Q("medium", 7, "تعداد جمله‌های 5 + 10 + 15 + … + 250 چند تا است؟", "50", ["51", "49", "250"], "(250 − 5) ÷ 5 + 1 = 50"),
+Q("hard", 4, "حاصل 1 + 1/(1 + 1/(1 + 1/5)) کدام است؟", "17/11", ["11/17", "11/6", "6/5"], "از داخل: 1 + 1/5 = 6/5 ← معکوس 5/6 ← 11/6 ← معکوس 6/11 ← 17/11"),
+Q("hard", 4, "حاصل 1 + 1/(1 + 1/(1 + 1/4)) کدام است؟", "14/9", ["9/14", "9/5", "5/4"], "از داخل: 1 + 1/4 = 5/4 ← معکوس 4/5 ← 9/5 ← معکوس 5/9 ← 14/9"),
+Q("easy", 0, "کدام عبارت درست است؟", "معکوس −2 از خودش بزرگ‌تر است", ["معکوس هر عدد از خودش بزرگ‌تر است", "صفر معکوس دارد", "معکوس 2 از 2 بزرگ‌تر است"], "معکوس −2 برابر −1/2 است و −1/2 > −2 است."),
+Q("easy", 1, "کوچک‌ترین عددی که با معکوسش برابر است کدام است؟", "−1", ["1", "0", "−1/2"], "شرط a × a = 1 فقط برای 1 و −1 برقرار است و −1 کوچک‌تر است."),
+Q("easy", 0, "کدام کسر با 2/3 برابر است؟", "4/6", ["3/2", "2/4", "4/5"], "صورت و مخرج را در 2 ضرب می‌کنیم: 4/6."),
+Q("easy", 0, "بین دو عدد −5 و 6.3 چند عدد صحیح وجود دارد؟", "11", ["10", "12", "6"], "عددهای −4 تا 6 یعنی 11 عدد."),
+Q("medium", 3, "در تساوی 1/8 × □ = −2 عدد مناسب کدام است؟", "−16", ["16", "−1/16", "−2/8"], "1/8 × (−16) = −2."),
+Q("medium", 3, "حاصل −(−18) × (−20) ÷ (−16 × 25) کدام است؟", "9/10", ["−9/10", "10/9", "−10/9"], "صورت: 18 × (−20) = −360؛ مخرج: −400؛ حاصل 360/400 = 9/10."),
+Q("easy", 4, "حاصل (−3) × [12 − (+10)] کدام است؟", "−6", ["6", "−36", "−66"], "12 − 10 = 2 و (−3) × 2 = −6."),
+Q("medium", 2, "حاصل −14 + 17 − (−6) + 18 کدام است؟", "27", ["15", "−27", "3"], "−14 + 17 = 3؛ 3 + 6 = 9؛ 9 + 18 = 27."),
+Q("medium", 3, "حاصل [(−4) × (−6)] ÷ (−3) کدام است؟", "−8", ["8", "−72", "72"], "(+24) ÷ (−3) = −8."),
+Q("medium", 4, "حاصل 16 ÷ (−2) + 6 × (−3) کدام است؟", "−26", ["−10", "10", "26"], "16 ÷ (−2) = −8 و 6 × (−3) = −18؛ −8 − 18 = −26."),
+Q("hard", 4, "حاصل 5 − (4 − (8 − 13) + 3) کدام است؟", "−7", ["7", "−17", "17"], "8 − 13 = −5؛ 4 + 5 + 3 = 12؛ 5 − 12 = −7."),
+Q("hard", 4, "حاصل −{+[−(−(5 − 12))]} کدام است؟", "7", ["−7", "17", "−17"], "5 − 12 = −7؛ −(5 − 12) = 7؛ −(7) = −7؛ −{−7} = 7."),
+Q("easy", 7, "حاصل 1 + 2 + 3 + … + 100 کدام است؟", "5050", ["5000", "5100", "10100"], "100 × 101 ÷ 2 = 5050."),
+Q("medium", 3, "حاصل (−3/8) ÷ (9/16) × (−5/4) کدام است؟", "5/6", ["−5/6", "1/6", "10/3"], "(−3/8) × (16/9) = −2/3؛ بعد × (−5/4) = 10/12 = 5/6."),
+Q("hard", 2, "حاصل (−8/9 + 1/6 − 3/8) ÷ (−7/24) کدام است؟", "79/21", ["−79/21", "79/72", "−79/72"], "داخل پرانتز: (−64 + 12 − 27)/72 = −79/72؛ بعد (−79/72) × (−24/7) = 79/21."),
+Q("hard", 2, "حاصل 2 1/4 − 5 1/2 کدام است؟", "−3 1/4", ["3 1/4", "−3 3/4", "−7 3/4"], "2.25 − 5.5 = −3.25 = −3 1/4."),
+Q("medium", 2, "حاصل 3 1/2 − 5 3/4 کدام است؟", "−2 1/4", ["2 1/4", "−2 3/4", "−9 1/4"], "3.5 − 5.75 = −2.25 = −2 1/4."),
+Q("medium", 2, "حاصل (−2.5) + (−1.75) − (−3) کدام است؟", "−1.25", ["1.25", "−7.25", "−4.25"], "(−2.5) + (−1.75) = −4.25؛ −4.25 + 3 = −1.25."),
+Q("medium", 6, "در جای خالی کدام علامت درست است؟  −5/6 □ −7/9", "&lt;", ["&gt;", "=", "قابل مقایسه نیست"], "با مخرج 18: −15/18 و −14/18؛ −15/18 کوچک‌تر است."),
+Q("medium", 6, "در تساوی −x/56 = −15/8 مقدار x کدام است؟", "105", ["−105", "120", "7"], "x × 8 = 15 × 56 = 840 ← x = 105."),
+Q("medium", 6, "در تساوی −3/7 = x/28 مقدار x کدام است؟", "−12", ["12", "−21", "−3/4"], "28 = 7 × 4 پس صورت را هم در 4 ضرب می‌کنیم: −12."),
+Q("medium", 2, "سارا می‌خواهد دورتادور رومیزی‌ای به طول 2.1 متر و عرض 1 1/4 متر روبان بدوزد. چند متر روبان لازم دارد؟", "6.7", ["3.35", "5.35", "7.1"], "محیط = 2 × (2.1 + 1.25) = 2 × 3.35 = 6.7 متر."),
+Q("hard", 7, "حاصل 1/(5×6) + 2/(6×8) + 3/(8×11) + … + 9/(41×50) کدام است؟", "9/50", ["1/50", "1/5", "45/50"], "هر جمله یک تفاضل است: 1/5 − 1/6 + 1/6 − 1/8 + … + 1/41 − 1/50 = 1/5 − 1/50 = 9/50."),
+Q("hard", 7, "اگر x و y نسبت به هم اول باشند و 165/404 × 303/66 = x/y، حاصل y − x چند است؟", "−7", ["7", "−21", "21"], "ضرب را ساده می‌کنیم: 15/8 پس x = 15 و y = 8 و y − x = −7."),
+Q("hard", 7, "حاصل 1/2 + 1/4 + 1/8 + … + 1/1024 کدام است؟", "1023/1024", ["1/1024", "1", "1025/1024"], "اگر 1/1024 را اضافه کنیم کل 1 می‌شود؛ پس حاصل 1 − 1/1024 = 1023/1024."),
+Q("hard", 7, "اگر M = 1 1/35 + 2 2/35 + … + 20 20/35 باشد، M/3 کدام است؟", "72", ["216", "70", "210"], "جمع قسمت‌های صحیح 210 و جمع کسرها 210/35 = 6؛ M = 216 و M/3 = 72."),
+Q("hard", 7, "اگر a = −1 − 2 − 3 − 4 − 5 و −b = 6 + 7 + 8 + 9 + 10 باشد، a + b کدام است؟", "−55", ["25", "55", "−25"], "a = −15 و b = −40 پس a + b = −55."),
+Q("hard", 7, "حاصل (−3/14) × (−2/13) × (−1/12) × (0/11) × (1/10) × (2/9) کدام است؟", "0", ["1/23", "−3/99", "−1/23"], "یکی از عامل‌ها صفر است و حاصل‌ضرب هر عدد در صفر، صفر است."),
+Q("hard", 7, "حاصل (−1)¹ + (−1)² + (−1)³ + … + (−1)⁵⁰ کدام است؟", "0", ["−1", "25", "50"], "جمله‌ها یکی در میان −1 و +1 هستند؛ 25 جفت (−1 + 1) داریم و حاصل 0 است."),
+Q("hard", 4, "حاصل 1/(1 − 1/(1 + 1/(1 − 1/3))) کدام است؟", "5/3", ["3/5", "2/5", "−5/3"], "1 − 1/3 = 2/3 ← 3/2؛ 1 + 3/2 = 5/2 ← 2/5؛ 1 − 2/5 = 3/5 ← معکوس 5/3."),
+Q("hard", 4, "حاصل −32 × [3/8 − 11/16]² کدام است؟", "−25/8", ["25/8", "−25/256", "−5/2"], "3/8 − 11/16 = −5/16؛ مجذور 25/256؛ ضرب در −32 ← −25/8."),
+Q("hard", 4, "معکوس عبارت [((−2/3)³ × (−9/2)) ÷ (8/5)] کدام است؟", "6/5", ["5/6", "−6/5", "−5/6"], "(−8/27) × (−9/2) = 4/3؛ ÷ (8/5) = 5/6؛ معکوس 6/5."),
+Q("hard", 1, "قرینهٔ معکوس عبارت −(1/696 − 1/1392) کدام است؟", "1392", ["−1392", "1/1392", "−1/1392"], "1/696 − 1/1392 = 1/1392؛ با منفی بیرون −1/1392؛ معکوس −1392؛ قرینه 1392."),
+Q("hard", 7, "اگر 1.21 = (a/b)² و a و b متباین باشند، a + b چند است؟", "21", ["11", "31", "121"], "1.21 = 121/100 ← a/b = 11/10 ← a + b = 21."),
+Q("hard", 7, "عدد −31 را وارد برنامه‌ای می‌کنیم که آن را با تک‌تک عددهای 1 تا 50 جمع می‌کند و حاصل‌ضرب همه را می‌دهد. خروجی چند است؟", "0", ["−31", "1", "50"], "وقتی به عدد 31 برسیم (−31 + 31) = 0 است و حاصل‌ضرب صفر می‌شود."),
+Q("medium", 3, "حاصل −3 × (4/9 + (−2/5)) کدام است؟", "−2/15", ["2/15", "−6/5", "−1/15"], "4/9 − 2/5 = 2/45 و −3 × 2/45 = −6/45 = −2/15."),
+Q("medium", 5, "با گرد کردن، حاصل −5 1/12 + 28 89/100 را تقریباً بیاب.", "24", ["23", "25", "34"], "−5 1/12 ≈ −5 و 28 89/100 ≈ 29؛ −5 + 29 = 24."),
+Q("medium", 5, "با گرد کردن، حاصل (−6.75) − (+12.1) + 7.9 تقریباً کدام است؟", "−11", ["−10", "−12", "−9"], "−6.75 ≈ −7 و 12.1 ≈ 12 و 7.9 ≈ 8؛ −7 − 12 + 8 = −11."),
+Q("easy", 0, "کدام عدد گویا است ولی صحیح نیست؟", "7/2", ["−5", "0", "9/3"], "7/2 = 3.5 صحیح نیست؛ 9/3 = 3 صحیح است."),
+Q("easy", 0, "کدام عدد صحیح است ولی طبیعی نیست؟", "−12/4", ["1/2", "12/6", "9/3"], "−12/4 = −3 صحیح و غیرطبیعی است."),
+Q("easy", 2, "بزرگ‌ترین عدد صحیح منفی سه‌رقمی کدام است؟", "−100", ["−999", "−101", "−1000"], "از میان منفی‌های سه‌رقمی، −100 به صفر نزدیک‌تر است."),
+Q("easy", 3, "حاصل تقسیم دو عدد ناهم‌علامت چه علامتی دارد؟", "منفی", ["مثبت", "صفر", "به عددها بستگی دارد"], "ناهم‌علامت ← منفی."),
+Q("easy", 1, "هر عدد گویای غیرصفر وقتی در ........ خودش ضرب شود، حاصل 1 می‌شود.", "معکوس", ["قرینه", "مجذور", "نصف"], "a × (1/a) = 1."),
+Q("easy", 1, "اگر 1 را بر هر عدد گویای غیرصفر تقسیم کنیم، حاصل چه نام دارد؟", "معکوس آن عدد", ["قرینهٔ آن عدد", "مجذور آن عدد", "دو برابر آن عدد"], "1 ÷ a = 1/a که معکوس a است."),
+Q("easy", 0, "کدام جمله درست است؟", "هر عدد صحیح یک عدد گویا است", ["هر عدد گویا یک عدد طبیعی است", "صفر عددی طبیعی است", "بین دو عدد گویا فقط یک عدد گویا هست"], "هر عدد صحیح را می‌توان به صورت a/1 نوشت."),
+Q("easy", 0, "چند عدد صحیح بین −3 و 2 وجود دارد؟", "4", ["5", "6", "3"], "عددهای −2، −1، 0 و 1."),
+Q("easy", 2, "حاصل −8 + 7 − 6 + 8 − 7 + 6 کدام است؟", "0", ["−6", "6", "12"], "هر عدد با قرینه‌اش خنثی می‌شود و حاصل 0 است."),
+Q("easy", 4, "حاصل −4 − 8 ÷ 2 کدام است؟", "−8", ["−6", "6", "−2"], "اول تقسیم: 8 ÷ 2 = 4 و بعد −4 − 4 = −8."),
+Q("easy", 4, "حاصل −2 − 5 × 4 کدام است؟", "−22", ["−28", "18", "22"], "اول ضرب: 5 × 4 = 20 و بعد −2 − 20 = −22."),
+Q("medium", 2, "حاصل −6 + 4 − 8 + 12 − 4 + 10 کدام است؟", "8", ["−8", "12", "6"], "−6 + 4 = −2؛ −2 − 8 = −10؛ −10 + 12 = 2؛ 2 − 4 = −2؛ −2 + 10 = 8."),
+Q("medium", 3, "حاصل (−15/12) × (+18/10) کدام است؟", "−9/4", ["9/4", "−3/2", "−4/9"], "(−5/4) × (9/5) = −9/4."),
+Q("medium", 3, "حاصل (−6/35) ÷ (−8/21) کدام است؟", "9/20", ["−9/20", "20/9", "9/40"], "(6/35) × (21/8) = 126/280 = 9/20."),
+Q("medium", 2, "حاصل (−3/8) + (+1/6) کدام است؟", "−5/24", ["5/24", "−1/7", "−1/14"], "مخرج 24: −9/24 + 4/24 = −5/24."),
+Q("medium", 2, "حاصل −3 + 2/5 کدام است؟", "−13/5", ["13/5", "−17/5", "−1/5"], "−15/5 + 2/5 = −13/5."),
+Q("medium", 2, "حاصل −2 1/2 + 3 1/3 کدام است؟", "5/6", ["−5/6", "1/6", "5 5/6"], "−5/2 + 10/3 = −15/6 + 20/6 = 5/6."),
+Q("easy", 2, "حاصل (−3/5) + (+7/5) کدام است؟", "4/5", ["−4/5", "10/5", "−10/5"], "هم‌مخرج‌اند: (−3 + 7)/5 = 4/5."),
+Q("easy", 2, "حاصل −2/3 − (+4/3) کدام است؟", "−2", ["2", "−2/3", "−2/6"], "−2/3 − 4/3 = −6/3 = −2."),
+Q("easy", 3, "کسر −90/126 را تا حد امکان ساده کن.", "−5/7", ["−45/63", "−10/14", "5/7"], "صورت و مخرج را بر ب.م.م آن‌ها یعنی 18 تقسیم می‌کنیم: −5/7."),
+Q("easy", 6, "در جای خالی کدام علامت درست است؟  −1/7 □ −11/5", "&gt;", ["&lt;", "=", "قابل مقایسه نیست"], "−1/7 ≈ −0.14 و −11/5 = −2.2؛ عدد نزدیک‌تر به صفر بزرگ‌تر است."),
+Q("easy", 6, "در جای خالی کدام علامت درست است؟  −8/16 □ −4/8", "=", ["&lt;", "&gt;", "قابل مقایسه نیست"], "هر دو کسر با −1/2 برابرند.")
+];
+// تبدیل رقم‌های لاتین به فارسی (بیرون از تگ‌های HTML) و ممیز اعشار
+(function () {
+  const D = "۰۱۲۳۴۵۶۷۸۹";
+  const cv = s => typeof s !== "string" ? s : s.replace(/(<[^>]*>)|(\d+(?:\.\d+)?)/g, (m, t, d) => t ? t : d.replace(".", "٫").replace(/\d/g, x => D[x]));
+  strategies.forEach(s => { ["desc", "body", "mistake", "tip"].forEach(k => s[k] = cv(s[k])); s.examples.forEach(e => { e.q = cv(e.q); e.a = cv(e.a); }); });
+  questionBank.forEach(q => { q.q = cv(q.q); q.options = q.options.map(cv); q.explain = cv(q.explain); });
+})();
+
+// ==================== PROGRESS TRACKING ====================
+const RESULTS_KEY = "riazi8_f1_results_v2";
+const SCHEMA_VERSION = 2;
+function uid() { return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10); }
+const STUDENT_KEY = "riazi8_f1_student_v1";
+const memStore = {};
+let storageOk = true;
+try { localStorage.setItem("__t", "1"); localStorage.removeItem("__t"); } catch (e) { storageOk = false; }
+function lsGet(k) { if (k in memStore) return memStore[k]; try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); delete memStore[k]; return true; } catch (e) { memStore[k] = v; storageOk = false; return false; } }
+const LEVELS = ["easy", "medium", "hard", "mixed"];
+function normName(s) { return String(s || "").replace(/[\u200e\u200f\u2066-\u2069]/g, "").replace(/ك/g, "ک").replace(/[يى]/g, "ی").replace(/\s+/g, " ").trim().slice(0, 60) || "دانش‌آموز"; }
+function normalizeRecord(r) {
+  if (!r || typeof r !== "object") return null;
+  const total = Number(r.total), correct = Number(r.correct);
+  if (!Number.isFinite(total) || total <= 0 || !Number.isFinite(correct) || correct < 0 || correct > total) return null;
+  if (!LEVELS.includes(r.level)) return null;
+  const d = new Date(r.date);
+  if (isNaN(d.getTime())) return null;
+  const items = Array.isArray(r.items) ? r.items.filter(it => it && typeof it.s === "string").map(it => ({
+    q: typeof it.q === "string" ? it.q : "", s: it.s, l: LEVELS.includes(it.l) ? it.l : "medium", c: it.c ? 1 : 0, k: it.k ? 1 : 0
+  })) : [];
+  let skipped = Number.isFinite(Number(r.skipped)) ? Number(r.skipped) : items.filter(i => i.k).length;
+  skipped = Math.max(0, Math.min(total - correct, Math.round(skipped)));
+  return { id: (typeof r.id === "string" && r.id) ? r.id : (Number.isFinite(Number(r.id)) ? String(r.id) : uid()), student: normName(r.student), fn: typeof r.fn === "string" && r.fn ? cleanNamePart(r.fn).slice(0, 25) : undefined, ln: typeof r.ln === "string" && r.ln ? cleanNamePart(r.ln).slice(0, 25) : undefined,
+    father: typeof r.father === "string" ? cleanNamePart(r.father).slice(0, 25) : undefined,
+    school: typeof r.school === "string" ? cleanNamePart(r.school).slice(0, 40) : undefined,
+    city: typeof r.city === "string" ? cleanNamePart(r.city).slice(0, 30) : undefined,
+    klass: typeof r.klass === "string" ? cleanNamePart(r.klass).slice(0, 30) : undefined,
+    date: d.toISOString(),
+    level: r.level, total, correct, skipped, wrong: total - correct - skipped, percent: Math.round(100 * correct / total), items };
+}
+function loadResults() {
+  try { const a = JSON.parse(lsGet(RESULTS_KEY) || "[]"); return Array.isArray(a) ? a.map(normalizeRecord).filter(Boolean) : []; }
+  catch (e) { return []; }
+}
+function saveResults(a) { return lsSet(RESULTS_KEY, JSON.stringify(a)); }
+
+const fa = n => Number(n).toLocaleString("fa-IR", { useGrouping: false, maximumFractionDigits: 0 });
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0;
+const LV = { easy: "ساده", medium: "متوسط", hard: "سخت", mixed: "ترکیبی" };
+const LV_HEX = { easy: "#10b981", medium: "#f59e0b", hard: "#ef4444", mixed: "#38bdf8" };
+function fmtDate(iso) { try { return new Date(iso).toLocaleDateString("fa-IR"); } catch (e) { return iso; } }
+function regress(ys) {
+  const n = ys.length, mx = (n - 1) / 2, my = avg(ys);
+  let num = 0, den = 0;
+  ys.forEach((y, i) => { num += (i - mx) * (y - my); den += (i - mx) ** 2; });
+  const m = den ? num / den : 0;
+  return { m, b: my - m * mx };
+}
+
+let currentAnswers = [];
+// ---------- نام کامل دانش‌آموز ----------
+const NAME_MIN = 2, NAME_MAX = 25;
+const elById = id => document.getElementById(id);
+function cleanNamePart(s) {
+  return String(s || "")
+    .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\u0640]/g, "")
+    .replace(/ك/g, "ک").replace(/[يى]/g, "ی")
+    .replace(/\s+/g, " ")
+    .replace(/\u200c{2,}/g, "\u200c")
+    .replace(/^[\s\u200c]+|[\s\u200c]+$/g, "");
+}
+function validateNamePart(s, label) {
+  const t = cleanNamePart(s);
+  if (!t) return { ok: false, msg: `${label} را وارد کن.` };
+  if (t.length < NAME_MIN) return { ok: false, msg: `${label} باید حداقل ${fa(NAME_MIN)} حرف باشد.` };
+  if (t.length > NAME_MAX) return { ok: false, msg: `${label} نباید بیشتر از ${fa(NAME_MAX)} حرف باشد.` };
+  if (!/^[\p{L}\p{M}\u200c' -]+$/u.test(t)) return { ok: false, msg: `${label} فقط باید شامل حروف باشد (بدون عدد و علامت).` };
+  return { ok: true, value: t };
+}
+function nameKey(s) { return cleanNamePart(s).replace(/\u200c/g, "").replace(/\s+/g, " ").toLowerCase(); }
+function splitName(full) { const t = String(full || ""); const i = t.lastIndexOf(" "); return i > 0 ? [t.slice(0, i), t.slice(i + 1)] : [t, ""]; }
+function studentParts(s) { return (s.fn || s.ln) ? [s.fn || "", s.ln || ""] : splitName(s.name); }
+function studentCatalog() {
+  const map = new Map();
+  loadResults().forEach(r => {
+    const k = nameKey(r.student);
+    const e = map.get(k) || { name: r.student, count: 0 };
+    e.count++;
+    if (!e.fn && !e.ln && (r.fn || r.ln)) { e.fn = r.fn; e.ln = r.ln; }
+    if (r.father) e.father = r.father;
+    if (r.school) e.school = r.school;
+    if (r.city) e.city = r.city;
+    if (r.klass) e.klass = r.klass;
+    map.set(k, e);
+  });
+  return [...map.values()];
+}
+function clearNameError() {
+  elById("nameError").textContent = "";
+  ["studentFirst", "studentLast", "studentFather", "studentSchool", "studentCity", "studentClass"]
+    .forEach(id => { const el = elById(id); if (el) { el.classList.remove("invalid"); el.removeAttribute("aria-invalid"); } });
+}
+function readExtraField(id, label, minLen) {
+  const el = elById(id);
+  const t = cleanNamePart(el.value);
+  if (!t) return { ok: false, msg: `${label} را وارد کن.`, el };
+  if (t.length < minLen) return { ok: false, msg: `${label} باید حداقل ${fa(minLen)} حرف باشد.`, el };
+  if (t.length > 40) return { ok: false, msg: `${label} خیلی بلند است.`, el };
+  return { ok: true, value: t, el };
+}
+function readStudentName() {
+  const fi = elById("studentFirst"), li = elById("studentLast");
+  const f = validateNamePart(fi.value, "نام"), l = validateNamePart(li.value, "نام خانوادگی");
+  const father = readExtraField("studentFather", "نام پدر", 2);
+  const school = readExtraField("studentSchool", "نام مدرسه", 2);
+  const city = readExtraField("studentCity", "نام شهر", 2);
+  const klass = readExtraField("studentClass", "نام کلاس", 1);
+  clearNameError();
+  const fails = [[fi, f], [li, l], [father.el, father], [school.el, school], [city.el, city], [klass.el, klass]]
+    .filter(([, v]) => !v.ok);
+  if (fails.length) {
+    fails.forEach(([el, v]) => { if (el) { el.classList.add("invalid"); el.setAttribute("aria-invalid", "true"); } });
+    elById("nameError").textContent = fails.map(([, v]) => v.msg).filter(Boolean).join(" ");
+    (fails[0][0] || fi).focus();
+    return null;
+  }
+  let full = `${f.value} ${l.value}`, fn = f.value, ln = l.value;
+  const known = studentCatalog().find(s => nameKey(s.name) === nameKey(full));
+  if (known && known.name !== full) { full = known.name; [fn, ln] = studentParts(known); }
+  fi.value = fn; li.value = ln;
+  return { full, fn, ln, father: father.value, school: school.value, city: city.value, klass: klass.value };
+}
+function refreshKnownStudents() {
+  const wrap = elById("knownStudentsWrap"), sel = elById("knownStudents");
+  const list = studentCatalog();
+  wrap.style.display = list.length ? "" : "none";
+  sel.innerHTML = "";
+  const o0 = document.createElement("option"); o0.value = ""; o0.textContent = "— انتخاب کنید —"; sel.appendChild(o0);
+  list.forEach((s, i) => { const o = document.createElement("option"); o.value = String(i); o.textContent = `${s.name} (${fa(s.count)} آزمون)`; sel.appendChild(o); });
+  sel._list = list;
+}
+let currentFn = "", currentLn = "";
+function loadLastStudent() {
+  const raw = lsGet(STUDENT_KEY);
+  if (!raw) return null;
+  try {
+    const o = JSON.parse(raw);
+    if (o && typeof o === "object") {
+      return {
+        f: cleanNamePart(o.f), l: cleanNamePart(o.l),
+        father: cleanNamePart(o.father || ""), school: cleanNamePart(o.school || ""),
+        city: cleanNamePart(o.city || ""), klass: cleanNamePart(o.klass || "")
+      };
+    }
+  } catch (e) { /* مقدار قدیمی */ }
+  const n = normName(raw);
+  if (n === "دانش‌آموز") return null;
+  const [f, l] = splitName(n);
+  return { f, l, father: "", school: "", city: "", klass: "" };
+}
+let currentFather = "", currentSchool = "", currentCity = "", currentClass = "";
+function initStudentFields() {
+  const last = loadLastStudent();
+  if (last) {
+    elById("studentFirst").value = last.f || "";
+    elById("studentLast").value = last.l || "";
+    elById("studentFather").value = last.father || "";
+    elById("studentSchool").value = last.school || "";
+    elById("studentCity").value = last.city || "";
+    elById("studentClass").value = last.klass || "";
+    currentFn = last.f || ""; currentLn = last.l || "";
+    currentFather = last.father || ""; currentSchool = last.school || "";
+    currentCity = last.city || ""; currentClass = last.klass || "";
+    currentStudent = `${last.f || ""} ${last.l || ""}`.trim();
+  }
+  ["studentFirst", "studentLast", "studentFather", "studentSchool", "studentCity", "studentClass"]
+    .forEach(id => elById(id).addEventListener("input", clearNameError));
+  elById("studentFirst").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); elById("studentLast").focus(); } });
+  elById("studentLast").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); elById("studentFather").focus(); } });
+  elById("studentClass").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); elById("startQuizBtn").click(); } });
+  elById("knownStudents").addEventListener("change", e => {
+    const pick = (e.target._list || [])[parseInt(e.target.value)];
+    if (!pick) return;
+    const [a, b] = studentParts(pick);
+    elById("studentFirst").value = a; elById("studentLast").value = b;
+    if (pick.father) elById("studentFather").value = pick.father;
+    if (pick.school) elById("studentSchool").value = pick.school;
+    if (pick.city) elById("studentCity").value = pick.city;
+    if (pick.klass) elById("studentClass").value = pick.klass;
+    clearNameError();
+  });
+  refreshKnownStudents();
+}
+let pgForce = null;
+
+let currentStudent = "";
+let pgLevel = "all";
+let pgClearArmed = false;
+initStudentFields();
+
+function recordAnswer(q, chosen, skipped) {
+  if (currentAnswers[currentIndex]) return; // هر سؤال فقط یک‌بار ثبت می‌شود
+  currentAnswers[currentIndex] = { q: q.id, s: q.strategy, l: q.level, c: (!skipped && chosen === q.answer) ? 1 : 0, k: skipped ? 1 : 0, a: skipped ? null : chosen };
+}
+
+function finishAttempt(sum) {
+  const box = document.getElementById("resultCompare");
+  if (practiceMode) {
+    box.innerHTML = "🔁 این یک آزمون تمرینی از اشتباهات بود و در نمودار پیشرفت ثبت نشد.";
+    box.style.display = "block";
+    return;
+  }
+  if (attemptSaved) return;
+  attemptSaved = true;
+  const all = loadResults();
+  const prevList = all.filter(r => r.student === currentStudent);
+  const prev = prevList[prevList.length - 1];
+  all.push({
+    id: uid(), student: currentStudent, fn: currentFn, ln: currentLn,
+    father: currentFather, school: currentSchool, city: currentCity, klass: currentClass,
+    date: new Date().toISOString(), level: selectedLevel,
+    total: sum.total, correct: sum.correct, skipped: sum.skipped, wrong: sum.wrong, percent: sum.percent,
+    items: currentAnswers.map(a => ({ q: a.q, s: a.s, l: a.l, c: a.c, k: a.k }))
+  });
+  const ok = saveResults(all);
+  sendResult(sum);
+
+  let html;
+  if (!prev) {
+    html = `📌 اولین آزمون <strong>${esc(currentStudent)}</strong> ثبت شد. از حالا پیشرفتت را دنبال می‌کنیم.`;
+  } else {
+    const d = sum.percent - prev.percent;
+    html = d > 0 ? `📈 نسبت به آزمون قبلی <strong>${fa(d)}٪ بهتر</strong> شدی!`
+         : d < 0 ? `📉 نسبت به آزمون قبلی ${fa(-d)}٪ کمتر شد؛ اشکالی ندارد، مرور کن و دوباره امتحان کن.`
+         : `➖ نتیجه‌ات مثل آزمون قبلی است.`;
+    if (prev.level !== selectedLevel) html += `<br><small style="color:#fcd34d">سطح آزمون قبلی «${LV[prev.level]}» بود؛ این مقایسه فقط تقریبی است.</small>`;
+    html += `<br><small style="color:var(--text-muted)">تعداد آزمون‌های ثبت‌شده: ${fa(prevList.length + 1)}</small>`;
+  }
+  if (!ok || !storageOk) html += `<br><small style="color:#fcd34d">⚠️ ذخیرهٔ دائمی در این مرورگر ممکن نشد؛ نتیجه فقط تا بستن صفحه می‌ماند. از بخش «پیشرفت من» پشتیبان بگیر.</small>`;
+  box.innerHTML = html;
+  box.style.display = "block";
+}
+
+function lineChartSVG(recs) {
+  const W = 640, H = 300, L = 46, R = 18, T = 24, B = 46, iw = W - L - R, ih = H - T - B, n = recs.length;
+  const X = i => n === 1 ? L + iw / 2 : L + iw * i / (n - 1);
+  const Y = v => T + ih * (1 - v / 100);
+  const pts = recs.map((r, i) => [X(i), Y(r.percent)]);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="نمودار درصد نمرهٔ آزمون‌ها" style="display:block;font-family:inherit">`;
+  s += `<defs><linearGradient id="pgFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6366f1" stop-opacity=".35"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs>`;
+  for (let v = 0; v <= 100; v += 20) {
+    s += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#334155" stroke-width="1" ${v ? 'stroke-dasharray="3 4"' : ""}/>`;
+    s += `<text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="#94a3b8">${fa(v)}</text>`;
+  }
+  if (n > 1) {
+    const line = pts.map(p => p.join(",")).join(" ");
+    s += `<path d="M${pts[0][0]},${Y(0)} L${pts.map(p => p.join(",")).join(" L")} L${pts[n - 1][0]},${Y(0)} Z" fill="url(#pgFill)"/>`;
+    s += `<polyline points="${line}" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }
+  if (n >= 3) {
+    const { m, b } = regress(recs.map(r => r.percent));
+    const c = v => Math.max(0, Math.min(100, v));
+    s += `<line x1="${X(0)}" y1="${Y(c(b))}" x2="${X(n - 1)}" y2="${Y(c(b + m * (n - 1)))}" stroke="#f472b6" stroke-width="2" stroke-dasharray="6 5"/>`;
+  }
+  const step = Math.ceil(n / 10);
+  recs.forEach((r, i) => {
+    const [px, py] = pts[i];
+    s += `<circle cx="${px}" cy="${py}" r="6" fill="${LV_HEX[r.level] || "#818cf8"}" stroke="#0f172a" stroke-width="2"><title>${esc(fmtDate(r.date))} — ${LV[r.level] || ""} — ${fa(r.percent)}٪ (${fa(r.correct)} از ${fa(r.total)})</title></circle>`;
+    if (n <= 12) s += `<text x="${px}" y="${py - 12}" text-anchor="middle" font-size="11" font-weight="700" fill="#f1f5f9">${fa(r.percent)}</text>`;
+    if (i % step === 0 || i === n - 1) s += `<text x="${px}" y="${H - 22}" text-anchor="middle" font-size="11" fill="#94a3b8">${fa(i + 1)}</text>`;
+  });
+  s += `<text x="${L + iw / 2}" y="${H - 4}" text-anchor="middle" font-size="11" fill="#94a3b8">شمارهٔ آزمون</text></svg>`;
+  return s;
+}
+
+const MIN_N = 3; // حداقل تعداد سؤال برای نتیجه‌گیری دربارهٔ یک مبحث
+function strategyRows(recs) {
+  const map = {};
+  recs.forEach((r, ri) => {
+    (r.items || []).forEach(it => {
+      const m = map[it.s] || (map[it.s] = { t: 0, c: 0, k: 0, f: [0, 0], g: [0, 0] });
+      m.t++; m.c += it.c; m.k += it.k;
+      const h = ri < recs.length / 2 ? m.f : m.g;
+      h[0]++; h[1] += it.c;
+    });
+  });
+  return Object.entries(map).map(([name, m]) => ({
+    name, t: m.t, k: m.k, acc: Math.round(100 * m.c / m.t), enough: m.t >= MIN_N,
+    delta: (m.f[0] >= MIN_N && m.g[0] >= MIN_N) ? Math.round(100 * m.g[1] / m.g[0] - 100 * m.f[1] / m.f[0]) : null
+  })).sort((a, b) => (b.enough - a.enough) || (a.acc - b.acc));
+}
+
+function miniTrendSVG(pts) {
+  const W = 300, H = 130, L = 30, R = 10, T = 12, B = 22, iw = W - L - R, ih = H - T - B, n = pts.length;
+  const X = i => n === 1 ? L + iw / 2 : L + iw * i / (n - 1);
+  const Y = v => T + ih * (1 - v / 100);
+  const bw = Math.max(6, Math.min(26, iw / n * 0.5));
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="font-family:inherit">`;
+  [0, 50, 100].forEach(v => {
+    s += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#334155" stroke-width="1" ${v ? 'stroke-dasharray="3 4"' : ""}/><text x="${L - 5}" y="${Y(v) + 4}" text-anchor="end" font-size="10" fill="#94a3b8">${fa(v)}</text>`;
+  });
+  pts.forEach((p, i) => {
+    const h = ih * p.acc / 100;
+    s += `<rect x="${X(i) - bw / 2}" y="${Y(p.acc)}" width="${bw}" height="${Math.max(h, 1.5)}" rx="3" fill="#6366f1" opacity=".35"><title>آزمون ${fa(p.idx)}: ${fa(p.c)} از ${fa(p.t)} درست (${fa(p.acc)}٪)</title></rect>`;
+  });
+  if (n > 1) s += `<polyline points="${pts.map((p, i) => X(i) + "," + Y(p.cum)).join(" ")}" fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  pts.forEach((p, i) => {
+    s += `<circle cx="${X(i)}" cy="${Y(p.cum)}" r="4" fill="#f472b6" stroke="#0f172a" stroke-width="1.5"><title>میانگین تا آزمون ${fa(p.idx)}: ${fa(p.cum)}٪</title></circle>`;
+  });
+  const step = Math.ceil(n / 6);
+  pts.forEach((p, i) => { if (i % step === 0 || i === n - 1) s += `<text x="${X(i)}" y="${H - 6}" text-anchor="middle" font-size="10" fill="#94a3b8">${fa(p.idx)}</text>`; });
+  return s + "</svg>";
+}
+
+function strategyTrendHTML(recs) {
+  const cards = strategies.map(st => {
+    let t = 0, c = 0;
+    const pts = [];
+    recs.forEach((r, i) => {
+      const its = (r.items || []).filter(it => st.name.startsWith(it.s));
+      if (!its.length) return;
+      const ct = its.reduce((a, it) => a + it.c, 0);
+      t += its.length; c += ct;
+      pts.push({ idx: i + 1, t: its.length, c: ct, acc: Math.round(100 * ct / its.length), cum: Math.round(100 * c / t) });
+    });
+    const head = `<div class="pg-mini-h"><span>${st.icon} ${esc(st.name)}</span><small>${pts.length ? "میانگین " + fa(pts[pts.length - 1].cum) + "٪ از " + fa(t) + " سؤال" : ""}</small></div>`;
+    if (pts.length < 2) return `<div class="pg-mini">${head}<div class="nodata">${pts.length ? "برای رسم روند حداقل دو آزمون لازم است" : "هنوز سؤالی از این مبحث نیامده"}</div></div>`;
+    return `<div class="pg-mini">${head}${miniTrendSVG(pts)}</div>`;
+  }).join("");
+  return `<h3>روند پیشرفت هر مبحث در طول زمان</h3>
+    <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:8px;">ستون‌ها درصد درست همان آزمون و خط صورتی میانگین تجمعی تا آن آزمون است (سیر یادگیری). محور افقی: شمارهٔ آزمون.</p>
+    <div class="pg-mini-grid">${cards}</div>`;
+}
+
+function goLearn(name) {
+  document.querySelector("[data-section=learn]").click();
+  const s = strategies.find(x => x.name.startsWith(name));
+  if (s) showStrategy(s.id);
+}
+
+let pgMsgTimer = null;
+function showPgMsg(text, kind) {
+  const el = document.getElementById("pgMsg");
+  el.textContent = text || "";
+  el.style.display = text ? "block" : "none";
+  el.className = "pg-warn" + (kind === "ok" ? " ok" : "");
+  clearTimeout(pgMsgTimer);
+  if (text) pgMsgTimer = setTimeout(() => { el.style.display = "none"; }, 8000);
+}
+
+function downloadFile(name, text, type) {
+  const blob = new Blob([text], { type });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function csvCell(v) { let s = String(v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; }
+function exportCsv(recs, filename) {
+  const lines = [["نام", "نام خانوادگی", "نام پدر", "مدرسه", "شهر", "کلاس", "نام کامل", "تاریخ", "تاریخ (ISO)", "سطح", "تعداد سؤال", "درست", "غلط", "ردشده", "درصد (درست از کل سؤال‌ها)"].map(csvCell).join(",")];
+  recs.forEach(r => {
+    const [fn, ln] = studentParts({ fn: r.fn, ln: r.ln, name: r.student });
+    lines.push([fn, ln, r.father || "", r.school || "", r.city || "", r.klass || "", r.student, fmtDate(r.date), r.date, LV[r.level] || r.level, r.total, r.correct, r.wrong, r.skipped, r.percent].map(csvCell).join(","));
+  });
+  downloadFile(filename, "\ufeff" + lines.join("\r\n"), "text/csv;charset=utf-8");
+}
+function exportBackup() {
+  const data = { app: "riazi8-fasl1", version: 2, exportedAt: new Date().toISOString(), results: loadResults() };
+  downloadFile("riazi8-f1-backup.json", JSON.stringify(data), "application/json");
+}
+function restoreFrom(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showPgMsg("فایل بیش از حد بزرگ است.", "err"); return; }
+  const fr = new FileReader();
+  fr.onerror = () => showPgMsg("خواندن فایل ناموفق بود.", "err");
+  fr.onload = () => {
+    let data;
+    try { data = JSON.parse(fr.result); } catch (e) { showPgMsg("فایل پشتیبان معتبر نیست.", "err"); return; }
+    const list = Array.isArray(data) ? data : (data && Array.isArray(data.results) ? data.results : null);
+    if (!list) { showPgMsg("ساختار فایل پشتیبان نامعتبر است.", "err"); return; }
+    const cur = loadResults();
+    const key = r => r.id || [r.student, r.date, r.level, r.total, r.correct].join("|");
+    const seen = new Set(cur.map(key));
+    let added = 0, ignored = 0;
+    list.forEach(x => {
+      const r = normalizeRecord(x);
+      if (!r || seen.has(key(r))) { ignored++; return; }
+      seen.add(key(r)); cur.push(r); added++;
+    });
+    cur.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const ok = saveResults(cur);
+    renderProgress();
+    showPgMsg(`${fa(added)} نتیجه بازیابی شد` + (ignored ? `؛ ${fa(ignored)} مورد تکراری یا نامعتبر نادیده گرفته شد.` : ".") + (ok ? "" : " ⚠️ ذخیرهٔ دائمی ممکن نشد."), ok ? "ok" : "err");
+  };
+  fr.readAsText(file);
+}
+
+function bindRestore() {
+  const btn = document.getElementById("pgRestoreBtn"), inp = document.getElementById("pgRestoreFile");
+  if (!btn || !inp) return;
+  btn.onclick = () => inp.click();
+  inp.onchange = () => { restoreFrom(inp.files && inp.files[0]); inp.value = ""; };
+}
+
+function bindRename(want) {
+  const btn = elById("pgRename"), box = elById("pgRenameBox");
+  if (!btn) return;
+  const known = studentCatalog().find(s => nameKey(s.name) === nameKey(want));
+  const [sf, sl] = known ? studentParts(known) : splitName(want);
+  btn.onclick = () => { box.hidden = !box.hidden; if (!box.hidden) { elById("rnFirst").value = sf; elById("rnLast").value = sl; elById("rnError").textContent = ""; elById("rnFirst").focus(); } };
+  elById("rnCancel").onclick = () => { box.hidden = true; };
+  elById("rnSave").onclick = () => {
+    const f = validateNamePart(elById("rnFirst").value, "نام"), l = validateNamePart(elById("rnLast").value, "نام خانوادگی");
+    if (!f.ok || !l.ok) { elById("rnError").textContent = [f.msg, l.msg].filter(Boolean).join(" "); return; }
+    let full = `${f.value} ${l.value}`, fnn = f.value, lnn = l.value;
+    const cur = loadResults();
+    const other = cur.find(r => r.student !== want && nameKey(r.student) === nameKey(full));
+    if (other) { full = other.student; [fnn, lnn] = studentParts({ fn: other.fn, ln: other.ln, name: other.student }); }
+    const ok = saveResults(cur.map(r => r.student === want ? Object.assign({}, r, { student: full, fn: fnn, ln: lnn }) : r));
+    if (currentStudent === want) { currentStudent = full; currentFn = fnn; currentLn = lnn; }
+    pgForce = full;
+    renderProgress();
+    showPgMsg(other ? `نتایج «${want}» با «${full}» ادغام شد.` : `نام به «${full}» تغییر کرد.` + (ok ? "" : " ⚠️ ذخیرهٔ دائمی ممکن نشد."), ok ? "ok" : "err");
+  };
+}
+
+function profileHTML(mine, want) {
+  const cur = { father: currentFather, school: currentSchool, city: currentCity, klass: currentClass };
+  const pick = k => { for (let i = mine.length - 1; i >= 0; i--) { const v = mine[i][k]; if (v) return v; } return want === currentStudent ? (cur[k] || "") : ""; };
+  const fld = (label, v, cls) => `<div class="pf${cls ? " " + cls : ""}"><small>${label}</small>${v ? `<strong>${esc(v)}</strong>` : `<strong class="na">ثبت نشده</strong>`}</div>`;
+  return `<div class="pg-profile" aria-label="مشخصات دانش‌آموز">
+    ${fld("👤 نام و نام خانوادگی", want, "wide")}
+    ${fld("👨 نام پدر", pick("father"))}
+    ${fld("🏫 نام مدرسه", pick("school"))}
+    ${fld("🏙️ شهر", pick("city"))}
+    ${fld("🎓 کلاس", pick("klass"))}
+  </div>`;
+}
+
+function renderProgress() {
+  const all = loadResults();
+  const sel = document.getElementById("pgStudent");
+  const names = [...new Set(all.map(r => r.student))];
+  const want = names.includes(pgForce) ? pgForce : names.includes(sel.value) ? sel.value : (names.includes(currentStudent) ? currentStudent : names[0]);
+  pgForce = null;
+  sel.innerHTML = names.map(n => `<option value="${esc(n)}"${n === want ? " selected" : ""}>${esc(n)}</option>`).join("");
+  document.querySelectorAll("#pgChips .pg-chip").forEach(c => { const on = c.dataset.lv === pgLevel; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on ? "true" : "false"); });
+  const body = document.getElementById("pgBody");
+  document.querySelector(".pg-toolbar").style.display = names.length ? "" : "none";
+  const restoreHTML = `<button class="btn btn-secondary" id="pgRestoreBtn">📂 بازیابی از فایل پشتیبان</button><input type="file" id="pgRestoreFile" accept="application/json,.json" hidden>`;
+
+  if (!names.length) {
+    body.innerHTML = `${storageOk ? "" : `<div class="pg-warn">⚠️ ذخیرهٔ دائمی در این مرورگر کار نمی‌کند (مثلاً وقتی فایل از داخل پیام‌رسان باز شده). فایل را در حافظهٔ گوشی ذخیره کن و از طریق مرورگر باز کن؛ در غیر این صورت نتایج با بستن صفحه از بین می‌روند.</div>`}<div class="pg-empty"><div class="big">📊</div><p>هنوز آزمونی ثبت نشده است.</p><p style="margin-top:6px;">یک آزمون را تا آخر بده؛ نتیجه‌اش خودکار اینجا ثبت می‌شود.</p>
+      <div class="pg-actions"><button class="btn btn-primary" onclick="document.querySelector('[data-section=quiz]').click()">رفتن به آزمون 🎯</button>${restoreHTML}</div></div>`;
+    bindRestore();
+    return;
+  }
+  const mine = all.filter(r => r.student === want);
+  const recs = pgLevel === "all" ? mine : mine.filter(r => r.level === pgLevel);
+  if (!recs.length) {
+    body.innerHTML = profileHTML(mine, want) + `<div class="pg-empty"><div class="big">🔎</div><p>برای سطح «${LV[pgLevel]}» هنوز آزمونی ثبت نشده است.</p></div>`;
+    return;
+  }
+
+  const ps = recs.map(r => r.percent), n = recs.length;
+  let insight = "";
+  if (n >= 2) {
+    const k = Math.min(3, Math.floor(n / 2));
+    const a = avg(ps.slice(0, k)), b = avg(ps.slice(-k)), d = Math.round(b - a);
+    const mixed = new Set(recs.map(r => r.level)).size > 1;
+    const hint = (mixed ? "<small>چون سطح آزمون‌ها متفاوت است، برای مقایسهٔ دقیق‌تر یک سطح را از بالا انتخاب کن.</small>" : "")
+               + (n < 4 ? `<small>با ${fa(n)} آزمون این برآورد فقط تقریبی است.</small>` : "");
+    if (d >= 5) insight = `<div class="pg-insight up">📈 میانگین ${fa(k)} آزمون اخیر ${fa(Math.round(b))}٪ است؛ ${fa(d)}٪ بیشتر از ${fa(k)} آزمون اول.${hint}</div>`;
+    else if (d <= -5) insight = `<div class="pg-insight down">📉 میانگین ${fa(k)} آزمون اخیر (${fa(Math.round(b))}٪) از ${fa(k)} آزمون اول کمتر است. بخش آموزش را مرور کن.${hint}</div>`;
+    else insight = `<div class="pg-insight flat">➖ روند تقریباً ثابت است (میانگین اخیر ${fa(Math.round(b))}٪). با مرور مبحث‌های ضعیف‌تر می‌توانی جهش بزنی.${hint}</div>`;
+  }
+
+  const rows = strategyRows(recs);
+  let weak = rows.find(r => r.enough && r.acc < 75);
+  if (!weak) {
+    const enough = rows.filter(r => r.enough);
+    if (enough.length >= 2) {
+      const sorted = enough.slice().sort((a,b) => a.acc - b.acc);
+      if (sorted[0].acc < sorted[sorted.length-1].acc - 5) weak = sorted[0];
+    }
+  }
+  const barColor = a => a >= 75 ? "#10b981" : a >= 50 ? "#f59e0b" : "#ef4444";
+  const strat = rows.map(r => `
+    <div class="pg-srow">
+      <div class="pg-sname">${esc(r.name)}${r.delta === null || r.delta === 0 ? "" : `<span class="pg-delta ${r.delta > 0 ? "up" : "down"}">${r.delta > 0 ? "▲" : "▼"} ${fa(Math.abs(r.delta))}٪</span>`}</div>
+      <div class="pg-sbar" role="img" aria-label="${esc(r.name)}: ${fa(r.acc)} درصد"><div style="width:${r.acc}%;background:${r.enough ? barColor(r.acc) : "#64748b"};${r.enough ? "" : "opacity:.5"}"></div></div>
+      <div class="pg-sval">${r.enough ? fa(r.acc) + "٪" : "<span style='color:var(--text-muted)'>داده کافی نیست</span>"} <small>(${fa(r.t)} سؤال${r.k ? "، " + fa(r.k) + " ردشده" : ""})</small></div>
+    </div>`).join("");
+
+  const last10 = recs.map((r, i) => ({ r, i, d: (i && recs[i - 1].level === r.level) ? r.percent - recs[i - 1].percent : null })).slice(-10).reverse();
+  const table = last10.map(({ r, i, d }) => `<tr><td>${fa(i + 1)}</td><td>${esc(fmtDate(r.date))}</td><td>${LV[r.level] || ""}</td><td>${fa(r.correct)} / ${fa(r.wrong)} / ${fa(r.skipped)}</td><td><strong>${fa(r.percent)}٪</strong></td>
+    <td title="${d === null ? "قابل مقایسه با آزمون قبل نیست (اولین آزمون یا سطح متفاوت)" : ""}" style="color:${d === null ? "var(--text-muted)" : d > 0 ? "#34d399" : d < 0 ? "#f87171" : "var(--text-muted)"}">${d === null ? "—" : d > 0 ? "▲ " + fa(d) : d < 0 ? "▼ " + fa(-d) : "="}</td></tr>`).join("");
+
+  body.innerHTML = `
+    ${storageOk ? "" : `<div class="pg-warn">⚠️ ذخیرهٔ دائمی در این مرورگر فعال نیست؛ نتایج فقط تا بستن صفحه می‌مانند. پشتیبان JSON یا CSV بگیر.</div>`}
+    ${profileHTML(mine, want)}
+    <div class="pg-stats">
+      <div class="pg-stat"><b>${fa(n)}</b><span>تعداد آزمون</span></div>
+      <div class="pg-stat"><b>${fa(Math.round(avg(ps)))}٪</b><span>میانگین نمره</span></div>
+      <div class="pg-stat"><b>${fa(Math.max(...ps))}٪</b><span>بهترین نمره</span></div>
+      <div class="pg-stat"><b>${fa(ps[n - 1])}٪</b><span>آخرین آزمون</span></div>
+    </div>
+    ${insight}
+    <h3>نمودار نمرهٔ آزمون‌ها</h3>
+    <div class="pg-chart">${lineChartSVG(recs)}</div>
+    <div class="pg-legend">
+      <span><i style="background:#10b981"></i>ساده</span><span><i style="background:#f59e0b"></i>متوسط</span><span><i style="background:#ef4444"></i>سخت</span><span><i style="background:#38bdf8"></i>ترکیبی</span>
+      ${n >= 3 ? `<span><i class="ln"></i>خط روند</span>` : ""}
+    </div>
+    <p class="pg-note">نمره = درست ÷ کل سؤال‌ها. خط روند فقط یک شاخص توصیفی است و اثبات قطعی پیشرفت نیست؛ نمره‌ها به سختی آزمون و تعداد سؤال‌ها وابسته‌اند.</p>
+    <h3>درصد پاسخ درست در هر مبحث <small style="color:var(--text-muted);font-weight:400">(از کل سؤال‌های ارائه‌شده؛ ردشده‌ها درست حساب نمی‌شوند. حداقل ${fa(MIN_N)} سؤال لازم است. ▲▼ = تغییر نسبت به نیمهٔ اول)</small></h3>
+    ${strat}
+    ${weak ? `<div class="tip-box"><strong>💡 پیشنهاد:</strong> مبحث «${esc(weak.name)}» ضعیف‌ترین بخش توست (${fa(weak.acc)}٪ از ${fa(weak.t)} سؤال). <button class="back-btn" id="pgWeakBtn" style="margin:8px 0 0 0;" data-strategy="${esc(weak.name)}">مرور همین مبحث ←</button></div>` : ""}
+    ${strategyTrendHTML(recs)}
+    <h3>تاریخچهٔ آخرین آزمون‌ها</h3>
+    <div class="pg-tablewrap"><table><tr><th>#</th><th>تاریخ</th><th>سطح</th><th>درست / غلط / ردشده</th><th>نمره</th><th>تغییر</th></tr>${table}</table></div>
+    <div class="pg-actions">
+      <button class="btn btn-secondary" id="pgCsvOne">⬇️ CSV این دانش‌آموز</button>
+      <button class="btn btn-secondary" id="pgCsvAll">⬇️ CSV همهٔ دانش‌آموزان</button>
+      <button class="btn btn-secondary" id="pgBackup">💾 پشتیبان‌گیری (JSON)</button>
+      ${restoreHTML}
+      <button class="btn btn-secondary" id="pgRename">✏️ ویرایش نام</button>
+      <button class="btn btn-secondary" id="pgClear">🗑️ پاک کردن نتایج این دانش‌آموز</button>
+    </div>
+    <div class="pg-rename" id="pgRenameBox" hidden>
+      <div class="name-grid"><div><label for="rnFirst">نام</label><input id="rnFirst" type="text" maxlength="25"></div><div><label for="rnLast">نام خانوادگی</label><input id="rnLast" type="text" maxlength="25"></div></div>
+      <p class="field-error" id="rnError" role="alert"></p>
+      <div class="pg-actions" style="margin-top:6px"><button class="btn btn-primary" id="rnSave">ذخیرهٔ نام</button><button class="btn btn-secondary" id="rnCancel">انصراف</button></div>
+    </div>`;
+
+  const wk = document.getElementById("pgWeakBtn");
+  if (wk) wk.onclick = () => goLearn(wk.dataset.strategy);
+  document.getElementById("pgCsvOne").onclick = () => exportCsv(mine, "riazi8-f1-results-student.csv");
+  document.getElementById("pgCsvAll").onclick = () => exportCsv(all, "riazi8-f1-results-all.csv");
+  document.getElementById("pgBackup").onclick = exportBackup;
+  bindRestore();
+  bindRename(want);
+  const clr = document.getElementById("pgClear");
+  clr.onclick = () => {
+    if (!pgClearArmed) {
+      pgClearArmed = true; clr.textContent = `مطمئنی؟ دوباره بزن تا نتایج «${want}» پاک شود`;
+      setTimeout(() => { pgClearArmed = false; const b = document.getElementById("pgClear"); if (b) b.textContent = "🗑️ پاک کردن نتایج این دانش‌آموز"; }, 4000);
+      return;
+    }
+    pgClearArmed = false;
+    saveResults(loadResults().filter(r => r.student !== want));
+    renderProgress();
+    showPgMsg(`نتایج «${want}» پاک شد.`, "ok");
+  };
+}
+
+document.getElementById("pgStudent").addEventListener("change", renderProgress);
+document.querySelectorAll("#pgChips .pg-chip").forEach(c => c.addEventListener("click", () => { pgLevel = c.dataset.lv; renderProgress(); }));
+
+// ==================== APP LOGIC ====================
+let selectedLevel = "medium";
+let selectedCount = 8;
+let currentQuiz = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+
+// Navigation
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    document.getElementById(btn.dataset.section).classList.add("active");
+    if (btn.dataset.section === "learn") showStrategyList();
+    if (btn.dataset.section === "progress") renderProgress();
+  });
+});
+
+// Render strategy cards
+function renderStrategyCards(containerId, clickable = true) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = strategies.map(s => `
+    <div class="strategy-card" data-id="${s.id}" ${clickable ? `role="button" tabindex="0" onclick="showStrategy(${s.id})"` : ""}>
+      <div class="num">${s.id}</div>
+      <h4>${s.icon} ${s.name}</h4>
+      <p>${s.desc.substring(0, 60)}...</p>
+    </div>
+  `).join("");
+}
+renderStrategyCards("home-strategies");
+renderStrategyCards("learn-strategies");
+
+// ---------- Math direction: عبارت‌های ریاضی همیشه چپ‌به‌راست ----------
+// هر «تکهٔ ریاضی» (عدد، کسر، عدد مخلوط، علامت، عملگر، پرانتز و کروشه، توان، دنباله و ...) با LRI/PDI جدا می‌شود تا
+// داخل متن فارسی چپ‌به‌راست نمایش داده شود؛ مثلاً «−۲ ۷/۸ ≈ −۲٫۸۷۵» و «(−۳) × [۱۲ − (+۱۰)]».
+const MATH = (() => {
+  const D = "0-9\\u06F0-\\u06F9\\u0660-\\u0669";
+  const NUM = `[${D}]+(?:[\\u066B.][${D}]+)?`;
+  // ترتیب مهم است: «...» قبل از «.»
+  const TOK = new RegExp(
+    `(?<sp>[\\s\\u00A0]+)|(?<num>${NUM})|(?<var>(?<![A-Za-z])[A-Za-z](?![A-Za-z]))|(?<dots>\\u2026|\\.{3})|` +
+    `(?<box>\\u25A1)|(?<op>[+\\-\\u2212\\u00D7\\u00F7=<>\\u2264\\u2265\\u2248\\u2260/^*\\u00B7])|(?<open>[(\\[{])|(?<close>[)\\]}])|` +
+    `(?<sup>[\\u00B2\\u00B3\\u00B9\\u2070-\\u2079\\u207F])|(?<misc>[%\\u066A\\u00B0\\u2191\\u2193])|(?<comma>[\\u060C,])`, "uy");
+  return { TOK };
+})();
+const OPEN2CLOSE = { "(": ")", "[": "]", "{": "}" };
+function scanMathRuns(t) {
+  // برمی‌گرداند: [{s, e}] بازه‌های ریاضی (انتهای باز)
+  const runs = []; let i = 0; const n = t.length;
+  while (i < n) {
+    MATH.TOK.lastIndex = i;
+    let m = MATH.TOK.exec(t);
+    if (!m || m.groups.sp !== undefined) { // شروع بازه باید یک توکن غیر فاصله باشد
+      i++; continue;
+    }
+    const s = i; let j = i;
+    while (j < n) {
+      MATH.TOK.lastIndex = j;
+      const k = MATH.TOK.exec(t);
+      if (!k) break;
+      j = MATH.TOK.lastIndex;
+    }
+    runs.push({ s, e: j }); i = j;
+  }
+  return runs;
+}
+function tokenize(str) {
+  const toks = []; let i = 0;
+  while (i < str.length) {
+    MATH.TOK.lastIndex = i;
+    const m = MATH.TOK.exec(str);
+    if (!m) break;
+    const g = m.groups; let type = "?";
+    for (const k in g) if (g[k] !== undefined) { type = k; break; }
+    toks.push({ type, v: m[0] }); i = MATH.TOK.lastIndex;
+  }
+  return toks;
+}
+function isOperand(tk) { return tk.type === "num" || tk.type === "var" || tk.type === "box" || tk.type === "dots"; }
+// حذف عملگر/فاصلهٔ اضافی دو سر و پرانتزهای نامتوازن (متعلق به جملهٔ فارسی‌اند)
+function trimRun(str) {
+  let toks = tokenize(str);
+  const depthInfo = () => {
+    const stack = [], unOpen = new Set(), unClose = new Set();
+    toks.forEach((tk, idx) => {
+      if (tk.type === "open") stack.push(idx);
+      else if (tk.type === "close") { if (stack.length) stack.pop(); else unClose.add(idx); }
+    });
+    stack.forEach(i => unOpen.add(i));
+    return { unOpen, unClose };
+  };
+  let changed = true, lead = 0, tail = 0; // طول (تعداد نویسه)ی بخش حذف‌شده از ابتدا و انتها
+  while (changed && toks.length) {
+    changed = false;
+    const { unOpen, unClose } = depthInfo();
+    const f = toks[0], l = toks[toks.length - 1];
+    if (f.type === "sp" || f.type === "comma") { lead += toks.shift().v.length; changed = true; continue; }
+    if (l.type === "sp" || l.type === "comma") { tail += toks.pop().v.length; changed = true; continue; }
+    // هر پرانتز/کروشهٔ نامتوازن در دو سر بازه متعلق به جملهٔ فارسی است و بیرون از عبارت می‌ماند
+    if ((f.type === "open" && unOpen.has(0)) || (f.type === "close" && unClose.has(0))) { lead += toks.shift().v.length; changed = true; continue; }
+    if ((l.type === "close" && unClose.has(toks.length - 1)) || (l.type === "open" && unOpen.has(toks.length - 1))) { tail += toks.pop().v.length; changed = true; continue; }
+    // عملگر ابتدای بازه: علامت (+ یا −) که بلافاصله پشتش عملوند یا پرانتز باز می‌آید می‌ماند، بقیه حذف می‌شوند
+    if (f.type === "op") {
+      const nx = toks[1];
+      const isSign = /^[+\u2212-]$/.test(f.v) && nx && (isOperand(nx) || nx.type === "open" || (nx.type === "op" && /^[+\u2212-]$/.test(nx.v)));
+      if (!isSign) { lead += toks.shift().v.length; changed = true; continue; }
+    }
+    if (l.type === "op") {
+      // «= −» یا «= +» (جدول علامت‌ها) علامتِ مقدار است و حذف نمی‌شود
+      const pv = toks.slice(0, -1).reverse().find(x => x.type !== "sp");
+      const valueSign = /^[+\u2212-]$/.test(l.v) && pv && pv.v === "=";
+      if (!valueSign) { tail += toks.pop().v.length; changed = true; continue; }
+    }
+  }
+  return { toks, lead, tail };
+}
+function wrapLtr(s) { return "\u2066" + s + "\u2069"; }
+function processMathText(t) {
+  const runs = scanMathRuns(t);
+  if (!runs.length) return t;
+  let out = "", pos = 0;
+  for (const r of runs) {
+    const raw = t.slice(r.s, r.e);
+    const { toks, lead, tail } = trimRun(raw);
+    if (!toks.length) continue;
+    // موقعیت دقیق متن پس از برش دو سر
+    const core = toks.map(x => x.v).join("");
+    const cs = r.s + lead, ce = r.e - tail;
+    // آیا این بازه واقعاً نیاز به جهت‌دهی دارد؟
+    const hasOperand = toks.some(x => x.type === "num" || x.type === "var" || x.type === "box");
+    const hasEq = toks.some(x => x.type === "op" && x.v === "=");
+    if (!hasOperand && !hasEq) continue;
+    // تقسیم روی ویرگول‌های بیرون از پرانتز
+    const items = []; let depth = 0, cur = "";
+    for (const tk of toks) {
+      if (tk.type === "open") depth++;
+      if (tk.type === "close") depth = Math.max(0, depth - 1);
+      if (tk.type === "comma" && depth === 0) { items.push(cur); cur = ""; } else cur += tk.v;
+    }
+    items.push(cur);
+    let pieces; // هر piece = [متن، آیا ایزوله شود]
+    const tail2 = t.slice(ce);
+    const hasEllipsis = items.some(x => /\u2026|\.{3}/.test(x));
+    const goodItems = items.filter(x => x.trim()).length;
+    const listWithAnd = /^\s*و\s*[0-9\u06F0-\u06F9]/.test(tail2);
+    if (items.length === 1) pieces = [[core, true]];
+    else if ((goodItems >= 3 || hasEllipsis) && !listWithAnd) pieces = [[core, true]]; // دنباله: چپ‌به‌راست
+    else { // فهرست معمولی فارسی: هر عضو جدا
+      pieces = []; const parts = core.split(/([\u060C,])/);
+      parts.forEach(p => pieces.push([p, !/^[\u060C,]$/.test(p) && p.trim() !== ""]));
+    }
+    out += t.slice(pos, cs);
+    for (const [p, iso] of pieces) {
+      if (!iso) { out += p; continue; }
+      const lead2 = p.match(/^\s*/)[0], tr2 = p.match(/\s*$/)[0], body = p.trim();
+      const tk2 = tokenize(body);
+      const needs = tk2.some(x => !["num", "var"].includes(x.type)) && (tk2.some(isOperand) || tk2.some(x => x.v === "="));
+      // عدد یا حرف تنها نیازی به ایزوله ندارد
+      out += needs && body ? lead2 + wrapLtr(body) + tr2 : p;
+    }
+    pos = ce;
+  }
+  return out + t.slice(pos);
+}
+// ---------- کسر استاندارد (صورت / خط کسر / مخرج) ----------
+const FRAC = (() => {
+  const DG = "0-9\\u06F0-\\u06F9\\u0660-\\u0669";
+  const NUMB = `[${DG}]+(?:[\\u066B.][${DG}]+)?`;
+  const GRP = "\\((?:[^()]|\\((?:[^()]|\\([^()]*\\))*\\))*\\)";
+  const OPD = `(?:${GRP}|${NUMB}|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
+  const SRC = `(?<![${DG}A-Za-z)])(${OPD})\\s*\\/\\s*(${OPD})(?![A-Za-z])`;
+  return { SRC };
+})();
+function fracNodes(str) {
+  const re = new RegExp(FRAC.SRC, "g");
+  const out = []; let pos = 0, m;
+  while ((m = re.exec(str))) {
+    if (m.index > pos) out.push(document.createTextNode(str.slice(pos, m.index)));
+    out.push(makeFrac(m[1], m[2]));
+    pos = m.index + m[0].length;
+  }
+  if (pos < str.length) out.push(document.createTextNode(str.slice(pos)));
+  return out;
+}
+function fracOperand(s) {
+  if (s.charAt(0) === "(" && s.charAt(s.length - 1) === ")") s = s.slice(1, -1).trim(); // پرانتز دور صورت/مخرج لازم نیست
+  return fracNodes(s);
+}
+function makeFrac(n, d) {
+  const f = document.createElement("span"); f.className = "frac";
+  const a = document.createElement("span"); a.className = "fn";
+  const b = document.createElement("span"); b.className = "fd";
+  fracOperand(n).forEach(x => a.appendChild(x));
+  fracOperand(d).forEach(x => b.appendChild(x));
+  f.appendChild(a); f.appendChild(b);
+  return f;
+}
+function hasFrac(t) { return new RegExp(FRAC.SRC).test(t); }
+const FA_LETTER = /[\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC]/;
+const BLK_MIN = 20; // فرمولی که (بدون فاصله) از این تعداد نویسه بلندتر باشد، در سطر جداگانه نوشته می‌شود
+// رشتهٔ پردازش‌شده (با نشانه‌های جهت LRI/PDI) را به قطعه‌ای از گره‌ها تبدیل می‌کند:
+// کسرها استاندارد می‌شوند و فرمول بلندِ میان متن فارسی (یا کسر تو‌در‌تو) در سطر بعدی، وسط‌چین می‌آید. اگر تغییری لازم نباشد null
+function fracFragment(out, allowBlock) {
+  const segRe = /\u2066([\s\S]*?)\u2069/g;
+  const persian = allowBlock && FA_LETTER.test(out.replace(segRe, ""));
+  const frag = document.createDocumentFragment();
+  let pos = 0, m, changed = false;
+  const text = t => { if (t) frag.appendChild(document.createTextNode(t)); };
+  while ((m = segRe.exec(out))) {
+    text(out.slice(pos, m.index));
+    pos = m.index + m[0].length;
+    const inner = m[1], frac = hasFrac(inner);
+    const nodes = frac ? fracNodes(inner) : null;
+    const nested = !!nodes && nodes.some(n => n.nodeType === 1 && n.querySelector && n.querySelector(".frac .frac"));
+    const block = persian && (inner.replace(/\s/g, "").length >= BLK_MIN || nested);
+    if (!frac && !block) { text(m[0]); continue; }
+    changed = true;
+    const w = document.createElement("span"); w.className = block ? "mf blk" : "mf";
+    (nodes || [document.createTextNode(inner)]).forEach(x => w.appendChild(x));
+    if (block) { // علامت‌هایی مثل ✓ که بلافاصله بعد از فرمول آمده‌اند، با خود فرمول بمانند
+      const mk = /^\s*([\u2713\u2714\u2705\u274C])/.exec(out.slice(pos));
+      if (mk) { w.appendChild(document.createTextNode(" " + mk[1])); pos += mk[0].length; }
+    }
+    frag.appendChild(w);
+  }
+  text(out.slice(pos));
+  return changed ? frag : null;
+}
+// علامت‌های < و > و ≤ و ≥ که تنها (بیرون از فرمول) می‌آیند، در متن راست‌به‌چپ آینه‌ای دیده می‌شوند؛ آن‌ها را چپ‌به‌راست جدا می‌کنیم
+function isolateCompare(out) {
+  return out.replace(/(\u2066[\s\S]*?\u2069)|([<>\u2264\u2265])/g, (m, seg, ch) => seg ? seg : "\u2066" + ch + "\u2069");
+}
+function ltrMath(root) {
+  if (!root) return;
+  const walker = document.createTreeWalker(root, 4);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n => {
+    const par = n.parentNode && n.parentNode.nodeName;
+    if (/^(SCRIPT|STYLE|TEXTAREA|OPTION)$/i.test(par || "")) return;
+    const t = n.nodeValue;
+    if (!t || t.includes("\u2066")) return;
+    if (n.parentNode && n.parentNode.closest && n.parentNode.closest(".mth, .mf, svg")) return;
+    let out = isolateCompare(processMathText(t));
+    // پیکان درون متن راست‌به‌چپ باید به سمت چپ باشد (جهت خواندن)
+    if (out.includes("→") && out.trim().length > 1) out = out.replace(/→/g, "←");
+    const allowBlock = !(n.parentNode && n.parentNode.closest && n.parentNode.closest(".ann, .eq, .ln, td, th, button, .frac"));
+    const frag = fracFragment(out, allowBlock);
+    if (frag) n.parentNode.replaceChild(frag, n);
+    else if (out !== t) n.nodeValue = out;
+  });
+}
+
+function fitSvgText(root) {
+  try {
+    root.querySelectorAll("svg").forEach(svg => {
+      const vb = svg.viewBox && svg.viewBox.baseVal;
+      if (!vb || !vb.width) return;
+      svg.querySelectorAll("text").forEach(t => {
+        if (typeof t.getBBox !== "function") return;
+        let b; try { b = t.getBBox(); } catch (e) { return; }
+        if (!b || !b.width) return;
+        let dx = 0;
+        if (b.x < 2) dx = 2 - b.x;
+        else if (b.x + b.width > vb.width - 2) dx = vb.width - 2 - (b.x + b.width);
+        if (dx) t.setAttribute("transform", ((t.getAttribute("transform") || "") + ` translate(${dx.toFixed(1)},0)`).trim());
+      });
+    });
+  } catch (e) { /* نمایش شکل نباید به خاطر این اصلاح مختل شود */ }
+}
+
+function showStrategyList() {
+  document.getElementById("strategy-list").style.display = "block";
+  document.getElementById("strategy-details").innerHTML = "";
+}
+
+function showStrategy(id) {
+  const s = strategies.find(x => x.id === id);
+  document.getElementById("strategy-list").style.display = "none";
+  const detail = document.getElementById("strategy-details");
+  detail.innerHTML = `
+    <button class="back-btn" onclick="showStrategyList()">← بازگشت به لیست مبحث‌ها</button>
+    <div class="card">
+      <h2>${s.icon} مبحث ${s.id}: ${s.name}</h2>
+      <p style="font-size:1.05rem; margin-bottom:16px;">${s.desc}</p>
+      ${s.body || ""}<div class="tip-box"><strong>💡 نکته طلایی:</strong> ${s.tip}</div>${s.mistake ? `<div class="tip-box" style="border-color:#f87171"><strong>⚠️ اشتباه رایج:</strong> ${s.mistake}</div>` : ""}
+      ${s.examples.map((ex, i) => `
+        <div class="example-box">
+          <span class="label">مثال ${i+1}</span>
+          <p style="margin-bottom:8px;"><strong>سؤال:</strong> ${ex.q}</p>
+          ${ex.diagram ? `<div class="diagram-box">${ex.diagram}<div class="diagram-caption">شکل کمکی برای فهم بهتر</div></div>` : ""}
+          <div class="answer-box"><strong>حل گام‌به‌گام:</strong><br>${ex.a}</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  ltrMath(detail);
+  fitSvgText(detail);
+}
+
+// ---------- Question bank: ids + validation ----------
+questionBank.forEach((q, i) => { q.id = "q" + String(i + 1).padStart(3, "0"); });
+const validBank = questionBank.filter(q => q && typeof q.q === "string" && Array.isArray(q.options) && q.options.length === 4
+  && q.options.every(o => typeof o === "string" && o.trim()) && new Set(q.options).size === 4
+  && Number.isInteger(q.answer) && q.answer >= 0 && q.answer < 4
+  && ["easy", "medium", "hard"].includes(q.level) && typeof q.strategy === "string" && typeof q.explain === "string");
+function poolFor(level) { return level === "mixed" ? validBank : validBank.filter(q => q.level === level); }
+function shuffle(arr) { // Fisher–Yates
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function stratifiedPick(pool, n) { // انتخاب چرخشی بین مبحث‌ها تا هر آزمون روی مبحث‌های مختلف پخش شود
+  const g = {};
+  pool.forEach(q => { (g[q.strategy] = g[q.strategy] || []).push(q); });
+  const lists = shuffle(Object.keys(g)).map(k => shuffle(g[k]));
+  const picked = [];
+  while (picked.length < n && lists.some(l => l.length)) {
+    for (const l of lists) { if (picked.length < n && l.length) picked.push(l.pop()); }
+  }
+  return shuffle(picked);
+}
+let practiceMode = false, attemptSaved = false, finished = false, wrongPool = [];
+
+// ---------- Quiz setup ----------
+function setNotice(t) { document.getElementById("quizNotice").textContent = t || ""; }
+function refreshSetup(note) {
+  refreshKnownStudents();
+  const avail = poolFor(selectedLevel).length;
+  const btns = [...document.querySelectorAll(".q-count button")];
+  btns.forEach(b => { const off = parseInt(b.dataset.count) > avail; b.disabled = off; b.title = off ? `در این سطح فقط ${fa(avail)} سؤال داریم` : ""; });
+  let msg = note || "";
+  if (selectedCount > avail) {
+    const ok = btns.filter(b => !b.disabled).pop();
+    selectedCount = ok ? parseInt(ok.dataset.count) : avail;
+    msg = `در سطح «${LV[selectedLevel]}» فقط ${fa(avail)} سؤال داریم؛ تعداد سؤال‌ها روی ${fa(selectedCount)} تنظیم شد.`;
+  }
+  btns.forEach(b => b.classList.toggle("selected", parseInt(b.dataset.count) === selectedCount));
+  document.querySelectorAll(".level-card").forEach(c => { const on = c.dataset.level === selectedLevel; c.classList.toggle("selected", on); c.setAttribute("aria-checked", on ? "true" : "false"); });
+  document.getElementById("startQuizBtn").disabled = avail === 0;
+  setNotice(avail === 0 ? "برای این سطح سؤالی در بانک نیست." : msg);
+}
+document.querySelectorAll(".level-card").forEach(card => {
+  card.addEventListener("click", () => { selectedLevel = card.dataset.level; refreshSetup(); });
+});
+document.querySelectorAll(".q-count button").forEach(btn => {
+  btn.addEventListener("click", () => { if (btn.disabled) return; selectedCount = parseInt(btn.dataset.count); refreshSetup(); });
+});
+document.addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches('[role="radio"],[role="button"]')) { e.preventDefault(); e.target.click(); }
+});
+refreshSetup();
+ltrMath(document.body);
+
+document.getElementById("startQuizBtn").addEventListener("click", () => startQuiz());
+
+function startQuiz(retryPool) {
+  practiceMode = Array.isArray(retryPool);
+  let pool, n;
+  if (practiceMode) { pool = retryPool; n = pool.length; }
+  else {
+    pool = poolFor(selectedLevel);
+    if (!pool.length) { setNotice("برای این سطح سؤالی در بانک نیست."); return; }
+    if (pool.length < selectedCount) { setNotice(`در سطح «${LV[selectedLevel]}» فقط ${fa(pool.length)} سؤال داریم؛ تعداد را کم کن یا سطح دیگری انتخاب کن.`); return; }
+    n = selectedCount;
+    const nm = readStudentName();
+    if (!nm) return;
+    currentStudent = nm.full; currentFn = nm.fn; currentLn = nm.ln;
+    currentFather = nm.father; currentSchool = nm.school;
+    currentCity = nm.city; currentClass = nm.klass;
+    lsSet(STUDENT_KEY, JSON.stringify({
+      f: nm.fn, l: nm.ln, father: nm.father, school: nm.school,
+      city: nm.city, klass: nm.klass
+    }));
+  }
+  currentQuiz = practiceMode ? shuffle(pool).slice(0, n) : stratifiedPick(pool, n);
+  currentIndex = 0; score = 0; answered = false; finished = false; attemptSaved = false;
+  currentAnswers = [];
+  document.getElementById("resultCompare").style.display = "none";
+  setNotice("");
+
+  document.getElementById("quiz-setup").style.display = "none";
+  document.getElementById("quiz-result").style.display = "none";
+  document.getElementById("quiz-area").style.display = "block";
+  document.getElementById("qTotal").textContent = fa(currentQuiz.length);
+  document.getElementById("liveScore").textContent = fa(0);
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  const q = currentQuiz[currentIndex];
+  document.getElementById("qNum").textContent = fa(currentIndex + 1);
+  document.getElementById("progressBar").style.width = ((currentIndex) / currentQuiz.length * 100) + "%";
+  document.getElementById("nextBtn").disabled = true;
+  document.getElementById("skipBtn").style.display = "inline-block";
+
+  const letters = ["آ", "ب", "ج", "د"];
+  const card = document.getElementById("questionCard");
+  card.innerHTML = `
+    <div class="q-meta">
+      <span class="q-tag level-${q.level}">${LV[q.level]}</span>
+      <span class="q-tag strategy">${q.strategy}</span>
+      ${practiceMode ? `<span class="q-tag">تمرین (ثبت نمی‌شود)</span>` : ""}
+    </div>
+    <div class="question-text">${q.q}</div>
+    <div class="options" role="group" aria-label="گزینه‌ها">
+      ${q.options.map((opt, i) => `
+        <button type="button" class="option" data-index="${i}">
+          <span class="opt-letter">${letters[i]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join("")}
+    </div>
+    <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+  `;
+  card.querySelectorAll(".option").forEach(b => b.addEventListener("click", () => selectOption(b, parseInt(b.dataset.index))));
+  ltrMath(card);
+}
+
+function selectOption(el, index) {
+  if (answered || finished) return;
+  answered = true;
+  const q = currentQuiz[currentIndex];
+  const options = document.querySelectorAll(".option");
+  options.forEach(o => { o.disabled = true; });
+
+  el.classList.add("selected");
+  const feedback = document.getElementById("feedback");
+
+  recordAnswer(q, index, false);
+  if (index === q.answer) {
+    el.classList.add("correct");
+    score++;
+    document.getElementById("liveScore").textContent = fa(score);
+    feedback.className = "feedback show correct";
+    feedback.innerHTML = `✅ آفرین! درست بود.<br><small>${q.explain}</small>`; ltrMath(feedback);
+  } else {
+    el.classList.add("wrong");
+    options[q.answer].classList.add("correct");
+    feedback.className = "feedback show wrong";
+    feedback.innerHTML = `❌ اشتباه بود. پاسخ درست گزینه «${["آ", "ب", "ج", "د"][q.answer]}» است.<br><small>${q.explain}</small>`; ltrMath(feedback);
+  }
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = false;
+  document.getElementById("skipBtn").style.display = "none";
+  nb.focus();
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (!answered || finished) return;
+  currentIndex++;
+  if (currentIndex >= currentQuiz.length) showResult();
+  else showQuestion();
+});
+
+document.getElementById("skipBtn").addEventListener("click", () => {
+  if (answered || finished) return;
+  answered = true;
+  const q = currentQuiz[currentIndex];
+  const options = document.querySelectorAll(".option");
+  options.forEach(o => { o.disabled = true; });
+  recordAnswer(q, null, true);
+  options[q.answer].classList.add("correct");
+  const feedback = document.getElementById("feedback");
+  feedback.className = "feedback show wrong";
+  feedback.innerHTML = `سؤال را رد کردی (نمره‌ای نمی‌گیرد، غلط هم حساب نمی‌شود). پاسخ صحیح: گزینه «${["آ", "ب", "ج", "د"][q.answer]}»<br><small>${q.explain}</small>`; ltrMath(feedback);
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = false;
+  document.getElementById("skipBtn").style.display = "none";
+  nb.focus();
+});
+
+function summarize() {
+  const total = currentQuiz.length;
+  let correct = 0, wrong = 0, skipped = 0;
+  for (let i = 0; i < total; i++) {
+    const a = currentAnswers[i];
+    if (!a || a.k) skipped++; else if (a.c) correct++; else wrong++;
+  }
+  return { total, correct, wrong, skipped, percent: total ? Math.round(100 * correct / total) : 0 };
+}
+
+function renderReview() {
+  const letters = ["آ", "ب", "ج", "د"];
+  wrongPool = [];
+  const items = [];
+  currentQuiz.forEach((q, i) => {
+    const a = currentAnswers[i];
+    if (a && a.c) return;
+    wrongPool.push(q);
+    const skip = !a || a.k;
+    items.push(`<details class="rv"><summary><span class="rv-tag ${skip ? "skip" : "wrong"}">${skip ? "ردشده" : "غلط"}</span>${fa(i + 1)}. ${q.q}</summary>
+      <div class="rv-body">
+        ${skip ? "" : `<p class="rv-bad">پاسخ تو: ${letters[a.a]}) ${q.options[a.a]}</p>`}
+        <p class="rv-ok">پاسخ درست: ${letters[q.answer]}) ${q.options[q.answer]}</p>
+        <p class="rv-ex">${q.explain}</p>
+      </div></details>`);
+  });
+  document.getElementById("reviewBox").innerHTML = items.length
+    ? `<div class="rv-wrap"><h3>🔍 مرور سؤال‌های اشتباه و ردشده</h3>${items.join("")}</div>` : "";
+  ltrMath(document.getElementById("reviewBox"));
+  const rb = document.getElementById("retryWrongBtn");
+  rb.style.display = items.length ? "inline-block" : "none";
+  rb.onclick = () => startQuiz(wrongPool.slice());
+}
+
+function showResult() {
+  if (finished) return;
+  finished = true;
+  for (let i = 0; i < currentQuiz.length; i++) if (!currentAnswers[i]) { currentIndex = i; recordAnswer(currentQuiz[i], null, true); }
+  const sum = summarize();
+  score = sum.correct;
+  document.getElementById("quiz-area").style.display = "none";
+  document.getElementById("quiz-result").style.display = "block";
+  const percent = sum.percent;
+  document.getElementById("resultScore").textContent = fa(percent) + "٪";
+  document.getElementById("statCorrect").textContent = fa(sum.correct);
+  document.getElementById("statWrong").textContent = fa(sum.wrong);
+  document.getElementById("statSkipped").textContent = fa(sum.skipped);
+  document.getElementById("statTotal").textContent = fa(sum.total);
+  const answeredN = sum.correct + sum.wrong;
+  const accuracy = answeredN ? Math.round(100 * sum.correct / answeredN) : null;
+  const completion = Math.round(100 * answeredN / sum.total);
+  document.getElementById("scoreNote").innerHTML =
+    `<strong>نمره آزمون:</strong> ${fa(sum.correct)} از ${fa(sum.total)} = ${fa(sum.percent)}٪<br>` +
+    `<strong>دقت پاسخ‌گویی:</strong> ${accuracy === null ? "قابل محاسبه نیست (هیچ سؤالی پاسخ داده نشد)" : fa(accuracy) + "٪ (" + fa(sum.correct) + " از " + fa(answeredN) + " پاسخ‌داده‌شده)"}<br>` +
+    `<strong>نرخ تکمیل:</strong> ${fa(completion)}٪` +
+    (sum.skipped ? ` — ${fa(sum.skipped)} سؤال ردشده نمره نگرفته و غلط هم حساب نشده است.` : "");
+
+  let stars = "", msg = "";
+  if (percent >= 90) { stars = "⭐⭐⭐⭐⭐"; msg = "عالی بودی! تو یک قهرمان عددهای گویا هستی! 🏆"; launchConfetti(); }
+  else if (percent >= 75) { stars = "⭐⭐⭐⭐"; msg = "خیلی خوب بود! ادامه بده، داری عالی پیشرفت می‌کنی! 💪"; launchConfetti(); }
+  else if (percent >= 60) { stars = "⭐⭐⭐"; msg = "خوب بود! با کمی تمرین بیشتر عالی می‌شی! 🌟"; }
+  else if (percent >= 40) { stars = "⭐⭐"; msg = "نمره قابل قبولی گرفتی. بخش آموزش را دوباره مرور کن! 📚"; }
+  else { stars = "⭐"; msg = "اشکالی نداره! یادگیری با تمرین بهتر می‌شه. دوباره تلاش کن! 🔄"; }
+  document.getElementById("resultStars").textContent = stars;
+  document.getElementById("resultMsg").textContent = msg;
+  document.getElementById("progressBar").style.width = "100%";
+  renderReview();
+  finishAttempt(sum);
+}
+
+function resetQuiz() {
+  document.getElementById("quiz-result").style.display = "none";
+  document.getElementById("quiz-area").style.display = "none";
+  document.getElementById("quiz-setup").style.display = "block";
+  refreshSetup();
+}
+
+function launchConfetti() {
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const container = document.getElementById("confetti");
+  const colors = ["#6366f1","#ec4899","#10b981","#f59e0b","#3b82f6","#f472b6"];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "%";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    c.style.animationDelay = Math.random() * 0.5 + "s";
+    c.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+    c.style.width = (Math.random() * 8 + 6) + "px";
+    c.style.height = c.style.width;
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+
+/* ===== اتصال به Supabase ===== */
+const SB='https://qwpmbprjdwrxwhwgdekt.supabase.co',KEY='sb_publishable_p8FrC24bNtoAlgyxoFvPsQ_tFj0L9fB',CH='g8-c1';
+const S8={1:'عددهای گویا و محور',2:'قرینه و معکوس',3:'جمع و تفریق',4:'ضرب و تقسیم',5:'اولویت عملیات',6:'گرد کردن و تقریب',7:'مقایسه و ترتیب',8:'الگوها و ترفندها'};
+const tkey=x=>{x=String(x);if(S8[x])return x;const f=Object.entries(S8).find(e=>e[1]===x);return f?f[0]:x};
+async function rpc(fn,b){const r=await fetch(SB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify(b)});const t=await r.text();if(!r.ok){let m='';try{m=JSON.parse(t).message||''}catch(e){}throw new Error(m||('HTTP '+r.status))}return t?JSON.parse(t):null}
+const ERR={'wrong pin':'رمز اشتباه است.','bad class':'کد کلاس معتبر نیست.','bad pin':'رمز باید دقیقاً ۴ رقم باشد.'};
+const $$=id=>document.getElementById(id);
+const ses=()=>{try{return JSON.parse(lsGet('r8s')||'null')}catch(e){return null}};
+function who(){const x=ses();$$('who').innerHTML=x?'👤 '+esc(x.name)+' — <a href="#" id="out" style="color:#94a3b8">خروج</a>':'مهمان (نتیجه ثبت نمی‌شود) — <a href="#" id="inn" style="color:#94a3b8">ورود</a>';
+ const o=$$('out')||$$('inn');o.onclick=e=>{e.preventDefault();if(x)lsSet('r8s','null');$$('lg').style.display='flex'}}
+$$('lgs').onclick=()=>{$$('lg').style.display='none';who()};
+$$('lgo').onclick=async()=>{const code=$$('lc').value.trim(),name=$$('ln2').value.trim(),pin=$$('lp').value.trim();
+ if(!code||name.length<3||!/^\d{4}$/.test(pin)){$$('lgm').textContent='کلاس، نام کامل و رمز ۴ رقمی را وارد کن.';return}
+ $$('lgm').textContent='در حال ورود…';
+ try{const id=await rpc('join_class',{p_code:code,p_name:name,p_pin:pin});lsSet('r8s',JSON.stringify({sid:id,pin,name}));$$('lg').style.display='none';who();flush()}
+ catch(e){$$('lgm').textContent=ERR[e.message]||(e.message.startsWith('HTTP')||e.name==='TypeError'?'ارتباط با سرور برقرار نشد. اینترنت را بررسی کن.':'ورود انجام نشد: '+e.message)}};
+const qget=()=>{try{return JSON.parse(lsGet('r8q')||'[]')}catch(e){return[]}};
+async function flush(){const x=ses();if(!x)return 0;const left=[];
+ for(const r of qget()){try{await rpc('submit_result',{p_sid:x.sid,p_pin:x.pin,p_chapter:CH,p_level:r.l,p_total:r.n,p_correct:r.ok,p_by_topic:r.t})}catch(e){left.push(r)}}
+ lsSet('r8q',JSON.stringify(left));return left.length}
+function toast(t){const e=$$('sst');e.textContent=t;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',6000)}
+async function sendResult(sum){const x=ses();if(!x){toast('نتیجه برای معلم ثبت نشد (بدون ورود).');return}
+ const t={};currentAnswers.forEach(a=>{if(!a)return;const k=tkey(a.s),v=t[k]||(t[k]=[0,0]);v[1]++;if(a.c)v[0]++});
+ const q=qget();q.push({l:Math.max(0,LEVELS.indexOf(selectedLevel)),n:sum.total,ok:sum.correct,t});lsSet('r8q',JSON.stringify(q));
+ toast('در حال ثبت نتیجه…');const left=await flush();toast(left?'ثبت انجام نشد؛ نتیجه نگه داشته شد و بعداً دوباره ارسال می‌شود.':'✅ نتیجه برای معلم ثبت شد.')}
+who();if(!ses())$$('lg').style.display='flex';else flush();
+
+/* فهرست کلاس‌های همین پایه */
+async function loadClasses(g){const s=document.getElementById('lc');
+ try{const L=await rpc('list_classes',{p_grade:g});const e=t=>String(t).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+  s.innerHTML='<option value="">— کلاس خودت را انتخاب کن —</option>'+L.map(c=>'<option value="'+e(c.code)+'">'+e(c.title)+'</option>').join('')}
+ catch(err){s.outerHTML='<input type="text" id="lc" maxlength="20" autocomplete="off" placeholder="کد کلاس را بنویس">'}}
+loadClasses(8);
+</script>
+</body>
+</html>
