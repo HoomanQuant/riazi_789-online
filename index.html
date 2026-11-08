@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ریاضی ۷، ۸ و ۹ | آموزش و آزمون تعاملی</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1224;--card:#152238;--bd:#2a3f5f;--tx:#f1f5f9;--mu:#94a3b8;--gr:linear-gradient(135deg,#6366f1,#a855f7 45%,#ec4899)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--tx);line-height:1.8;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
+.w{max-width:960px;margin:0 auto}
+header{text-align:center;padding:30px 8px 14px}
+h1{font-size:2.1rem;font-weight:800;background:var(--gr);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:22px 0}
+.g{background:var(--card);border:1px solid var(--bd);border-top:4px solid #6366f1;border-radius:18px;padding:20px}
+.g h2{font-size:1.4rem;margin-bottom:4px}
+.g .n{font-size:2.4rem;font-weight:800;background:var(--gr);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
+.ch{display:block;text-decoration:none;color:var(--tx);background:#1b2c47;border:2px solid var(--bd);border-radius:12px;padding:10px 14px;margin:10px 0;font-weight:600}
+.ch:hover,.ch:focus-visible{border-color:#818cf8;outline:none;background:#223656}
+.ch small{display:block;color:var(--mu);font-weight:400}
+.soon{color:var(--mu);font-size:.9rem;margin-top:8px}
+.how{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px 20px;margin-bottom:16px}
+footer{text-align:center;color:var(--mu);font-size:.85rem;padding:14px}footer a{color:var(--mu)}
+</style>
+</head>
+<body><div class="w">
+<header><h1>📐 ریاضی هفتم، هشتم و نهم</h1><p>یاد بگیر، تمرین کن و پیشرفتت را ببین</p></header>
+<div class="grid" id="g"></div>
+<div class="how"><b>چطور شروع کنم؟</b><br>۱) پایه و فصل خودت را انتخاب کن. ۲) با کد کلاس، نام و رمز ۴ رقمی وارد شو تا معلمت پیشرفتت را ببیند (یا «ادامه بدون ورود» را بزن). ۳) درس را بخوان و آزمون بده.</div>
+<footer>معلم هستید؟ <a href="teacher/">ورود به داشبورد معلم</a></footer>
+</div>
+<script>
+const FA=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+// برای افزودن فصل جدید فقط یک سطر به فهرست همان پایه اضافه کن: [عنوان، توضیح، پوشه]
+const G=[
+ {n:7,t:'پایهٔ هفتم',ch:[['فصل ۱','راهبردهای حل مسئله','g7-c1/']]},
+ {n:8,t:'پایهٔ هشتم',ch:[['فصل ۱','عددهای صحیح و گویا','g8-c1/']]},
+ {n:9,t:'پایهٔ نهم',ch:[['فصل ۱','مجموعه‌ها و احتمال','g9-c1/']]}];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById('g').innerHTML=G.map(g=>`<section class="g"><div class="n">${FA(g.n)}</div><h2>${esc(g.t)}</h2>`+
+ g.ch.map(c=>`<a class="ch" href="${esc(c[2])}">${esc(c[0])}<small>${esc(c[1])}</small></a>`).join('')+
+ '<div class="soon">فصل‌های بعدی به‌زودی اضافه می‌شوند.</div></section>').join('');
+</script>
+</body>
+</html>
