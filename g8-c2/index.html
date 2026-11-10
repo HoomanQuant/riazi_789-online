@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ریاضی هشتم — فصل ۲</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+<div class="wrap">
+<header><h1>ریاضی هشتم — فصل ۲</h1><p>حساب عددهای طبیعی: یاد بگیر، تمرین کن، پیشرفتت را ببین</p></header>
+<div id="who" style="text-align:center;color:var(--mu)"></div><nav id="nav"></nav>
+
+<section id="home" class="sec on">
+ <div class="card" id="rules"></div>
+ <div class="card"><h2>🧠 مباحث کلیدی</h2><div class="grid" id="tgrid"></div></div>
+</section>
+
+<section id="learn" class="sec"><div id="lbody"></div></section>
+
+<section id="quiz" class="sec"><div class="card" id="qbox">
+<div id="qstart">
+ <h2>🎯 آزمون</h2>
+ <p>سطح را انتخاب کن:</p>
+ <div class="row" style="justify-content:center;gap:10px;margin:16px 0">
+  <button class="btn" data-lv="easy">آسان</button>
+  <button class="btn" data-lv="medium">متوسط</button>
+  <button class="btn" data-lv="hard">سخت</button>
+  <button class="btn pri" data-lv="all">همه</button>
+ </div>
+</div>
+<div id="qplay" style="display:none"></div>
+</div></section>
+
+<section id="prog" class="sec"><div class="card" id="pbox"></div></section>
+</div>
+
+<div id="lg" class="modal" style="display:none"><div class="modal-box">
+<h2>ورود دانش‌آموز</h2>
+<label>کد کلاس <input id="lgc" autocomplete="off"></label>
+<label>نام <input id="lgn" autocomplete="name"></label>
+<label>رمز ۴ رقمی <input id="lgp" type="password" maxlength="4" inputmode="numeric" autocomplete="off"></label>
+<div id="lgm" role="alert"></div>
+<div class="row"><button class="btn pri" id="lgo">ورود</button><button class="btn" id="lgs">ادامه بدون ورود</button></div>
+<p style="color:var(--mu);font-size:.85rem">بدون ورود، نتیجهٔ آزمون برای معلم ثبت نمی‌شود.</p></div></div>
+
+<script>
+// Override the engine's fetch path so it loads local index.json when opened from /g8-c2/
+const _origFetch = window.fetch;
+window.fetch = function(url, opts) {
+  if (typeof url === 'string' && url.includes('/content/g8-c2.json')) {
+    return _origFetch('./index.json', opts);
+  }
+  return _origFetch(url, opts);
+};
+// Force the chapter id
+history.replaceState(null, '', location.pathname + '?c=g8-c2');
+</script>
+<script src="../shared/engine.js"></script>
+</body>
+</html>
