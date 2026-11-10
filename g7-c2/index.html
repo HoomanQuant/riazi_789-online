@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ریاضی هفتم | فصل ۲: عددهای صحیح</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #ec4899;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --bg: #0b1224;
+  --card: #152238;
+  --card-hover: #1e3350;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #2a3f5f;
+  --easy: #10b981;
+  --medium: #f59e0b;
+  --hard: #ef4444;
+  --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 45%, #ec4899 100%);
+  --glow: 0 0 40px rgba(99,102,241,0.25);
+  --radius: 20px;
+  --shadow-card: 0 10px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(99,102,241,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Vazirmatn', 'Vazir', 'IRANSans', Tahoma, 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.bg-pattern {
+  position: fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(ellipse 80% 50% at 15% 10%, rgba(99,102,241,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 45% at 85% 80%, rgba(236,72,153,0.16) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(16,185,129,0.08) 0%, transparent 55%),
+    radial-gradient(circle at 70% 20%, rgba(168,85,247,0.08) 0%, transparent 35%);
+}
+.bg-pattern::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(148,163,184,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+header {
+  text-align: center;
+  padding: 36px 20px 22px;
+  position: relative;
+}
+header h1 {
+  font-size: 2.35rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 4px 20px rgba(99,102,241,0.35));
+}
+header p { color: var(--text-muted); font-size: 1.08rem; font-weight: 500; }
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(236,72,153,0.18));
+  color: #c4b5fd;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  margin-top: 12px;
+  border: 1px solid rgba(167,139,250,0.35);
+  box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+  font-weight: 600;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 25px 0 30px;
+}
+.nav-btn {
+  background: rgba(21, 34, 56, 0.85);
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+}
+.nav-btn:hover {
+  border-color: rgba(99,102,241,0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(99,102,241,0.2);
+  background: rgba(99,102,241,0.15);
+}
+.nav-btn.active {
+  background: var(--gradient);
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(99,102,241,0.4);
+  color: #fff;
+}
+.nav-btn .icon { font-size: 1.25rem; }
+
+/* Cards */
+.card {
+  background: linear-gradient(165deg, rgba(30,45,70,0.95) 0%, rgba(21,34,56,0.98) 100%);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(99,102,241,0.18);
+  box-shadow: var(--shadow-card);
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gradient);
+  opacity: 0.7;
+}
+.card:hover {
+  border-color: rgba(99,102,241,0.4);
+  box-shadow: 0 14px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.2);
+  transform: translateY(-2px);
+}
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+}
+.card h3 {
+  font-size: 1.15rem;
+  color: #c4b5fd;
+  margin: 18px 0 10px;
+  font-weight: 700;
+}
+.section { display: none; animation: fadeIn 0.4s ease; }
+.section.active { display: block; }
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(12px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* Strategy grid */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.strategy-card {
+  background: linear-gradient(160deg, rgba(36,52,80,0.9), rgba(15,23,42,0.95));
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 18px;
+  padding: 24px 18px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+.strategy-card::before {
+  content: '';
+  position: absolute;
+  top:0; left:0; right:0;
+  height: 4px;
+  background: var(--gradient);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.strategy-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(99,102,241,0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.strategy-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(129,140,248,0.55);
+  box-shadow: 0 16px 40px rgba(99,102,241,0.28);
+}
+.strategy-card:hover::before,
+.strategy-card:hover::after { opacity:1; }
+.strategy-card .num {
+  width: 48px; height: 48px;
+  background: var(--gradient);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1.15rem;
+  margin: 0 auto 14px;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.4);
+  color: #fff;
+}
+.strategy-card h4 { font-size: 1.08rem; margin-bottom: 8px; font-weight: 700; }
+.strategy-card p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; }
+
+/* Strategy detail */
+.strategy-detail { display: none; }
+.strategy-detail.active { display: block; }
+.example-box {
+  background: linear-gradient(145deg, rgba(99,102,241,0.12), rgba(15,23,42,0.4));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 16px 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.example-box .label {
+  display: inline-block;
+  background: var(--gradient);
+  color: white;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+}
+.answer-box {
+  background: linear-gradient(145deg, rgba(16,185,129,0.12), rgba(15,23,42,0.35));
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 14px;
+  line-height: 1.9;
+}
+.answer-box .step {
+  margin: 8px 0;
+  padding-right: 10px;
+  border-right: 3px solid rgba(16,185,129,0.35);
+}
+.answer-box .final {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: rgba(16,185,129,0.22);
+  border-radius: 12px;
+  font-weight: 800;
+  color: #34d399;
+  text-align: center;
+  font-size: 1.05rem;
+  box-shadow: 0 0 20px rgba(16,185,129,0.15);
+}
+.tip-box {
+  background: linear-gradient(145deg, rgba(245,158,11,0.14), rgba(15,23,42,0.3));
+  border: 1px solid rgba(245,158,11,0.35);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin: 18px 0;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 14px rgba(245,158,11,0.08);
+}
+.tip-box strong { color: #fbbf24; }
+.back-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-family: inherit;
+  cursor: pointer;
+  margin-bottom: 18px;
+  transition: all 0.2s;
+}
+.back-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* Quiz setup */
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 24px 0;
+}
+.level-card {
+  background: linear-gradient(160deg, rgba(30,45,70,0.9), rgba(15,23,42,0.95));
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 26px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+.level-card:hover, .level-card.selected {
+  transform: scale(1.04) translateY(-3px);
+}
+.level-card.easy:hover, .level-card.easy.selected { border-color: var(--easy); box-shadow: 0 0 28px rgba(16,185,129,0.3); background: linear-gradient(160deg, rgba(16,185,129,0.12), rgba(15,23,42,0.95)); }
+.level-card.medium:hover, .level-card.medium.selected { border-color: var(--medium); box-shadow: 0 0 28px rgba(245,158,11,0.3); background: linear-gradient(160deg, rgba(245,158,11,0.12), rgba(15,23,42,0.95)); }
+.level-card.hard:hover, .level-card.hard.selected { border-color: var(--hard); box-shadow: 0 0 28px rgba(239,68,68,0.3); background: linear-gradient(160deg, rgba(239,68,68,0.12), rgba(15,23,42,0.95)); }
+.level-card .emoji { font-size: 2.4rem; margin-bottom: 10px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+.level-card h3 { margin-bottom: 6px; font-weight: 800; }
+.level-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+.q-count {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.q-count button {
+  background: rgba(21,34,56,0.9);
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 11px 22px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.q-count button:hover {
+  border-color: rgba(99,102,241,0.6);
+  background: rgba(99,102,241,0.15);
+}
+.q-count button.selected {
+  background: var(--gradient);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.35);
+}
+
+.start-quiz-btn {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin: 24px auto 0;
+  background: var(--gradient);
+  border: none;
+  color: white;
+  padding: 17px 32px;
+  border-radius: 18px;
+  font-family: inherit;
+  font-size: 1.18rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+.start-quiz-btn::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition: left 0.6s;
+}
+.start-quiz-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(99,102,241,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.start-quiz-btn:hover::after { left: 120%; }
+.start-quiz-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.start-quiz-btn:disabled::after { display: none; }
+
+/* Quiz UI */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.progress-bar-wrap {
+  flex: 1;
+  min-width: 150px;
+  height: 10px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--gradient);
+  border-radius: 10px;
+  transition: width 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
+  box-shadow: 0 0 12px rgba(99,102,241,0.5);
+}
+.score-display {
+  background: linear-gradient(135deg, rgba(99,102,241,0.22), rgba(236,72,153,0.12));
+  padding: 8px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.08rem;
+  border: 1px solid rgba(99,102,241,0.3);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.15);
+}
+.question-card {
+  background: linear-gradient(165deg, rgba(30,45,70,0.95), rgba(21,34,56,0.98));
+  border-radius: 22px;
+  padding: 28px;
+  border: 1px solid rgba(99,102,241,0.2);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
+}
+.q-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.q-tag {
+  padding: 3px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.q-tag.level-easy { background: rgba(16,185,129,0.2); color: #34d399; }
+.q-tag.level-medium { background: rgba(245,158,11,0.2); color: #fbbf24; }
+.q-tag.level-hard { background: rgba(239,68,68,0.2); color: #f87171; }
+.q-tag.strategy { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+.question-text {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 22px;
+  line-height: 1.8;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.option {
+  background: rgba(15,23,42,0.7);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 15px 18px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.02rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.option:hover { border-color: rgba(99,102,241,0.7); background: rgba(99,102,241,0.12); transform: translateX(-4px); }
+.option.selected { border-color: var(--primary); background: rgba(99,102,241,0.22); box-shadow: 0 0 0 3px rgba(99,102,241,0.2); }
+.option.correct { border-color: var(--success); background: rgba(16,185,129,0.22); box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
+.option.wrong { border-color: var(--danger); background: rgba(239,68,68,0.18); box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+.option .opt-letter {
+  width: 36px; height: 36px;
+  background: rgba(51,65,85,0.9);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+.option.selected .opt-letter { background: var(--primary); color: #fff; }
+.option.correct .opt-letter { background: var(--success); color: #fff; }
+.option.wrong .opt-letter { background: var(--danger); color: #fff; }
+
+.quiz-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s;
+}
+.btn-primary {
+  background: var(--gradient);
+  color: white;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.35);
+  border: none;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(99,102,241,0.45); }
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--primary); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+.feedback {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 500;
+  display: none;
+  line-height: 1.8;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #34d399; }
+.feedback.wrong { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+.feedback small { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.92rem; }
+
+/* Result */
+.result-card {
+  text-align: center;
+  padding: 40px 28px;
+}
+.result-card .big-score {
+  font-size: 4.2rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 16px 0;
+  filter: drop-shadow(0 6px 24px rgba(99,102,241,0.4));
+}
+.stars { font-size: 2.6rem; margin: 14px 0; letter-spacing: 8px; filter: drop-shadow(0 4px 12px rgba(251,191,36,0.4)); }
+.motivational {
+  font-size: 1.25rem;
+  margin: 16px 0;
+  color: #c4b5fd;
+  font-weight: 600;
+}
+.result-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+}
+.stat .num { font-size: 1.8rem; font-weight: 800; }
+.stat .label { font-size: 0.85rem; color: var(--text-muted); }
+
+.diagram-box {
+  background: linear-gradient(160deg, rgba(15,23,42,0.75), rgba(30,41,59,0.5));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 14px;
+  padding: 18px;
+  margin: 14px 0;
+  text-align: center;
+  overflow-x: auto;
+  box-shadow: inset 0 0 30px rgba(99,102,241,0.05);
+}
+.diagram-box svg {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+.diagram-caption {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* Steps */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.step {
+  background: linear-gradient(160deg, rgba(99,102,241,0.12), rgba(15,23,42,0.5));
+  border: 1px solid rgba(99,102,241,0.28);
+  border-radius: 16px;
+  padding: 18px 14px;
+  text-align: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.step:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(99,102,241,0.2); }
+.step .step-num {
+  width: 40px; height: 40px;
+  background: var(--gradient);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.4);
+  font-size: 1.05rem;
+}
+
+/* Confetti */
+.confetti-container {
+  position: fixed; inset:0; pointer-events: none; z-index: 999;
+  overflow: hidden;
+}
+.confetti {
+  position: absolute;
+  width: 10px; height: 10px;
+  opacity: 0.9;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+@keyframes softPulse {
+  0%, 100% { box-shadow: 0 10px 30px rgba(99,102,241,0.4), inset 0 1px 0 rgba(255,255,255,0.2); }
+  50% { box-shadow: 0 12px 36px rgba(236,72,153,0.45), inset 0 1px 0 rgba(255,255,255,0.25); }
+}
+.start-quiz-btn:not(:disabled) {
+  animation: softPulse 2.8s ease-in-out infinite;
+}
+.start-quiz-btn:hover:not(:disabled) {
+  animation: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 36px 20px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-top: 48px;
+  border-top: 1px solid rgba(99,102,241,0.15);
+  background: linear-gradient(180deg, transparent, rgba(99,102,241,0.04));
+  line-height: 1.9;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.65rem; }
+  header { padding: 24px 12px 16px; }
+  .level-cards { grid-template-columns: 1fr 1fr; }
+  .strategy-grid { grid-template-columns: 1fr 1fr; }
+  .question-text { font-size: 1.05rem; }
+  .nav-btn { padding: 10px 14px; font-size: 0.88rem; }
+  .card { padding: 20px 14px; }
+}
+@media (max-width: 400px) {
+  .strategy-grid { grid-template-columns: 1fr; }
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: center;
+}
+th { background: rgba(99,102,241,0.2); }
+
+/* ===== Progress tracking ===== */
+.student-box { max-width: 420px; margin: 20px auto 0; text-align: center; }
+.student-box label { display:block; font-weight:600; margin-bottom:8px; color:#a5b4fc; }
+.student-box input, .pg-toolbar select {
+  width: 100%; background: var(--bg); color: var(--text); border: 2px solid var(--border);
+  border-radius: 12px; padding: 10px 14px; font-family: inherit; font-size: 1rem; text-align: center;
+}
+.pg-toolbar select { width: auto; min-width: 180px; padding: 8px 14px; }
+.student-box input:focus, .pg-toolbar select:focus { outline: none; border-color: var(--primary); }
+.pg-toolbar { display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin: 14px 0 22px; }
+.pg-toolbar .grp { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.pg-chip { background: var(--bg); border: 2px solid var(--border); color: var(--text-muted); padding: 6px 16px; border-radius: 20px; font-family: inherit; font-size: .9rem; cursor: pointer; transition: all .2s; }
+.pg-chip:hover { border-color: var(--primary); color: var(--text); }
+.pg-chip.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+.pg-profile { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 18px; padding: 14px; border-radius: 16px; background: linear-gradient(135deg, rgba(99,102,241,.14), rgba(236,72,153,.08)); border: 1px solid rgba(167,139,250,.3); }
+.pg-profile .pf { background: rgba(15,23,42,.55); border: 1px solid rgba(99,102,241,.2); border-radius: 12px; padding: 10px 14px; min-width: 0; }
+.pg-profile .pf small { display:block; color: var(--text-muted); font-size: .78rem; font-weight: 500; margin-bottom: 2px; }
+.pg-profile .pf strong { display:block; font-size: 1.02rem; font-weight: 700; color: #e0e7ff; line-height: 1.6; white-space: normal; overflow-wrap: anywhere; word-break: normal; }
+.pg-profile .pf.wide { grid-column: 1 / -1; }
+.pg-profile .pf.wide strong { font-size: 1.2rem; color: #fff; }
+.pg-profile .pf strong.na { color: var(--text-muted); font-weight: 500; }
+.pg-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.pg-stat { background: rgba(99,102,241,.1); border: 1px solid rgba(99,102,241,.25); border-radius: 14px; padding: 14px 10px; text-align: center; }
+.pg-stat b { display:block; font-size: 1.7rem; font-weight: 800; color: #c7d2fe; line-height: 1.3; }
+.pg-stat span { font-size: .85rem; color: var(--text-muted); }
+.pg-insight { border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; font-weight: 600; border: 1px solid; }
+.pg-insight.up { background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.35); color: #6ee7b7; }
+.pg-insight.down { background: rgba(239,68,68,.1); border-color: rgba(239,68,68,.3); color: #fca5a5; }
+.pg-insight.flat { background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.3); color: #fcd34d; }
+.pg-insight small { display:block; font-weight: 400; color: var(--text-muted); margin-top: 4px; }
+.pg-chart { background: rgba(15,23,42,.55); border: 1px solid var(--border); border-radius: 14px; padding: 12px 8px 6px; direction: ltr; }
+.pg-legend { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; font-size:.82rem; color: var(--text-muted); margin: 10px 0 4px; }
+.pg-legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-left:5px; vertical-align:middle; }
+.pg-legend i.ln { width:18px; height:0; border-top:2px dashed #f472b6; border-radius:0; }
+.pg-srow { display:grid; grid-template-columns: minmax(120px, 190px) 1fr 120px; gap: 12px; align-items:center; margin: 10px 0; }
+.pg-sname { font-size: .92rem; }
+.pg-sbar { height: 12px; background: var(--bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.pg-sbar div { height: 100%; border-radius: 8px; transition: width .6s; }
+.pg-sval { font-size: .88rem; font-weight: 700; }
+.pg-sval small { color: var(--text-muted); font-weight: 400; }
+.pg-delta { display:inline-block; font-size:.75rem; padding:1px 8px; border-radius:10px; margin-right:6px; font-weight:700; }
+.pg-delta.up { background: rgba(16,185,129,.2); color:#6ee7b7; }
+.pg-delta.down { background: rgba(239,68,68,.18); color:#fca5a5; }
+.pg-actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top: 22px; }
+.pg-empty { text-align:center; padding: 36px 10px; color: var(--text-muted); }
+.pg-empty .big { font-size: 3rem; }
+.pg-warn { background: rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.3); color:#fcd34d; border-radius:10px; padding:10px 14px; font-size:.85rem; margin-bottom:14px; }
+.result-compare { display:none; margin: 14px auto 0; max-width: 460px; background: rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.3); border-radius: 12px; padding: 12px 16px; line-height: 1.9; }
+.pg-tablewrap { overflow-x:auto; }
+.pg-mini-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+.pg-mini { background: rgba(15,23,42,.55); border: 1px solid var(--border); border-radius: 14px; padding: 12px 10px 6px; }
+.pg-mini-h { display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding: 0 6px 4px; font-size:.92rem; font-weight:600; }
+.pg-mini-h small { color: var(--text-muted); font-weight:400; font-size:.78rem; }
+.pg-mini svg { direction: ltr; display:block; }
+.pg-mini .nodata { color: var(--text-muted); font-size:.82rem; text-align:center; padding: 34px 8px; }
+@media (max-width: 600px) { .pg-srow { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ===== v4: accessibility & quiz additions ===== */
+:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 2px; }
+.level-cards { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.level-card.mixed:hover, .level-card.mixed.selected { border-color: #38bdf8; box-shadow: 0 0 28px rgba(56,189,248,0.35); background: linear-gradient(160deg, rgba(56,189,248,0.12), rgba(15,23,42,0.95)); }
+.level-card { cursor: pointer; }
+button.option { font-family: inherit; color: inherit; text-align: right; width: 100%; }
+button.option:disabled { opacity: 1; color: inherit; cursor: default; }
+.q-count button:disabled { opacity: .4; cursor: not-allowed; }
+.quiz-notice { min-height: 1.4em; text-align: center; color: #fcd34d; font-size: .9rem; margin: 10px 0 0; }
+.score-note { color: var(--text-muted); font-size: .88rem; margin: -6px auto 10px; max-width: 520px; line-height: 1.9; }
+.rv-wrap { text-align: right; margin: 18px auto 0; max-width: 700px; }
+.rv-wrap h3 { margin-bottom: 10px; }
+details.rv { background: rgba(15,23,42,.55); border: 1px solid var(--border); border-radius: 12px; margin: 8px 0; padding: 10px 14px; }
+details.rv summary { cursor: pointer; font-weight: 600; line-height: 1.8; }
+details.rv .rv-body { margin-top: 8px; font-size: .92rem; line-height: 1.9; }
+details.rv .rv-ok { color: #34d399; } details.rv .rv-bad { color: #f87171; } details.rv .rv-ex { color: var(--text-muted); }
+.rv-tag { display:inline-block; font-size:.72rem; padding:1px 8px; border-radius:10px; margin-left:6px; }
+.rv-tag.wrong { background: rgba(239,68,68,.2); color:#fca5a5; } .rv-tag.skip { background: rgba(245,158,11,.2); color:#fcd34d; }
+.pg-warn.ok { background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.35); color: #6ee7b7; }
+.pg-note { color: var(--text-muted); font-size: .82rem; margin: 8px 4px 0; line-height: 1.9; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+/* ===== v4.1: mobile fit for lesson cards, diagrams and tables ===== */
+.diagram-box svg { min-width: 300px; width: 100%; }
+.diagram-box table { width: 100%; table-layout: auto; }
+@media (max-width: 600px) {
+  .container { padding: 10px 6px; }
+  .card { padding: 16px 12px; border-radius: 16px; }
+  .example-box { padding: 12px 8px; }
+  .diagram-box { padding: 8px 2px; }
+  .diagram-box table { font-size: .8rem !important; min-width: 0 !important; margin: 0 auto; }
+  .diagram-box th, .diagram-box td { padding: 6px 4px; }
+  .answer-box .step, .step { padding-left: 10px; padding-right: 10px; }
+}
+
+/* ===== v4.2: student full name ===== */
+.student-box { max-width: 640px; }
+.student-box .name-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: right; }
+.student-box { max-width: 640px; }
+@media (min-width: 700px) {
+  .student-box .name-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+.student-box .name-grid label { font-weight: 500; font-size: .88rem; margin-bottom: 4px; color: var(--text-muted); }
+.student-box input.invalid { border-color: #ef4444; }
+.student-box input { text-align: right; }
+.field-error { color: #fca5a5; min-height: 1.4em; font-size: .88rem; margin: 8px 0 0; text-align: center; }
+.known-students { margin-top: 12px; text-align: right; }
+.known-students select { width: 100%; background: var(--bg); color: var(--text); border: 2px solid var(--border); border-radius: 12px; padding: 8px 12px; font-family: inherit; font-size: .95rem; }
+.pg-rename { margin-top: 14px; padding: 14px; border: 1px solid var(--border); border-radius: 14px; background: rgba(15,23,42,.55); }
+.pg-rename[hidden] { display: none; }
+.pg-rename .name-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pg-rename input { width: 100%; background: var(--bg); color: var(--text); border: 2px solid var(--border); border-radius: 12px; padding: 8px 12px; font-family: inherit; font-size: 1rem; }
+.pg-rename label { display: block; font-size: .85rem; color: var(--text-muted); margin-bottom: 4px; }
+@media (max-width: 480px) { .student-box .name-grid, .pg-rename .name-grid { grid-template-columns: 1fr; } }
+.mth{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.diagram-box svg.sm{min-width:0;width:auto;max-width:100%}
+#lg{position:fixed;inset:0;background:rgba(5,10,25,.93);display:none;align-items:center;justify-content:center;padding:16px;z-index:9999}
+#lg .box{width:100%;max-width:380px;background:#152238;border:1px solid #2a3f5f;border-radius:18px;padding:22px;color:#f1f5f9;font-family:inherit}
+#lg label{display:block;margin:8px 0}#lg input{width:100%;font:inherit;background:#0f1a30;color:#f1f5f9;border:1px solid #2a3f5f;border-radius:10px;padding:8px 10px}
+#lg .r{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}#lg button{font:inherit;font-weight:600;color:#fff;background:#1b2c47;border:2px solid #2a3f5f;border-radius:12px;padding:8px 14px;cursor:pointer}#lg button.p{background:linear-gradient(135deg,#6366f1,#ec4899);border-color:transparent}
+#lgm{color:#fca5a5;min-height:1.6em}#who{text-align:center;color:#94a3b8;margin:6px 0}#sst{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#152238;border:1px solid #2a3f5f;color:#f1f5f9;border-radius:12px;padding:8px 16px;z-index:9998;display:none}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style id="theme-ink-saffron">
+:root{
+ --primary:#2bb5a0; --primary-dark:#1e8f7e; --secondary:#e0715a; --success:#3fa796; --warning:#2bb5a0; --danger:#d9534f;
+ --bg:#0a0f12; --card:#11181c; --card-hover:#18232a; --text:#eaf2f3; --text-muted:#9fb0b6; --border:#26343b;
+ --easy:#3fa796; --medium:#2bb5a0; --hard:#d9634f;
+ --gradient:linear-gradient(135deg,#5eead4 0%,#2bb5a0 45%,#e0715a 100%);
+ --glow:0 0 30px rgba(43,181,160,.15); --radius:14px;
+ --shadow-card:0 14px 40px rgba(0,0,0,.45),0 0 0 1px rgba(43,181,160,.14);
+ --serif:'Vazirmatn',sans-serif;
+}
+body{font-family:'Vazirmatn','Vazir',Tahoma,sans-serif;line-height:1.85;background:var(--bg)}
+h1,h2,h3,h4,.card h2,.card h3,.strategy-card h4,.level-card h3,.big-score{font-family:var(--serif)!important;font-weight:700;letter-spacing:0}
+.bg-pattern{background:
+ radial-gradient(ellipse 70% 45% at 12% 0%,rgba(43,181,160,.14),transparent 60%),
+ radial-gradient(ellipse 60% 40% at 92% 100%,rgba(224,113,90,.12),transparent 60%),
+ radial-gradient(ellipse 50% 40% at 50% 55%,rgba(63,167,150,.05),transparent 60%)}
+.bg-pattern::after{background-image:linear-gradient(rgba(234,242,243,.025) 1px,transparent 1px);background-size:100% 36px;opacity:.7}
+header{padding:44px 20px 18px}
+header h1{font-size:2.6rem;font-weight:700;line-height:1.25;filter:none;background:linear-gradient(180deg,#ffffff,#a6f0e3 60%,#4fd1bb);-webkit-background-clip:text;background-clip:text}
+header h1::after{content:"";display:block;width:84px;height:2px;margin:14px auto 0;background:linear-gradient(90deg,transparent,#2bb5a0,transparent)}
+header p{color:var(--text-muted);font-weight:400;letter-spacing:.01em}
+.badge{background:transparent;color:#7fdccb;border:1px solid rgba(43,181,160,.5);box-shadow:none;font-weight:500;letter-spacing:.02em}
+.nav{gap:6px;border-bottom:1px solid var(--border);padding-bottom:0;margin:22px 0 28px}
+.nav-btn{background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;color:var(--text-muted);padding:12px 18px;font-weight:500;backdrop-filter:none;box-shadow:none;transition:color .2s,border-color .2s,background .2s}
+.nav-btn:hover{background:rgba(43,181,160,.07);color:var(--text);transform:none;box-shadow:none;border-color:rgba(43,181,160,.4)}
+.nav-btn.active{background:transparent;color:#8eeadb;border-color:#2bb5a0;transform:none;box-shadow:none}
+.card,.question-card,.result-card,.student-box{background:linear-gradient(180deg,#141c20,#0f1519);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-card)}
+.card::before{background:linear-gradient(90deg,transparent,#2bb5a0,transparent)!important;opacity:.6}
+.card h2{font-size:1.6rem;color:#8eeadb}
+.card h3{font-size:1.25rem}
+.strategy-card,.level-card{background:#121a1e;border:1px solid var(--border);border-radius:12px;box-shadow:none;transition:transform .25s,border-color .25s,background .25s}
+.strategy-card:hover,.level-card:hover,.level-card.selected{background:#18232a;border-color:rgba(43,181,160,.6);transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.strategy-card .num{font-family:var(--serif);background:transparent!important;color:#2bb5a0!important;border:1px solid rgba(43,181,160,.55);box-shadow:none!important;font-weight:700}
+.strategy-card h4{font-size:1.1rem;color:var(--text)}
+.diagram-box,.example-box,.answer-box,.tip-box{border-radius:12px}
+.example-box{background:#0f1519;border:1px solid var(--border);border-right:3px solid #2bb5a0}
+.answer-box{background:rgba(63,167,150,.08);border:1px solid rgba(63,167,150,.35)}
+.tip-box{background:rgba(43,181,160,.07);border:1px solid rgba(43,181,160,.35)}
+.diagram-box{background:#0d1317;border:1px solid var(--border)}
+.step{background:#121a1e;border:1px solid var(--border);border-radius:10px}
+.step:hover{border-color:rgba(43,181,160,.5)}
+.step .step-num{background:#2bb5a0;color:#04201c;font-weight:700}
+.option{background:#11181c;border:1px solid var(--border);border-radius:10px;transition:border-color .2s,background .2s,transform .2s}
+.option:hover{background:#18232a;border-color:rgba(43,181,160,.6);transform:translateX(-3px)}
+.option.selected{border-color:#2bb5a0;background:rgba(43,181,160,.1)}
+.option .opt-letter{background:#1d2a30;color:#7fdccb;font-family:var(--serif);font-size:1rem;border-radius:8px}
+.option.selected .opt-letter{background:#2bb5a0;color:#04201c}
+.question-text{font-family:'Vazirmatn',sans-serif;font-weight:600;line-height:1.9}
+.q-tag{border-radius:6px;font-weight:500}
+.q-tag.strategy{background:rgba(43,181,160,.12);color:#7fdccb;border:1px solid rgba(43,181,160,.3)}
+.progress-bar-wrap{background:#1b262b;border-radius:99px}
+.progress-bar{background:var(--gradient)!important;box-shadow:none}
+.btn-primary,.start-quiz-btn{background:var(--gradient)!important;color:#04201c!important;font-weight:700;border-radius:10px;box-shadow:0 8px 22px rgba(43,181,160,.22)}
+.btn-primary:hover,.start-quiz-btn:hover{box-shadow:0 12px 28px rgba(43,181,160,.34)}
+.btn-secondary,.back-btn,.q-count button,.pg-chip{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:10px}
+.btn-secondary:hover,.back-btn:hover,.q-count button:hover,.pg-chip:hover{border-color:#2bb5a0;background:rgba(43,181,160,.08)}
+.q-count button.selected,.pg-chip.on{background:rgba(43,181,160,.16);border-color:#2bb5a0;color:#8eeadb}
+.stat,.pg-stat,.pg-profile .pf{background:#11181c;border:1px solid var(--border);border-radius:10px}
+.big-score,.stat .num{color:#8eeadb}
+input,select{background:#0d1317;color:var(--text);border:1px solid var(--border)!important;border-radius:10px}
+input:focus,select:focus{border-color:#2bb5a0!important;box-shadow:0 0 0 3px rgba(43,181,160,.18)!important;outline:none}
+::selection{background:#2bb5a0;color:#04201c}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#2d3d45;border-radius:8px}::-webkit-scrollbar-track{background:#0a0f12}
+</style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+<div class="confetti-container" id="confetti"></div>
+
+<div class="container">
+  <header>
+    <h1>📐 ریاضی هفتم — فصل ۲</h1>
+    <p>🌡️ عددهای صحیح — بیایید با هم قوی‌تر شویم!</p>
+    <span class="badge">آموزشی + تعاملی + آزمون هوشمند + نمودار پیشرفت</span>
+  </header>
+
+  <div id="who"></div>
+  <nav class="nav">
+    <button class="nav-btn active" data-section="home"><span class="icon">🏠</span> خانه</button>
+    <button class="nav-btn" data-section="learn"><span class="icon">📚</span> آموزش مبحث‌ها</button>
+    <button class="nav-btn" data-section="quiz"><span class="icon">🎯</span> آزمون</button>
+    <button class="nav-btn" data-section="progress"><span class="icon">📈</span> پیشرفت من</button>
+    <button class="nav-btn" data-section="about"><span class="icon">ℹ️</span> راهنما</button>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home" class="section active">
+    <div class="card">
+      <h2>🌟 چهار قانون طلایی عددهای صحیح</h2>
+      <p style="margin-bottom:18px; color:var(--text-muted);">هر مسئله‌ای مثل یک بازی فکری است! با این <strong>۴ قانون</strong> می‌توانی قهرمان عددهای صحیح شوی:</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">۱</div><strong>جمع هم‌علامت‌ها</strong><br><small>عددها را جمع کن، علامت مشترک را بگذار</small></div>
+        <div class="step"><div class="step-num">۲</div><strong>جمع ناهم‌علامت‌ها</strong><br><small>کم کن، علامت عدد بزرگ‌تر را بگذار</small></div>
+        <div class="step"><div class="step-num">۳</div><strong>تفریق = جمع</strong><br><small>a − b را به a + (−b) تبدیل کن</small></div>
+        <div class="step"><div class="step-num">۴</div><strong>ضرب و تقسیم</strong><br><small>هم‌علامت مثبت، ناهم‌علامت منفی</small></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🧠 هشت مبحث کلیدی</h2>
+      <p style="color:var(--text-muted); margin-bottom:16px;">روی هر کارت کلیک کن و مثال‌های جذاب را ببین. لازم نیست قانون‌ها را حفظ کنی — مهم این است که بلد باشی از آن‌ها استفاده کنی! ✨</p>
+      <div class="strategy-grid" id="home-strategies"></div>
+    </div>
+    <div style="text-align:center; margin-top:30px;">
+      <button class="start-quiz-btn" onclick="document.querySelector('[data-section=quiz]').click()">🚀 برو به آزمون و امتیاز بگیر!</button>
+    </div>
+  </section>
+
+  <!-- LEARN -->
+  <section id="learn" class="section">
+    <div id="strategy-list">
+      <div class="card">
+        <h2>📚 آموزش ۸ مبحث عددهای صحیح</h2>
+        <p style="color:var(--text-muted);">روی هر مبحث کلیک کن تا جزئیات، مثال و پاسخ گام‌به‌گام آن را ببینی.</p>
+        <div class="strategy-grid" id="learn-strategies"></div>
+      </div>
+    </div>
+    <div id="strategy-details"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="section">
+    <div id="quiz-setup">
+      <div class="card">
+        <h2>🎯 آزمون تعاملی</h2>
+        <p style="color:var(--text-muted); margin-bottom:8px;">سطح سختی را انتخاب کن، تعداد سؤالات را مشخص کن و شروع کن!</p>
+        <p style="color:var(--text-muted); font-size:0.9rem;">هر بار سؤالات به صورت تصادفی از بانک سؤالات انتخاب می‌شوند — پس هر آزمون متفاوت است!</p>
+        
+        <div class="student-box">
+          <label>👤 مشخصات دانش‌آموز (برای ثبت نتایج)</label>
+          <div class="name-grid">
+            <div><label for="studentFirst">نام</label><input id="studentFirst" type="text" maxlength="25" placeholder="مثلاً: سارا" autocomplete="given-name" aria-describedby="nameError"></div>
+            <div><label for="studentLast">نام خانوادگی</label><input id="studentLast" type="text" maxlength="25" placeholder="مثلاً: احمدی" autocomplete="family-name" aria-describedby="nameError"></div>
+            <div><label for="studentFather">نام پدر</label><input id="studentFather" type="text" maxlength="25" placeholder="مثلاً: محمد" autocomplete="additional-name"></div>
+            <div><label for="studentSchool">نام مدرسه</label><input id="studentSchool" type="text" maxlength="40" placeholder="مثلاً: شهید بهشتی"></div>
+            <div><label for="studentCity">نام شهر</label><input id="studentCity" type="text" maxlength="30" placeholder="مثلاً: مشهد"></div>
+            <div><label for="studentProvince">نام استان</label><input id="studentProvince" type="text" maxlength="30" placeholder="مثلاً: خراسان رضوی"></div>
+          </div>
+          <div class="known-students" id="knownStudentsWrap" style="display:none">
+            <label for="knownStudents">یا یکی از دانش‌آموزان قبلی را انتخاب کن:</label>
+            <select id="knownStudents"></select>
+          </div>
+          <p class="field-error" id="nameError" role="alert"></p>
+        </div>
+
+        <h3 style="text-align:center; margin-top:24px;">سطح سختی</h3>
+        <div class="level-cards" role="radiogroup" aria-label="سطح سختی">
+          <div class="level-card easy" data-level="easy" role="radio" tabindex="0" aria-checked="false">
+            <div class="emoji">🌱</div>
+            <h3>ساده</h3>
+            <p>سؤالات پایه و مستقیم</p>
+          </div>
+          <div class="level-card medium selected" data-level="medium" role="radio" tabindex="0" aria-checked="true">
+            <div class="emoji">🔥</div>
+            <h3>متوسط</h3>
+            <p>ترکیبی و کمی چالش‌برانگیز</p>
+          </div>
+          <div class="level-card hard" data-level="hard" role="radio" tabindex="0" aria-checked="false">
+            <div class="emoji">💎</div>
+            <h3>سخت</h3>
+            <p>چندمرحله‌ای و مفهومی</p>
+          </div>
+          <div class="level-card mixed" data-level="mixed" role="radio" tabindex="0" aria-checked="false">
+            <div class="emoji">🎲</div>
+            <h3>ترکیبی</h3>
+            <p>سؤال‌هایی از هر سه سطح (سطح هر سؤال نمایش داده می‌شود)</p>
+          </div>
+        </div>
+
+        <h3 style="text-align:center;">تعداد سؤالات</h3>
+        <div class="q-count">
+          <button data-count="5">۵ سؤال</button>
+          <button data-count="8" class="selected">۸ سؤال</button>
+          <button data-count="12">۱۲ سؤال</button>
+          <button data-count="15">۱۵ سؤال</button>
+        </div>
+
+        <p class="quiz-notice" id="quizNotice" role="status" aria-live="polite"></p>
+
+        <button class="start-quiz-btn" id="startQuizBtn">شروع آزمون 🚀</button>
+      </div>
+    </div>
+
+    <div id="quiz-area" style="display:none;">
+      <div class="quiz-header">
+        <div class="score-display">امتیاز: <span id="liveScore">0</span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+        <div style="font-weight:600;"><span id="qNum">1</span> / <span id="qTotal">8</span></div>
+      </div>
+      <div class="question-card" id="questionCard"></div>
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" id="skipBtn">رد کردن</button>
+        <button class="btn btn-primary" id="nextBtn" disabled>سؤال بعدی</button>
+      </div>
+    </div>
+
+    <div id="quiz-result" style="display:none;">
+      <div class="card result-card">
+        <h2>🏁 نتیجه آزمون</h2>
+        <div class="stars" id="resultStars"></div>
+        <div class="big-score" id="resultScore">0%</div>
+        <p class="motivational" id="resultMsg"></p>
+        <div class="result-compare" id="resultCompare"></div>
+        <div class="result-stats">
+          <div class="stat"><div class="num" id="statCorrect">0</div><div class="label">پاسخ درست</div></div>
+          <div class="stat"><div class="num" id="statWrong">0</div><div class="label">پاسخ غلط</div></div>
+          <div class="stat"><div class="num" id="statSkipped">0</div><div class="label">ردشده</div></div>
+          <div class="stat"><div class="num" id="statTotal">0</div><div class="label">کل سؤالات</div></div>
+        </div>
+        <p class="score-note" id="scoreNote"></p>
+        <div id="reviewBox"></div>
+        <div style="margin-top:28px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <button class="btn btn-primary" id="retryWrongBtn" style="display:none;">تمرین دوبارهٔ اشتباهات 🔁</button>
+          <button class="btn btn-primary" onclick="resetQuiz()">آزمون دوباره 🔄</button>
+          <button class="btn btn-secondary" onclick="document.querySelector('[data-section=progress]').click()">نمودار پیشرفت من 📈</button>
+          <button class="btn btn-secondary" onclick="document.querySelector('[data-section=learn]').click()">مرور آموزش 📚</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section id="progress" class="section">
+    <div class="card">
+      <h2>📈 پیشرفت یادگیری</h2>
+      <div class="pg-toolbar">
+        <div class="grp"><label for="pgStudent" style="color:var(--text-muted);">دانش‌آموز:</label><select id="pgStudent"></select></div>
+        <div class="grp" id="pgChips">
+          <button class="pg-chip on" data-lv="all">همه سطح‌ها</button>
+          <button class="pg-chip" data-lv="easy">ساده</button>
+          <button class="pg-chip" data-lv="medium">متوسط</button>
+          <button class="pg-chip" data-lv="hard">سخت</button>
+          <button class="pg-chip" data-lv="mixed">ترکیبی</button>
+        </div>
+      </div>
+      <div id="pgMsg" class="pg-warn" role="status" aria-live="polite" style="display:none"></div>
+      <div id="pgBody"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="card">
+      <h2>ℹ️ راهنمای استفاده</h2>
+      <ul style="list-style:none; padding:0; line-height:2.2;">
+        <li>✅ از بخش <strong>آموزش مبحث‌ها</strong> هر ۸ مبحث را با مثال گام‌به‌گام یاد بگیر.</li>
+        <li>✅ در بخش <strong>آزمون</strong> سطح و تعداد سؤال را انتخاب کن.</li>
+        <li>✅ هر بار سؤالات به صورت تصادفی از بانک بزرگ (۴۵ سؤال در سه سطح) انتخاب می‌شوند.</li>
+        <li>✅ بعد از هر پاسخ، بازخورد فوری و توضیح واضح می‌گیری.</li>
+        <li>✅ در پایان آزمون امتیاز، ستاره و پیام تشویقی دریافت می‌کنی.</li>
+        <li>✅ نتیجهٔ هر آزمون (کامل‌شده) خودکار ثبت می‌شود و در بخش <strong>پیشرفت من</strong> روند نمره و نقاط قوت و ضعف هر مبحث را در نمودار می‌بینی.</li>
+        <li>✅ نتایج روی همین مرورگر ذخیره می‌شوند. با «پشتیبان‌گیری» یک فایل JSON بگیر تا اگر داده‌های مرورگر پاک شد بتوانی بازیابی کنی؛ برای معلم هم می‌توانی CSV بگیری.</li>
+        <li>✅ سؤال‌های ردشده نمره نمی‌گیرند و غلط هم حساب نمی‌شوند؛ پس از آزمون می‌توانی اشتباهات را مرور و دوباره تمرین کنی (آزمون تمرینی در نمودار ثبت نمی‌شود).</li>
+        <li>✅ هدف این اپ، تمرین و لذت بردن از ریاضی است — اشتباه کردن بخشی از یادگیری است!</li>
+      </ul>
+      
+      <h3 style="margin-top:24px;">حریم خصوصی و ذخیره داده</h3>
+      <ul style="list-style:none; padding:0; line-height:2;">
+        <li>🔒 نام، نام پدر، مدرسه، شهر، استان و نتایج آزمون‌ها فقط در <strong>حافظه محلی همین مرورگر</strong> ذخیره می‌شوند و به هیچ سروری ارسال نمی‌گردند.</li>
+        <li>📥 با «پشتیبان‌گیری JSON» یا «CSV» می‌توانی نسخه پشتیبان بگیری و در دستگاه دیگر بازیابی کنی.</li>
+        <li>🗑️ امکان پاک‌کردن نتایج هر دانش‌آموز یا همه داده‌ها وجود دارد.</li>
+        <li>⚠️ اگر داده‌های مرورگر پاک شود یا در حالت ناشناس کار کنی، سوابق از بین می‌روند — حتماً پشتیبان بگیر.</li>
+      </ul>
+      <h3 style="margin-top:24px;">۸ مبحث:</h3>
+      <ol style="padding-right:20px; line-height:2;"><li>مقایسه و ترتیب</li><li>قرینه</li><li>جمع</li><li>تفریق</li><li>ضرب و تقسیم</li><li>اولویت عملیات</li><li>میانگین و دما</li><li>الگوهای عددی</li></ol>
+    </div>
+  </section>
+</div>
+
+<footer>
+  ساخته شده توسط <strong>علیرضا هومان</strong> برای دانش‌آموزان کلاس هفتم<br>
+  فصل ۲ ریاضی — عددهای صحیح
+</footer>
+
+<div id="lg"><div class="box"><h2>ورود دانش‌آموز</h2>
+<label>کلاس<select id="lc" style="width:100%;font:inherit;background:#0f1a30;color:#f1f5f9;border:1px solid #2a3f5f;border-radius:10px;padding:8px 10px"><option value="">در حال بارگذاری…</option></select></label>
+<label>نام و نام‌خانوادگی<input type="text" id="ln2" maxlength="40" autocomplete="off"></label>
+<label>رمز ۴ رقمی (بار اول خودت انتخاب کن و یادت بماند)<input type="password" id="lp" inputmode="numeric" maxlength="4" autocomplete="off"></label>
+<div id="lgm" role="alert"></div>
+<div class="r"><button class="p" id="lgo">ورود</button><button id="lgs">ادامه بدون ورود</button></div>
+<p style="color:#94a3b8;font-size:.85rem">بدون ورود، نتیجهٔ آزمون برای معلم ثبت نمی‌شود.</p></div></div><div id="sst"></div>
+<script>
+// ==================== DATA ====================
+const faN = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]).replace("-", "−");
+function nl(lo, hi, jumps, marks) {
+  jumps = jumps || []; marks = marks || [];
+  const x = v => 30 + (v - lo) * 44, W = 60 + (hi - lo) * 44, y = 70;
+  let s = `<svg viewBox="0 0 ${W} 120" xmlns="http://www.w3.org/2000/svg" style="max-width:${Math.min(W, 560)}px"><line x1="10" y1="${y}" x2="${W - 10}" y2="${y}" stroke="#94a3b8" stroke-width="2"/>`;
+  for (let v = lo; v <= hi; v++) s += `<line x1="${x(v)}" y1="${y - 5}" x2="${x(v)}" y2="${y + 5}" stroke="#94a3b8" stroke-width="2"/><text x="${x(v)}" y="${y + 24}" fill="${v === 0 ? "#fbbf24" : "#cbd5e1"}" font-size="14" text-anchor="middle">\u2066${faN(v)}\u2069</text>`;
+  jumps.forEach(([a, b]) => { const c = b > a ? "#4ade80" : "#f87171", m = (x(a) + x(b)) / 2, h = 18 + Math.abs(b - a) * 5;
+    s += `<path d="M${x(a)} ${y} Q${m} ${y - h * 2} ${x(b)} ${y}" fill="none" stroke="${c}" stroke-width="3"/><text x="${m}" y="${y - h - 4}" fill="${c}" font-size="14" font-weight="700" text-anchor="middle">\u2066${b > a ? "+" : "−"}${faN(Math.abs(b - a))}\u2069</text>`; });
+  marks.forEach(v => s += `<circle cx="${x(v)}" cy="${y}" r="7" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2"/>`);
+  return s + "</svg>";
+}
+const st = t => `<div class="step">${t}</div>`, fin = t => `<div class="final">✅ ${t}</div>`;
+const strategies = [
+  { id:1, name:"مقایسه و ترتیب", icon:"📏",
+    desc:"عددهای صحیح یعنی عددهای طبیعی (۱، ۲، ۳، …)، عدد صفر و قرینهٔ عددهای طبیعی (−۱، −۲، −۳، …). این عددها را روی یک خط به نام «محور» می‌نویسیم: صفر وسط، مثبت‌ها سمت راست و منفی‌ها سمت چپ.",
+    body:`<div class="diagram-box">${nl(-4,4,[],[-3,2])}<div class="diagram-caption">هرچه عددی راست‌تر باشد بزرگ‌تر است</div></div>
+<ul style="line-height:2.1;padding-right:20px"><li>صفر نه مثبت است و نه منفی.</li><li>هر عدد منفی از صفر و از همهٔ عددهای مثبت کوچک‌تر است.</li><li>−۱ بزرگ‌ترین عدد صحیح منفی است؛ ولی کوچک‌ترین عدد صحیح منفی وجود ندارد (همیشه می‌شود یکی کوچک‌تر نوشت).</li><li>بین دو عدد منفی، عددی که بدون علامت بزرگ‌تر است، در واقع کوچک‌تر است: −۹ از −۲ کوچک‌تر است.</li></ul>`,
+    mistake:"عدد −۹ را از −۲ بزرگ‌تر نگو! درست است که ۹ از ۲ بیشتر است، اما −۹ روی محور سمت چپ −۲ قرار دارد و بنابراین کوچک‌تر است.",
+    tip:"هر وقت شک کردی، دو عدد را روی محور بگذار و ببین کدام راست‌تر است.",
+    examples:[
+      { q:"عددهای ۴، −۷، ۰، −۲ را از کوچک به بزرگ مرتب کن.", diagram:nl(-7,4,[],[-7,-2,0,4]),
+        a:st("① منفی‌ها از صفر کوچک‌ترند و صفر از مثبت‌ها کوچک‌تر است: منفی‌ها &lt; ۰ &lt; ۴")+st("② بین −۷ و −۲: −۷ از صفر دورتر (چپ‌تر) است، پس کوچک‌تر است.")+fin("جواب: −۷، −۲، ۰، ۴") },
+      { q:"بین دو عدد −۳ و +۵ چند عدد صحیح وجود دارد؟",
+        a:st("① خود −۳ و ۵ را نمی‌شماریم («بین» یعنی بدون دو سر).")+st("② عددها: −۲، −۱، ۰، ۱، ۲، ۳، ۴")+fin("جواب: ۷ عدد") },
+      { q:"عدد قبل و بعد از −۱۲ چیست؟",
+        a:st("① عدد بعد یعنی یک قدم به راست: −۱۲ + ۱ = −۱۱")+st("② عدد قبل یعنی یک قدم به چپ: −۱۲ − ۱ = −۱۳")+fin("جواب: قبل −۱۳ و بعد −۱۱") }]},
+  { id:2, name:"قرینه", icon:"🪞",
+    desc:"قرینهٔ یک عدد، عددی است که فاصله‌اش تا صفر با آن عدد برابر ولی در سمت مخالف است؛ مثل آینه‌ای که روی صفر گذاشته باشیم. قرینه را با علامت −(…) نشان می‌دهیم.",
+    body:`<div class="diagram-box">${nl(-5,5,[],[-5,5])}<div class="diagram-caption">۵ و −۵ قرینهٔ هم‌اند (فاصلهٔ هر دو تا صفر ۵ است)</div></div>
+<ul style="line-height:2.1;padding-right:20px"><li>−(+۷) = −۷ و −(−۹) = +۹ و −(۰) = ۰</li><li>قرینهٔ قرینهٔ هر عدد، خودِ آن عدد است: −(−۴) = ۴.</li><li>اگر چند قرینه پشت سر هم بگیریم: تعداد <b>زوج</b> → عدد همان می‌ماند؛ تعداد <b>فرد</b> → عدد یک بار قرینه می‌شود.</li><li>مجموع هر عدد با قرینه‌اش همیشه صفر است.</li></ul>`,
+    mistake:"علامت −x همیشه منفی نیست! اگر x = −۴ باشد، −x = +۴ می‌شود.",
+    tip:"فقط شمردن تعداد علامت‌های منفی کافی است: زوج یعنی بدون تغییر، فرد یعنی قرینه.",
+    examples:[
+      { q:"حاصل −(−(−(+۳))) را بنویس.", a:st("① −(+۳) = −۳")+st("② −(−۳) = +۳")+st("③ −(+۳) = −۳")+st("④ راه سریع: ۳ علامت منفی (فرد) پس یک بار قرینه می‌شود.")+fin("جواب: −۳") },
+      { q:"قرینهٔ مجموع دو عدد −۱۲ و +۲۷ را بنویس.", a:st("① اول مجموع: −۱۲ + ۲۷ = ۱۵")+st("② سپس قرینه: −(۱۵) = −۱۵")+fin("جواب: −۱۵") },
+      { q:"عدد −۲۱ را ۳۷ بار قرینه می‌کنیم. حاصل چیست؟", a:st("① ۳۷ عددی فرد است.")+st("② پس فقط یک بار قرینه می‌شود: −(−۲۱) = +۲۱")+fin("جواب: +۲۱") }]},
+  { id:3, name:"جمع", icon:"➕",
+    desc:"جمع روی محور یعنی حرکت: جمع با عدد مثبت = حرکت به راست و جمع با عدد منفی = حرکت به چپ. برای محاسبهٔ سریع‌تر دو حالت داریم: عددهای هم‌علامت و ناهم‌علامت.",
+    body:`<div class="diagram-box">${nl(-3,4,[[0,3],[3,-2]])}<div class="diagram-caption">(+۳) + (−۵): ابتدا ۳ قدم راست، سپس ۵ قدم چپ؛ می‌رسیم به −۲</div></div>
+<div class="step"><b>هم‌علامت:</b> عددها را جمع کن و علامت مشترک را بگذار. (−۱۰) + (−۳) = −۱۳</div>
+<div class="step"><b>ناهم‌علامت:</b> عدد کوچک‌تر (بدون علامت) را از بزرگ‌تر کم کن و علامت عدد بزرگ‌تر را بگذار. (−۸) + (+۱۴) = +۶ چون ۱۴ − ۸ = ۶ و ۱۴ بزرگ‌تر و مثبت است.</div>`,
+    mistake:"(−۸) + (+۱۴) را −۲۲ ننویس! عددهای ناهم‌علامت با هم جمع نمی‌شوند؛ از هم کم می‌شوند.",
+    tip:"جمع عددی با قرینه‌اش صفر می‌شود؛ از این برای ساده‌کردن استفاده کن: −۸ + ۸ − ۱۱ = −۱۱.",
+    examples:[
+      { q:"حاصل (−۸) + (+۱۴) را بیاب.", diagram:nl(-8,6,[[-8,6]]), a:st("① ناهم‌علامت‌اند: ۱۴ − ۸ = ۶")+st("② ۱۴ بزرگ‌تر و مثبت است، پس علامت جواب مثبت می‌شود.")+fin("جواب: +۶") },
+      { q:"حاصل (−۱۰) + (−۳) را بیاب.", a:st("① هر دو منفی‌اند (هم‌علامت): ۱۰ + ۳ = ۱۳")+st("② علامت مشترک منفی است.")+fin("جواب: −۱۳") },
+      { q:"حاصل −۴۳ + ۵۱ − ۳۴ را بیاب.", a:st("① از چپ: −۴۳ + ۵۱ = +۸")+st("② سپس ۸ − ۳۴ = −۲۶")+fin("جواب: −۲۶") },
+      { q:"در تساوی □ + (+۳۰) = −۱۵ جای خالی چه عددی است؟", a:st("① برای پیدا کردن □، ۳۰ را از دو طرف کم می‌کنیم.")+st("② □ = −۱۵ − ۳۰ = −۴۵")+st("③ بررسی: −۴۵ + ۳۰ = −۱۵ ✓")+fin("جواب: −۴۵") }]},
+  { id:4, name:"تفریق", icon:"➖",
+    desc:"هر تفریق را به جمع تبدیل می‌کنیم: «کم کردن یک عدد» یعنی «جمع کردن قرینهٔ آن». برای مثال اگر دمای هوا ۳ درجه سردتر شود، دما با −۳ جمع شده است.",
+    body:`<div class="diagram-box">${nl(-5,4,[[-4,2]])}<div class="diagram-caption">(−۴) − (−۶) = (−۴) + ۶ = +۲ ؛ از −۴ شش قدم به راست</div></div>
+<div class="step">a − (+b) = a + (−b) &nbsp;&nbsp; مثال: ۵ − (+۳) = ۵ + (−۳) = ۲</div>
+<div class="step">a − (−b) = a + b &nbsp;&nbsp; مثال: ۵ − (−۳) = ۵ + ۳ = ۸</div>
+<p>یعنی «علامت عدد بعد از منفی» را برعکس می‌کنیم و عمل را جمع می‌گذاریم؛ بعد طبق قانون جمع پیش می‌رویم.</p>`,
+    mistake:"(−۴) − (−۶) را −۱۰ ننویس! منفیِ جلوی عدد منفی، مثبت می‌شود: −۴ + ۶ = +۲.",
+    tip:"قبل از هر چیز علامت‌ها را ساده کن، بعد جمع را انجام بده.",
+    examples:[
+      { q:"حاصل (−۷۰) − (−۲۰) را بیاب.", a:st("① به جمع تبدیل می‌کنیم: −۷۰ + ۲۰")+st("② ناهم‌علامت: ۷۰ − ۲۰ = ۵۰ با علامت عدد بزرگ‌تر (منفی)")+fin("جواب: −۵۰") },
+      { q:"حاصل −۹ − ۲۱ را بیاب.", a:st("① −۹ − ۲۱ یعنی −۹ + (−۲۱)")+st("② هم‌علامت: ۹ + ۲۱ = ۳۰ با علامت منفی")+fin("جواب: −۳۰") },
+      { q:"حاصل (−۱۶) − (−۷ + ۴) را بیاب.", a:st("① اول پرانتز: −۷ + ۴ = −۳")+st("② (−۱۶) − (−۳) = −۱۶ + ۳")+st("③ −۱۶ + ۳ = −۱۳")+fin("جواب: −۱۳") },
+      { q:"دمای اردبیل −۱۰ و تبریز −۴ است. اختلاف دمای دو شهر چند درجه است؟", a:st("① اختلاف = بزرگ‌تر − کوچک‌تر")+st("② (−۴) − (−۱۰) = −۴ + ۱۰ = ۶")+fin("جواب: ۶ درجه (اردبیل سردتر است)") }]},
+  { id:5, name:"ضرب و تقسیم", icon:"✖️",
+    desc:"ضرب یعنی جمع تکراری: (+۳) × (−۲) یعنی سه بار (−۲) را جمع کنیم: (−۲)+(−۲)+(−۲) = −۶. از این‌جا قانون علامت‌ها به دست می‌آید که برای تقسیم هم همین است.",
+    body:`<table style="margin:10px auto;border-collapse:collapse;text-align:center"><tr style="background:#4338ca;color:#fff"><th style="padding:8px 16px">علامت دو عدد</th><th style="padding:8px 16px">علامت حاصل</th><th style="padding:8px 16px">مثال</th></tr>
+<tr><td style="padding:8px;border-bottom:1px solid #334155">هم‌علامت (+ و +)</td><td style="border-bottom:1px solid #334155">مثبت</td><td style="border-bottom:1px solid #334155">۴ × ۵ = +۲۰</td></tr>
+<tr><td style="padding:8px;border-bottom:1px solid #334155">هم‌علامت (− و −)</td><td style="border-bottom:1px solid #334155">مثبت</td><td style="border-bottom:1px solid #334155">(−۴) × (−۵) = +۲۰</td></tr>
+<tr><td style="padding:8px;border-bottom:1px solid #334155">ناهم‌علامت</td><td style="border-bottom:1px solid #334155">منفی</td><td style="border-bottom:1px solid #334155">(−۴) × ۵ = −۲۰</td></tr></table>
+<ul style="line-height:2.1;padding-right:20px"><li>اگر چند عدد را ضرب کنیم: تعداد عامل‌های منفی <b>زوج</b> → حاصل مثبت؛ <b>فرد</b> → حاصل منفی.</li><li>هر عدد ضربدر صفر، صفر می‌شود.</li></ul>`,
+    mistake:"قانون جمع و ضرب را قاطی نکن: (−۳) + (−۴) = −۷ ولی (−۳) × (−۴) = +۱۲.",
+    tip:"اول علامت جواب را مشخص کن، بعد عددها را بدون علامت ضرب یا تقسیم کن.",
+    examples:[
+      { q:"حاصل (−۸) × (+۵) را بیاب.", a:st("① علامت‌ها ناهم‌علامت‌اند → حاصل منفی")+st("② ۸ × ۵ = ۴۰")+fin("جواب: −۴۰") },
+      { q:"حاصل (−۶۰) ÷ (−۲۰) را بیاب.", a:st("① هم‌علامت → مثبت")+st("② ۶۰ ÷ ۲۰ = ۳")+fin("جواب: +۳") },
+      { q:"حاصل (−۲) × (−۳) × (−۴) را بیاب.", a:st("① سه عامل منفی (تعداد فرد) → حاصل منفی")+st("② ۲ × ۳ × ۴ = ۲۴")+fin("جواب: −۲۴") },
+      { q:"حاصل (−۸ ÷ ۲) × (−۳ × ۴) را بیاب.", a:st("① (−۸ ÷ ۲) = −۴ و (−۳ × ۴) = −۱۲")+st("② (−۴) × (−۱۲): هم‌علامت → مثبت")+fin("جواب: +۴۸") }]},
+  { id:6, name:"اولویت عملیات", icon:"🧮",
+    desc:"وقتی چند عمل در یک عبارت هست، ترتیب انجام‌دادن مهم است. اگر ترتیب را رعایت نکنی جواب اشتباه می‌شود، حتی اگر همهٔ جمع و ضرب‌ها را درست بلد باشی.",
+    body:`<div class="step"><b>۱)</b> پرانتز &nbsp; ← &nbsp; <b>۲)</b> ضرب و تقسیم &nbsp; ← &nbsp; <b>۳)</b> جمع و تفریق</div>
+<p>اگر چند عمل هم‌اولویت پشت سر هم بود (مثلاً × و ÷)، از <b>چپ به راست</b> انجام می‌شوند. توصیه: در هر خط فقط یک عمل انجام بده و بقیهٔ عبارت را بدون تغییر دوباره بنویس.</p>`,
+    mistake:"۶ ÷ (−۳) × ۴ را به‌صورت ۶ ÷ (−۱۲) حل نکن! ÷ و × هم‌اولویت‌اند و از چپ انجام می‌شوند: (−۲) × ۴ = −۸.",
+    tip:"اشتباه‌های علامت را کم کن: هر جا ضرب یا تقسیم انجام دادی، علامت جواب را همان لحظه بنویس.",
+    examples:[
+      { q:"حاصل (−۷−۳) ÷ (۲+۸) را بیاب.", a:st("① پرانتز اول: −۷ − ۳ = −۱۰")+st("② پرانتز دوم: ۲ + ۸ = ۱۰")+st("③ (−۱۰) ÷ ۱۰ = −۱")+fin("جواب: −۱") },
+      { q:"حاصل ۲ + ۶ ÷ (−۵+۲) × ۴ − ۷ را بیاب.", a:st("① پرانتز: −۵ + ۲ = −۳ → ۲ + ۶ ÷ (−۳) × ۴ − ۷")+st("② از چپ: ۶ ÷ (−۳) = −۲ → ۲ + (−۲) × ۴ − ۷")+st("③ (−۲) × ۴ = −۸ → ۲ − ۸ − ۷")+st("④ ۲ − ۸ = −۶ و −۶ − ۷ = −۱۳")+fin("جواب: −۱۳") },
+      { q:"حاصل ۱۲ − ۳ × (−۲) را بیاب.", a:st("① اول ضرب: ۳ × (−۲) = −۶")+st("② ۱۲ − (−۶) = ۱۲ + ۶")+fin("جواب: ۱۸") }]},
+  { id:7, name:"میانگین و دما", icon:"🌡️",
+    desc:"عددهای صحیح در زندگی روزمره کاربرد زیادی دارند: دمای بالا و زیر صفر، طبقه‌های بالا و پایین ساختمان، ارتفاع از سطح دریا و عمق زیر آب. بالاتر از صفر را مثبت و پایین‌تر از صفر را منفی می‌گیریم.",
+    body:`<ul style="line-height:2.1;padding-right:20px"><li><b>میانگین</b> = مجموع همهٔ عددها ÷ تعداد عددها (عددهای منفی هم باید حساب شوند).</li><li>«۲۲ درجه سردتر شد» یعنی ۲۲ تا کم کن؛ «۵ درجه گرم‌تر شد» یعنی ۵ تا اضافه کن.</li><li><b>اختلاف</b> دو عدد = بزرگ‌تر − کوچک‌تر. این مقدار همیشه مثبت است.</li><li>عددی که منفی‌تر است سردتر (یا پایین‌تر) است: −۱۰ از −۴ سردتر است.</li></ul>`,
+    mistake:"اختلاف دمای −۴ و −۱۰ را ۱۴ ننویس (جمع نکن)! (−۴) − (−۱۰) = ۶.",
+    tip:"اول موقعیت را با یک عبارت عددی بنویس (مثلاً ۱۸ − ۲۲)، بعد حل کن.",
+    examples:[
+      { q:"میانگین دمای سه شهر: ۶ درجه بالای صفر، ۴ درجه زیر صفر و ۷ درجه بالای صفر چند است؟", a:st("① عددها: +۶، −۴، +۷")+st("② مجموع: ۶ − ۴ + ۷ = ۹")+st("③ میانگین: ۹ ÷ ۳ = ۳")+fin("جواب: ۳ درجه بالای صفر") },
+      { q:"جسمی با دمای +۱۸ درجه را در سردخانه می‌گذاریم و ۲۲ درجه سردتر می‌شود. دمای آن چند است؟", a:st("① سردتر شدن یعنی کم شدن: ۱۸ − ۲۲")+st("② ۱۸ − ۲۲ = −۴")+fin("جواب: ۴ درجه زیر صفر") },
+      { q:"هواپیمایی در ارتفاع ۲۵۰۰ متری و زیردریایی در عمق ۳۰ متری (یعنی −۳۰) است. فاصلهٔ آن‌ها چقدر است؟", a:st("① فاصله = بالاتر − پایین‌تر")+st("② ۲۵۰۰ − (−۳۰) = ۲۵۰۰ + ۳۰")+fin("جواب: ۲۵۳۰ متر") },
+      { q:"رضا در طبقهٔ −۱ است. ۴ طبقه بالا می‌رود، ۲ طبقه پایین می‌آید و ۱ طبقه دیگر بالا می‌رود. در کدام طبقه است؟", a:st("① −۱ + ۴ = ۳")+st("② ۳ − ۲ = ۱")+st("③ ۱ + ۱ = ۲")+fin("جواب: طبقهٔ ۲") }]},
+  { id:8, name:"الگوهای عددی", icon:"🔁",
+    desc:"برای ادامه دادن یک الگو، باید بفهمیم هر جمله چگونه از جملهٔ قبل ساخته شده است. دو راه اصلی داریم: بررسی «تفاضل» جمله‌های پشت سرهم (جمع یا کم کردن عدد ثابت) و بررسی «نسبت» آن‌ها (ضرب در عدد ثابت).",
+    body:`<ul style="line-height:2.1;padding-right:20px"><li>اگر تفاضل‌ها یکسان‌اند → هر بار عدد ثابتی جمع یا کم می‌شود: −۱۳، −۱۱، −۹، … (هر بار ۲ تا اضافه).</li><li>اگر عددها کوچک‌تر می‌شوند → عدد ثابت کم می‌شود: −۳، −۶، −۹، … (هر بار ۳ تا کم).</li><li>اگر علامت‌ها یک‌درمیان عوض می‌شوند → در عدد <b>منفی</b> ضرب می‌شود: ۲، −۴، ۸، −۱۶، …</li><li>اگر تفاضل‌ها خودشان الگو دارند (مثل ۲، ۴، ۶، …) تفاضل‌ها را ادامه بده.</li></ul>`,
+    mistake:"در الگوی −۳، −۶، −۹ نگو «۳ تا اضافه می‌شود»؛ عددها دارند کوچک‌تر می‌شوند، یعنی ۳ تا کم می‌شود.",
+    tip:"چند جمله‌ی اول را با هم مقایسه کن: تفاضل بگیر، اگر ثابت نبود نسبت بگیر.",
+    examples:[
+      { q:"دو عدد بعدی الگوی −۷، ۱۴، −۲۱، ۲۸، … را بنویس.", a:st("① علامت‌ها یک‌درمیان عوض می‌شوند و قدر مطلق‌ها مضرب‌های ۷ هستند.")+st("② جملهٔ پنجم: −۳۵ و جملهٔ ششم: +۴۲")+fin("جواب: −۳۵، ۴۲") },
+      { q:"دو عدد بعدی الگوی ۱۲، ۱، −۱۰، −۲۱، … را بنویس.", a:st("① ۱ − ۱۲ = −۱۱ و −۱۰ − ۱ = −۱۱؛ هر بار ۱۱ تا کم می‌شود.")+st("② −۲۱ − ۱۱ = −۳۲ و سپس −۳۲ − ۱۱ = −۴۳")+fin("جواب: −۳۲، −۴۳") },
+      { q:"جملهٔ بعدی الگوی −۵۱۲، ۲۵۶، −۱۲۸، ۶۴، … را بنویس.", a:st("① علامت یک‌درمیان عوض می‌شود و قدر مطلق هر بار نصف می‌شود.")+st("② نسبت هر جمله به قبلی −½ است: ۶۴ × (−½) = −۳۲")+fin("جواب: −۳۲") },
+      { q:"جملهٔ هشتم دنبالهٔ ۱۰، ۱۲، ۱۶، ۲۲، … را بنویس.", a:st("① تفاضل‌ها: ۲، ۴، ۶، … (هر بار ۲ تا بیشتر)")+st("② جمله‌ها: ۲۲، ۳۰، ۴۰، ۵۲، ۶۶ (تفاضل‌های بعدی ۸، ۱۰، ۱۲، ۱۴)")+fin("جواب: ۶۶") }]}
+];
+
+const questionBank = [
+  // ===== EASY =====
+  { level:"easy", strategy:"مقایسه و ترتیب", q:"بزرگ‌ترین عدد صحیح منفی کدام است؟", options:["−۱","۰","−۱۰۰","مشخص نیست"], answer:0, explain:"−۱ از همهٔ عددهای صحیح منفی بزرگ‌تر است؛ ولی کوچک‌ترین عدد صحیح منفی مشخص نیست." },
+  { level:"easy", strategy:"مقایسه و ترتیب", q:"بین دو عدد −۳ و +۵ چند عدد صحیح وجود دارد؟", options:["۶","۷","۸","۹"], answer:1, explain:"عددها: −۲، −۱، ۰، ۱، ۲، ۳، ۴ که ۷ عدد است." },
+  { level:"easy", strategy:"مقایسه و ترتیب", q:"عدد −۱۳ − ۸ نسبت به −(۱۳+۸) چگونه است؟", options:["کوچک‌تر است","بزرگ‌تر است","مساوی است","قابل مقایسه نیست"], answer:2, explain:"−۱۳ − ۸ = −۲۱ و −(۱۳+۸) = −۲۱؛ پس مساوی‌اند." },
+  { level:"easy", strategy:"قرینه", q:"قرینهٔ عدد −۹ کدام است؟", options:["−۹","۰","+۹","−۱۹"], answer:2, explain:"قرینهٔ −۹ برابر +۹ است." },
+  { level:"easy", strategy:"قرینه", q:"حاصل −(−(−(+۳))) چند است؟", options:["+۳","−۳","۰","−۹"], answer:1, explain:"سه بار قرینه (تعداد فرد) یعنی یک بار قرینه: −(+۳) = −۳." },
+  { level:"easy", strategy:"جمع", q:"حاصل (−۱۰) + (−۳) کدام است؟", options:["−۷","+۷","−۱۳","+۱۳"], answer:2, explain:"هم‌علامت‌اند: ۱۰ + ۳ = ۱۳ با علامت منفی." },
+  { level:"easy", strategy:"جمع", q:"حاصل (−۸) + (+۱۴) کدام است؟", options:["−۶","+۶","+۲۲","−۲۲"], answer:1, explain:"ناهم‌علامت: ۱۴ − ۸ = ۶ و علامت عدد بزرگ‌تر (۱۴) مثبت است." },
+  { level:"easy", strategy:"جمع", q:"اگر از +۴ به اندازهٔ −۹ حرکت کنیم، به چه عددی می‌رسیم؟", options:["+۱۳","+۵","−۱۳","−۵"], answer:3, explain:"۴ + (−۹) = −۵." },
+  { level:"easy", strategy:"تفریق", q:"حاصل (−۷۰) − (−۲۰) کدام است؟", options:["−۹۰","−۵۰","+۵۰","+۹۰"], answer:1, explain:"−۷۰ + ۲۰ = −۵۰." },
+  { level:"easy", strategy:"تفریق", q:"حاصل −۹ − ۲۱ کدام است؟", options:["−۱۲","+۱۲","+۳۰","−۳۰"], answer:3, explain:"هم‌علامت‌اند: ۹ + ۲۱ = ۳۰ با علامت منفی." },
+  { level:"easy", strategy:"ضرب و تقسیم", q:"حاصل (−۸) × (+۵) کدام است؟", options:["+۴۰","−۴۰","−۱۳","+۱۳"], answer:1, explain:"ناهم‌علامت → منفی: ۸ × ۵ = ۴۰ پس −۴۰." },
+  { level:"easy", strategy:"ضرب و تقسیم", q:"حاصل (−۶۰) ÷ (−۲۰) کدام است؟", options:["−۳","+۳","+۸۰","−۸۰"], answer:1, explain:"هم‌علامت → مثبت: ۶۰ ÷ ۲۰ = ۳." },
+  { level:"easy", strategy:"اولویت عملیات", q:"حاصل (−۷−۳) ÷ (۲+۸) کدام است؟", options:["−۲۰","صفر","+۱","−۱"], answer:3, explain:"(−۱۰) ÷ ۱۰ = −۱." },
+  { level:"easy", strategy:"اولویت عملیات", q:"حاصل −۸ + ۸ − ۱۱ کدام است؟", options:["−۱۱","+۱۱","−۲۷","۰"], answer:0, explain:"−۸ + ۸ = ۰ و ۰ − ۱۱ = −۱۱." },
+  { level:"easy", strategy:"میانگین و دما", q:"دمای تبریز −۴ و اردبیل −۱۰ درجه است. کدام شهر سردتر است و اختلاف دما چقدر است؟", options:["تبریز، ۶ درجه","اردبیل، ۶ درجه","اردبیل، ۱۴ درجه","تبریز، ۱۴ درجه"], answer:1, explain:"−۱۰ از −۴ کوچک‌تر است. اختلاف: −۴ − (−۱۰) = ۶ درجه." },
+  { level:"easy", strategy:"میانگین و دما", q:"میانگین دو عدد −۱۰ و +۵ کدام است؟", options:["−۵","+۲٫۵","−۱۵","−۲٫۵"], answer:3, explain:"(−۱۰ + ۵) ÷ ۲ = −۵ ÷ ۲ = −۲٫۵." },
+  { level:"easy", strategy:"الگوهای عددی", q:"دو عدد بعدی الگوی −۱۳، −۱۱، −۹، −۷، … کدام است؟", options:["−۶، −۵","−۵، −۳","−۵، −۴","−۳، −۱"], answer:1, explain:"هر جمله ۲ واحد بیشتر می‌شود: −۷+۲ = −۵ و سپس −۳." },
+  { level:"easy", strategy:"الگوهای عددی", q:"دو عدد بعدی الگوی −۳، −۶، −۹، −۱۲، … کدام است؟", options:["−۱۴، −۱۶","−۱۵، −۱۷","−۱۸، −۲۱","−۱۵، −۱۸"], answer:3, explain:"هر جمله ۳ واحد کمتر می‌شود: −۱۵ و −۱۸." },
+  // ===== MEDIUM =====
+  { level:"medium", strategy:"مقایسه و ترتیب", q:"کدام ترتیب از کوچک به بزرگ درست است؟", options:["−۲، −۷، ۰، ۴","۴، ۰، −۲، −۷","−۷، −۲، ۰، ۴","۰، −۲، −۷، ۴"], answer:2, explain:"عددی که سمت چپ‌تر روی محور است کوچک‌تر است: −۷ < −۲ < ۰ < ۴." },
+  { level:"medium", strategy:"مقایسه و ترتیب", q:"کدام عدد از بقیه کوچک‌تر است؟", options:["−(−۵)","−(+۷)","−۶","۰"], answer:1, explain:"مقدارها: ۵، −۷، −۶، ۰. کوچک‌ترین −۷ است." },
+  { level:"medium", strategy:"قرینه", q:"قرینهٔ مجموع دو عدد −۱۲ و +۲۷ کدام است؟", options:["+۱۵","−۱۵","+۳۹","−۳۹"], answer:1, explain:"مجموع: ۱۵ و قرینهٔ آن −۱۵ است." },
+  { level:"medium", strategy:"قرینه", q:"عدد −۲۱ را ۳۷ بار قرینه می‌کنیم. حاصل چیست؟", options:["−۲۱","۰","+۲۱","+۳۷"], answer:2, explain:"۳۷ فرد است، پس عدد یک بار قرینه می‌شود: +۲۱." },
+  { level:"medium", strategy:"جمع", q:"با قرار دادن چه عددی تساوی □ + (+۳۰) = −۱۵ برقرار می‌شود؟", options:["+۴۵","−۴۵","−۲۰","+۲۰"], answer:1, explain:"□ = −۱۵ − ۳۰ = −۴۵." },
+  { level:"medium", strategy:"جمع", q:"حاصل −۴۳ + ۵۱ − ۳۴ کدام است؟", options:["−۲۶","−۱۲۸","+۲۶","+۸"], answer:0, explain:"−۴۳ + ۵۱ = ۸ و ۸ − ۳۴ = −۲۶." },
+  { level:"medium", strategy:"تفریق", q:"حاصل (−۱۶) − (−۷+۴) کدام است؟", options:["−۱۹","+۱۳","−۲۷","−۱۳"], answer:3, explain:"داخل پرانتز −۳ است؛ −۱۶ − (−۳) = −۱۶ + ۳ = −۱۳." },
+  { level:"medium", strategy:"تفریق", q:"در تساوی (−۸) − □ = −۲۰ جای خالی کدام عدد است؟", options:["−۱۲","−۲۸","+۱۲","+۲۸"], answer:2, explain:"□ = −۸ + ۲۰ = ۱۲. بررسی: −۸ − ۱۲ = −۲۰." },
+  { level:"medium", strategy:"ضرب و تقسیم", q:"حاصل (−۸ ÷ ۲) × (−۳ × ۴) کدام است؟", options:["−۴۸","+۲۴","+۴۸","−۲۴"], answer:2, explain:"(−۴) × (−۱۲) = +۴۸." },
+  { level:"medium", strategy:"ضرب و تقسیم", q:"حاصل‌ضرب سه عدد صحیح منفی همیشه چگونه عددی است؟", options:["مثبت","صفر","گاهی مثبت و گاهی منفی","منفی"], answer:3, explain:"دو عدد منفی ضرب می‌شوند و مثبت می‌دهند؛ ضرب در عدد منفی سوم، حاصل را منفی می‌کند." },
+  { level:"medium", strategy:"اولویت عملیات", q:"حاصل ۲ + ۶ ÷ (−۵+۲) × ۴ − ۷ کدام است؟", options:["−۳","+۳","−۱۷","−۱۳"], answer:3, explain:"۲ + ۶ ÷ (−۳) × ۴ − ۷ = ۲ + (−۲) × ۴ − ۷ = ۲ − ۸ − ۷ = −۱۳." },
+  { level:"medium", strategy:"اولویت عملیات", q:"حاصل (−۵−۴) × (−۶) کدام است؟", options:["−۵۴","−۳۰","+۵۴","+۳۰"], answer:2, explain:"(−۹) × (−۶) = +۵۴." },
+  { level:"medium", strategy:"میانگین و دما", q:"میانگین سه عدد +۱۴، −۷ و +۱۷ کدام است؟", options:["−۸","+۱۲","−۹","+۸"], answer:3, explain:"مجموع ۱۴ − ۷ + ۱۷ = ۲۴ و ۲۴ ÷ ۳ = ۸." },
+  { level:"medium", strategy:"میانگین و دما", q:"جسمی با دمای +۱۸ درجه ۲۲ درجه سردتر می‌شود. دمای نهایی آن چند است؟", options:["+۴۰","+۴","−۴۰","−۴"], answer:3, explain:"۱۸ − ۲۲ = −۴ درجه." },
+  { level:"medium", strategy:"میانگین و دما", q:"دمای سه شهر ۶ درجه بالای صفر، ۴ درجه زیر صفر و ۷ درجه بالای صفر است. میانگین دما چند است؟", options:["+۹","−۳","+۳","+۱۷"], answer:2, explain:"(۶ − ۴ + ۷) ÷ ۳ = ۹ ÷ ۳ = ۳." },
+  { level:"medium", strategy:"میانگین و دما", q:"رضا در طبقهٔ −۱ است. ۴ طبقه بالا می‌رود، ۲ طبقه پایین می‌آید و دوباره ۱ طبقه بالا می‌رود. در کدام طبقه است؟", options:["۱","۲","۳","۴"], answer:1, explain:"−۱ + ۴ = ۳؛ ۳ − ۲ = ۱؛ ۱ + ۱ = ۲." },
+  { level:"medium", strategy:"الگوهای عددی", q:"دو عدد بعدی الگوی −۷، ۱۴، −۲۱، ۲۸، … کدام است؟", options:["−۳۵، −۴۲","۳۵، −۴۲","−۳۴، ۴۱","−۳۵، ۴۲"], answer:3, explain:"مضرب‌های ۷ با علامت یک‌درمیان: −۳۵ و +۴۲." },
+  { level:"medium", strategy:"الگوهای عددی", q:"جملهٔ بعدی الگوی ۱۲، ۱، −۱۰، −۲۱، … کدام است؟", options:["−۳۱","−۳۳","−۳۲","−۲۹"], answer:2, explain:"هر جمله ۱۱ واحد کم می‌شود: −۲۱ − ۱۱ = −۳۲." },
+  // ===== HARD =====
+  { level:"hard", strategy:"مقایسه و ترتیب", q:"چند عدد صحیح بزرگ‌تر از −۴ و کوچک‌تر یا مساوی ۳ وجود دارد؟", options:["۶","۸","۷","۹"], answer:2, explain:"عددها: −۳، −۲، −۱، ۰، ۱، ۲، ۳ → ۷ عدد." },
+  { level:"hard", strategy:"قرینه", q:"اگر قرینهٔ قرینهٔ قرینهٔ عدد x برابر ۵ باشد، x چند است؟", options:["۵","۱۰","۰","−۵"], answer:3, explain:"سه قرینه یعنی یک قرینه: قرینهٔ x برابر ۵ است، پس x = −۵." },
+  { level:"hard", strategy:"جمع", q:"مجموع همهٔ عددهای صحیح از −۵ تا +۷ چند است؟", options:["۷","۱۲","۱۳","۰"], answer:2, explain:"عددهای قرینه از −۵ تا ۵ جمعشان صفر می‌شود؛ فقط ۶ + ۷ = ۱۳ می‌ماند." },
+  { level:"hard", strategy:"تفریق", q:"اگر a = −۵ و b = −۱۲ باشد، مقدار a − b − (−b) چند است؟", options:["+۷","−۱۷","−۵","−۱۲"], answer:2, explain:"a − b + b = a = −۵." },
+  { level:"hard", strategy:"ضرب و تقسیم", q:"دو عدد صحیح با حاصل‌ضرب −۳۶ و حاصل‌جمع −۹ کدام‌اند؟", options:["−۹ و +۴","−۱۸ و +۲","+۱۲ و −۳","−۱۲ و +۳"], answer:3, explain:"(−۱۲) × (+۳) = −۳۶ و −۱۲ + ۳ = −۹. گزینه‌های دیگر جمع −۵، −۱۶ و +۹ می‌دهند." },
+  { level:"hard", strategy:"اولویت عملیات", q:"حاصل (−۸۰−۴۰) ÷ (−۴۰÷۵) کدام است؟", options:["+۱۲","−۱۵","−۱۲","+۱۵"], answer:3, explain:"(−۱۲۰) ÷ (−۸) = +۱۵." },
+  { level:"hard", strategy:"میانگین و دما", q:"دمای تبریز ۸ درجه زیر صفر است. اندیمشک ۳۴ درجه گرم‌تر از تبریز و همدان ۱۱ درجه سردتر از اندیمشک است. میانگین دمای سه شهر چند است؟", options:["+۱۴","+۸","+۱۱","+۳۳"], answer:2, explain:"اندیمشک ۲۶ و همدان ۱۵ است. (−۸ + ۲۶ + ۱۵) ÷ ۳ = ۳۳ ÷ ۳ = ۱۱." },
+  { level:"hard", strategy:"الگوهای عددی", q:"جملهٔ بعدی الگوی −۵۱۲، ۲۵۶، −۱۲۸، ۶۴، … کدام است؟", options:["+۳۲","−۱۶","−۳۲","−۶۴"], answer:2, explain:"هر جمله نصفِ جملهٔ قبل با علامت مخالف است: ۶۴ × (−½) = −۳۲." },
+  { level:"hard", strategy:"الگوهای عددی", q:"جملهٔ هشتم دنبالهٔ ۱۰، ۱۲، ۱۶، ۲۲، … کدام است؟", options:["۵۲","۴۲","۶۶","۵۶"], answer:2, explain:"تفاضل‌ها ۲، ۴، ۶، ۸، ... است: ۳۰، ۴۰، ۵۲، ۶۶." },
+];
+
+// ==================== PROGRESS TRACKING ====================
+const RESULTS_KEY = "riazi7_f2_results_v2";
+const SCHEMA_VERSION = 2;
+function uid() { return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10); }
+const STUDENT_KEY = "riazi7_f1_student_v1";
+const memStore = {};
+let storageOk = true;
+try { localStorage.setItem("__t", "1"); localStorage.removeItem("__t"); } catch (e) { storageOk = false; }
+function lsGet(k) { if (k in memStore) return memStore[k]; try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); delete memStore[k]; return true; } catch (e) { memStore[k] = v; storageOk = false; return false; } }
+const LEVELS = ["easy", "medium", "hard", "mixed"];
+function normName(s) { return String(s || "").replace(/[\u200e\u200f\u2066-\u2069]/g, "").replace(/ك/g, "ک").replace(/[يى]/g, "ی").replace(/\s+/g, " ").trim().slice(0, 60) || "دانش‌آموز"; }
+function normalizeRecord(r) {
+  if (!r || typeof r !== "object") return null;
+  const total = Number(r.total), correct = Number(r.correct);
+  if (!Number.isFinite(total) || total <= 0 || !Number.isFinite(correct) || correct < 0 || correct > total) return null;
+  if (!LEVELS.includes(r.level)) return null;
+  const d = new Date(r.date);
+  if (isNaN(d.getTime())) return null;
+  const items = Array.isArray(r.items) ? r.items.filter(it => it && typeof it.s === "string").map(it => ({
+    q: typeof it.q === "string" ? it.q : "", s: it.s, l: LEVELS.includes(it.l) ? it.l : "medium", c: it.c ? 1 : 0, k: it.k ? 1 : 0
+  })) : [];
+  let skipped = Number.isFinite(Number(r.skipped)) ? Number(r.skipped) : items.filter(i => i.k).length;
+  skipped = Math.max(0, Math.min(total - correct, Math.round(skipped)));
+  return { id: (typeof r.id === "string" && r.id) ? r.id : (Number.isFinite(Number(r.id)) ? String(r.id) : uid()), student: normName(r.student), fn: typeof r.fn === "string" && r.fn ? cleanNamePart(r.fn).slice(0, 25) : undefined, ln: typeof r.ln === "string" && r.ln ? cleanNamePart(r.ln).slice(0, 25) : undefined,
+    father: typeof r.father === "string" ? cleanNamePart(r.father).slice(0, 25) : undefined,
+    school: typeof r.school === "string" ? cleanNamePart(r.school).slice(0, 40) : undefined,
+    city: typeof r.city === "string" ? cleanNamePart(r.city).slice(0, 30) : undefined,
+    province: typeof r.province === "string" ? cleanNamePart(r.province).slice(0, 30) : undefined,
+    date: d.toISOString(),
+    level: r.level, total, correct, skipped, wrong: total - correct - skipped, percent: Math.round(100 * correct / total), items };
+}
+function loadResults() {
+  try { const a = JSON.parse(lsGet(RESULTS_KEY) || "[]"); return Array.isArray(a) ? a.map(normalizeRecord).filter(Boolean) : []; }
+  catch (e) { return []; }
+}
+function saveResults(a) { return lsSet(RESULTS_KEY, JSON.stringify(a)); }
+
+const fa = n => Number(n).toLocaleString("fa-IR", { useGrouping: false, maximumFractionDigits: 0 });
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0;
+const LV = { easy: "ساده", medium: "متوسط", hard: "سخت", mixed: "ترکیبی" };
+const LV_HEX = { easy: "#10b981", medium: "#f59e0b", hard: "#ef4444", mixed: "#38bdf8" };
+function fmtDate(iso) { try { return new Date(iso).toLocaleDateString("fa-IR"); } catch (e) { return iso; } }
+function regress(ys) {
+  const n = ys.length, mx = (n - 1) / 2, my = avg(ys);
+  let num = 0, den = 0;
+  ys.forEach((y, i) => { num += (i - mx) * (y - my); den += (i - mx) ** 2; });
+  const m = den ? num / den : 0;
+  return { m, b: my - m * mx };
+}
+
+let currentAnswers = [];
+// ---------- نام کامل دانش‌آموز ----------
+const NAME_MIN = 2, NAME_MAX = 25;
+const elById = id => document.getElementById(id);
+function cleanNamePart(s) {
+  return String(s || "")
+    .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\u0640]/g, "")
+    .replace(/ك/g, "ک").replace(/[يى]/g, "ی")
+    .replace(/\s+/g, " ")
+    .replace(/\u200c{2,}/g, "\u200c")
+    .replace(/^[\s\u200c]+|[\s\u200c]+$/g, "");
+}
+function validateNamePart(s, label) {
+  const t = cleanNamePart(s);
+  if (!t) return { ok: false, msg: `${label} را وارد کن.` };
+  if (t.length < NAME_MIN) return { ok: false, msg: `${label} باید حداقل ${fa(NAME_MIN)} حرف باشد.` };
+  if (t.length > NAME_MAX) return { ok: false, msg: `${label} نباید بیشتر از ${fa(NAME_MAX)} حرف باشد.` };
+  if (!/^[\p{L}\p{M}\u200c' -]+$/u.test(t)) return { ok: false, msg: `${label} فقط باید شامل حروف باشد (بدون عدد و علامت).` };
+  return { ok: true, value: t };
+}
+function nameKey(s) { return cleanNamePart(s).replace(/\u200c/g, "").replace(/\s+/g, " ").toLowerCase(); }
+function splitName(full) { const t = String(full || ""); const i = t.lastIndexOf(" "); return i > 0 ? [t.slice(0, i), t.slice(i + 1)] : [t, ""]; }
+function studentParts(s) { return (s.fn || s.ln) ? [s.fn || "", s.ln || ""] : splitName(s.name); }
+function studentCatalog() {
+  const map = new Map();
+  loadResults().forEach(r => {
+    const k = nameKey(r.student);
+    const e = map.get(k) || { name: r.student, count: 0 };
+    e.count++;
+    if (!e.fn && !e.ln && (r.fn || r.ln)) { e.fn = r.fn; e.ln = r.ln; }
+    if (r.father) e.father = r.father;
+    if (r.school) e.school = r.school;
+    if (r.city) e.city = r.city;
+    if (r.province) e.province = r.province;
+    map.set(k, e);
+  });
+  return [...map.values()];
+}
+function clearNameError() {
+  elById("nameError").textContent = "";
+  ["studentFirst", "studentLast", "studentFather", "studentSchool", "studentCity", "studentProvince"]
+    .forEach(id => { const el = elById(id); if (el) { el.classList.remove("invalid"); el.removeAttribute("aria-invalid"); } });
+}
+function readExtraField(id, label, minLen) {
+  const el = elById(id);
+  const t = cleanNamePart(el.value);
+  if (!t) return { ok: false, msg: `${label} را وارد کن.`, el };
+  if (t.length < minLen) return { ok: false, msg: `${label} باید حداقل ${fa(minLen)} حرف باشد.`, el };
+  if (t.length > 40) return { ok: false, msg: `${label} خیلی بلند است.`, el };
+  return { ok: true, value: t, el };
+}
+function readStudentName() {
+  const fi = elById("studentFirst"), li = elById("studentLast");
+  const f = validateNamePart(fi.value, "نام"), l = validateNamePart(li.value, "نام خانوادگی");
+  const father = readExtraField("studentFather", "نام پدر", 2);
+  const school = readExtraField("studentSchool", "نام مدرسه", 2);
+  const city = readExtraField("studentCity", "نام شهر", 2);
+  const province = readExtraField("studentProvince", "نام استان", 2);
+  clearNameError();
+  const fails = [[fi, f], [li, l], [father.el, father], [school.el, school], [city.el, city], [province.el, province]]
+    .filter(([, v]) => !v.ok);
+  if (fails.length) {
+    fails.forEach(([el, v]) => { if (el) { el.classList.add("invalid"); el.setAttribute("aria-invalid", "true"); } });
+    elById("nameError").textContent = fails.map(([, v]) => v.msg).filter(Boolean).join(" ");
+    (fails[0][0] || fi).focus();
+    return null;
+  }
+  let full = `${f.value} ${l.value}`, fn = f.value, ln = l.value;
+  const known = studentCatalog().find(s => nameKey(s.name) === nameKey(full));
+  if (known && known.name !== full) { full = known.name; [fn, ln] = studentParts(known); }
+  fi.value = fn; li.value = ln;
+  return { full, fn, ln, father: father.value, school: school.value, city: city.value, province: province.value };
+}
+function refreshKnownStudents() {
+  const wrap = elById("knownStudentsWrap"), sel = elById("knownStudents");
+  const list = studentCatalog();
+  wrap.style.display = list.length ? "" : "none";
+  sel.innerHTML = "";
+  const o0 = document.createElement("option"); o0.value = ""; o0.textContent = "— انتخاب کنید —"; sel.appendChild(o0);
+  list.forEach((s, i) => { const o = document.createElement("option"); o.value = String(i); o.textContent = `${s.name} (${fa(s.count)} آزمون)`; sel.appendChild(o); });
+  sel._list = list;
+}
+let currentFn = "", currentLn = "";
+function loadLastStudent() {
+  const raw = lsGet(STUDENT_KEY);
+  if (!raw) return null;
+  try {
+    const o = JSON.parse(raw);
+    if (o && typeof o === "object") {
+      return {
+        f: cleanNamePart(o.f), l: cleanNamePart(o.l),
+        father: cleanNamePart(o.father || ""), school: cleanNamePart(o.school || ""),
+        city: cleanNamePart(o.city || ""), province: cleanNamePart(o.province || "")
+      };
+    }
+  } catch (e) { /* مقدار قدیمی */ }
+  const n = normName(raw);
+  if (n === "دانش‌آموز") return null;
+  const [f, l] = splitName(n);
+  return { f, l, father: "", school: "", city: "", province: "" };
+}
+let currentFather = "", currentSchool = "", currentCity = "", currentProvince = "";
+function initStudentFields() {
+  const last = loadLastStudent();
+  if (last) {
+    elById("studentFirst").value = last.f || "";
+    elById("studentLast").value = last.l || "";
+    elById("studentFather").value = last.father || "";
+    elById("studentSchool").value = last.school || "";
+    elById("studentCity").value = last.city || "";
+    elById("studentProvince").value = last.province || "";
+    currentFn = last.f || ""; currentLn = last.l || "";
+    currentFather = last.father || ""; currentSchool = last.school || "";
+    currentCity = last.city || ""; currentProvince = last.province || "";
+    currentStudent = `${last.f || ""} ${last.l || ""}`.trim();
+  }
+  ["studentFirst", "studentLast", "studentFather", "studentSchool", "studentCity", "studentProvince"]
+    .forEach(id => elById(id).addEventListener("input", clearNameError));
+  elById("studentFirst").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); elById("studentLast").focus(); } });
+  elById("studentLast").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); elById("studentFather").focus(); } });
+  elById("studentProvince").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); elById("startQuizBtn").click(); } });
+  elById("knownStudents").addEventListener("change", e => {
+    const pick = (e.target._list || [])[parseInt(e.target.value)];
+    if (!pick) return;
+    const [a, b] = studentParts(pick);
+    elById("studentFirst").value = a; elById("studentLast").value = b;
+    if (pick.father) elById("studentFather").value = pick.father;
+    if (pick.school) elById("studentSchool").value = pick.school;
+    if (pick.city) elById("studentCity").value = pick.city;
+    if (pick.province) elById("studentProvince").value = pick.province;
+    clearNameError();
+  });
+  refreshKnownStudents();
+}
+let pgForce = null;
+
+let currentStudent = "";
+let pgLevel = "all";
+let pgClearArmed = false;
+initStudentFields();
+
+function recordAnswer(q, chosen, skipped) {
+  if (currentAnswers[currentIndex]) return; // هر سؤال فقط یک‌بار ثبت می‌شود
+  currentAnswers[currentIndex] = { q: q.id, s: q.strategy, l: q.level, c: (!skipped && chosen === q.answer) ? 1 : 0, k: skipped ? 1 : 0, a: skipped ? null : chosen };
+}
+
+function finishAttempt(sum) {
+  const box = document.getElementById("resultCompare");
+  if (practiceMode) {
+    box.innerHTML = "🔁 این یک آزمون تمرینی از اشتباهات بود و در نمودار پیشرفت ثبت نشد.";
+    box.style.display = "block";
+    return;
+  }
+  if (attemptSaved) return;
+  attemptSaved = true;
+  const all = loadResults();
+  const prevList = all.filter(r => r.student === currentStudent);
+  const prev = prevList[prevList.length - 1];
+  all.push({
+    id: uid(), student: currentStudent, fn: currentFn, ln: currentLn,
+    father: currentFather, school: currentSchool, city: currentCity, province: currentProvince,
+    date: new Date().toISOString(), level: selectedLevel,
+    total: sum.total, correct: sum.correct, skipped: sum.skipped, wrong: sum.wrong, percent: sum.percent,
+    items: currentAnswers.map(a => ({ q: a.q, s: a.s, l: a.l, c: a.c, k: a.k }))
+  });
+  const ok = saveResults(all);
+  sendResult(sum);
+
+  let html;
+  if (!prev) {
+    html = `📌 اولین آزمون <strong>${esc(currentStudent)}</strong> ثبت شد. از حالا پیشرفتت را دنبال می‌کنیم.`;
+  } else {
+    const d = sum.percent - prev.percent;
+    html = d > 0 ? `📈 نسبت به آزمون قبلی <strong>${fa(d)}٪ بهتر</strong> شدی!`
+         : d < 0 ? `📉 نسبت به آزمون قبلی ${fa(-d)}٪ کمتر شد؛ اشکالی ندارد، مرور کن و دوباره امتحان کن.`
+         : `➖ نتیجه‌ات مثل آزمون قبلی است.`;
+    if (prev.level !== selectedLevel) html += `<br><small style="color:#fcd34d">سطح آزمون قبلی «${LV[prev.level]}» بود؛ این مقایسه فقط تقریبی است.</small>`;
+    html += `<br><small style="color:var(--text-muted)">تعداد آزمون‌های ثبت‌شده: ${fa(prevList.length + 1)}</small>`;
+  }
+  if (!ok || !storageOk) html += `<br><small style="color:#fcd34d">⚠️ ذخیرهٔ دائمی در این مرورگر ممکن نشد؛ نتیجه فقط تا بستن صفحه می‌ماند. از بخش «پیشرفت من» پشتیبان بگیر.</small>`;
+  box.innerHTML = html;
+  box.style.display = "block";
+}
+
+function lineChartSVG(recs) {
+  const W = 640, H = 300, L = 46, R = 18, T = 24, B = 46, iw = W - L - R, ih = H - T - B, n = recs.length;
+  const X = i => n === 1 ? L + iw / 2 : L + iw * i / (n - 1);
+  const Y = v => T + ih * (1 - v / 100);
+  const pts = recs.map((r, i) => [X(i), Y(r.percent)]);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="نمودار درصد نمرهٔ آزمون‌ها" style="display:block;font-family:inherit">`;
+  s += `<defs><linearGradient id="pgFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6366f1" stop-opacity=".35"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs>`;
+  for (let v = 0; v <= 100; v += 20) {
+    s += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#334155" stroke-width="1" ${v ? 'stroke-dasharray="3 4"' : ""}/>`;
+    s += `<text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="#94a3b8">${fa(v)}</text>`;
+  }
+  if (n > 1) {
+    const line = pts.map(p => p.join(",")).join(" ");
+    s += `<path d="M${pts[0][0]},${Y(0)} L${pts.map(p => p.join(",")).join(" L")} L${pts[n - 1][0]},${Y(0)} Z" fill="url(#pgFill)"/>`;
+    s += `<polyline points="${line}" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }
+  if (n >= 3) {
+    const { m, b } = regress(recs.map(r => r.percent));
+    const c = v => Math.max(0, Math.min(100, v));
+    s += `<line x1="${X(0)}" y1="${Y(c(b))}" x2="${X(n - 1)}" y2="${Y(c(b + m * (n - 1)))}" stroke="#f472b6" stroke-width="2" stroke-dasharray="6 5"/>`;
+  }
+  const step = Math.ceil(n / 10);
+  recs.forEach((r, i) => {
+    const [px, py] = pts[i];
+    s += `<circle cx="${px}" cy="${py}" r="6" fill="${LV_HEX[r.level] || "#818cf8"}" stroke="#0f172a" stroke-width="2"><title>${esc(fmtDate(r.date))} — ${LV[r.level] || ""} — ${fa(r.percent)}٪ (${fa(r.correct)} از ${fa(r.total)})</title></circle>`;
+    if (n <= 12) s += `<text x="${px}" y="${py - 12}" text-anchor="middle" font-size="11" font-weight="700" fill="#f1f5f9">${fa(r.percent)}</text>`;
+    if (i % step === 0 || i === n - 1) s += `<text x="${px}" y="${H - 22}" text-anchor="middle" font-size="11" fill="#94a3b8">${fa(i + 1)}</text>`;
+  });
+  s += `<text x="${L + iw / 2}" y="${H - 4}" text-anchor="middle" font-size="11" fill="#94a3b8">شمارهٔ آزمون</text></svg>`;
+  return s;
+}
+
+const MIN_N = 3; // حداقل تعداد سؤال برای نتیجه‌گیری دربارهٔ یک مبحث
+function strategyRows(recs) {
+  const map = {};
+  recs.forEach((r, ri) => {
+    (r.items || []).forEach(it => {
+      const m = map[it.s] || (map[it.s] = { t: 0, c: 0, k: 0, f: [0, 0], g: [0, 0] });
+      m.t++; m.c += it.c; m.k += it.k;
+      const h = ri < recs.length / 2 ? m.f : m.g;
+      h[0]++; h[1] += it.c;
+    });
+  });
+  return Object.entries(map).map(([name, m]) => ({
+    name, t: m.t, k: m.k, acc: Math.round(100 * m.c / m.t), enough: m.t >= MIN_N,
+    delta: (m.f[0] >= MIN_N && m.g[0] >= MIN_N) ? Math.round(100 * m.g[1] / m.g[0] - 100 * m.f[1] / m.f[0]) : null
+  })).sort((a, b) => (b.enough - a.enough) || (a.acc - b.acc));
+}
+
+function miniTrendSVG(pts) {
+  const W = 300, H = 130, L = 30, R = 10, T = 12, B = 22, iw = W - L - R, ih = H - T - B, n = pts.length;
+  const X = i => n === 1 ? L + iw / 2 : L + iw * i / (n - 1);
+  const Y = v => T + ih * (1 - v / 100);
+  const bw = Math.max(6, Math.min(26, iw / n * 0.5));
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="font-family:inherit">`;
+  [0, 50, 100].forEach(v => {
+    s += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#334155" stroke-width="1" ${v ? 'stroke-dasharray="3 4"' : ""}/><text x="${L - 5}" y="${Y(v) + 4}" text-anchor="end" font-size="10" fill="#94a3b8">${fa(v)}</text>`;
+  });
+  pts.forEach((p, i) => {
+    const h = ih * p.acc / 100;
+    s += `<rect x="${X(i) - bw / 2}" y="${Y(p.acc)}" width="${bw}" height="${Math.max(h, 1.5)}" rx="3" fill="#6366f1" opacity=".35"><title>آزمون ${fa(p.idx)}: ${fa(p.c)} از ${fa(p.t)} درست (${fa(p.acc)}٪)</title></rect>`;
+  });
+  if (n > 1) s += `<polyline points="${pts.map((p, i) => X(i) + "," + Y(p.cum)).join(" ")}" fill="none" stroke="#f472b6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  pts.forEach((p, i) => {
+    s += `<circle cx="${X(i)}" cy="${Y(p.cum)}" r="4" fill="#f472b6" stroke="#0f172a" stroke-width="1.5"><title>میانگین تا آزمون ${fa(p.idx)}: ${fa(p.cum)}٪</title></circle>`;
+  });
+  const step = Math.ceil(n / 6);
+  pts.forEach((p, i) => { if (i % step === 0 || i === n - 1) s += `<text x="${X(i)}" y="${H - 6}" text-anchor="middle" font-size="10" fill="#94a3b8">${fa(p.idx)}</text>`; });
+  return s + "</svg>";
+}
+
+function strategyTrendHTML(recs) {
+  const cards = strategies.map(st => {
+    let t = 0, c = 0;
+    const pts = [];
+    recs.forEach((r, i) => {
+      const its = (r.items || []).filter(it => st.name.startsWith(it.s));
+      if (!its.length) return;
+      const ct = its.reduce((a, it) => a + it.c, 0);
+      t += its.length; c += ct;
+      pts.push({ idx: i + 1, t: its.length, c: ct, acc: Math.round(100 * ct / its.length), cum: Math.round(100 * c / t) });
+    });
+    const head = `<div class="pg-mini-h"><span>${st.icon} ${esc(st.name)}</span><small>${pts.length ? "میانگین " + fa(pts[pts.length - 1].cum) + "٪ از " + fa(t) + " سؤال" : ""}</small></div>`;
+    if (pts.length < 2) return `<div class="pg-mini">${head}<div class="nodata">${pts.length ? "برای رسم روند حداقل دو آزمون لازم است" : "هنوز سؤالی از این مبحث نیامده"}</div></div>`;
+    return `<div class="pg-mini">${head}${miniTrendSVG(pts)}</div>`;
+  }).join("");
+  return `<h3>روند پیشرفت هر مبحث در طول زمان</h3>
+    <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:8px;">ستون‌ها درصد درست همان آزمون و خط صورتی میانگین تجمعی تا آن آزمون است (سیر یادگیری). محور افقی: شمارهٔ آزمون.</p>
+    <div class="pg-mini-grid">${cards}</div>`;
+}
+
+function goLearn(name) {
+  document.querySelector("[data-section=learn]").click();
+  const s = strategies.find(x => x.name.startsWith(name));
+  if (s) showStrategy(s.id);
+}
+
+let pgMsgTimer = null;
+function showPgMsg(text, kind) {
+  const el = document.getElementById("pgMsg");
+  el.textContent = text || "";
+  el.style.display = text ? "block" : "none";
+  el.className = "pg-warn" + (kind === "ok" ? " ok" : "");
+  clearTimeout(pgMsgTimer);
+  if (text) pgMsgTimer = setTimeout(() => { el.style.display = "none"; }, 8000);
+}
+
+function downloadFile(name, text, type) {
+  const blob = new Blob([text], { type });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function csvCell(v) { let s = String(v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; }
+function exportCsv(recs, filename) {
+  const lines = [["نام", "نام خانوادگی", "نام پدر", "مدرسه", "شهر", "استان", "نام کامل", "تاریخ", "تاریخ (ISO)", "سطح", "تعداد سؤال", "درست", "غلط", "ردشده", "درصد (درست از کل سؤال‌ها)"].map(csvCell).join(",")];
+  recs.forEach(r => {
+    const [fn, ln] = studentParts({ fn: r.fn, ln: r.ln, name: r.student });
+    lines.push([fn, ln, r.father || "", r.school || "", r.city || "", r.province || "", r.student, fmtDate(r.date), r.date, LV[r.level] || r.level, r.total, r.correct, r.wrong, r.skipped, r.percent].map(csvCell).join(","));
+  });
+  downloadFile(filename, "\ufeff" + lines.join("\r\n"), "text/csv;charset=utf-8");
+}
+function exportBackup() {
+  const data = { app: "riazi7-fasl2", version: 2, exportedAt: new Date().toISOString(), results: loadResults() };
+  downloadFile("riazi7-f2-backup.json", JSON.stringify(data), "application/json");
+}
+function restoreFrom(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showPgMsg("فایل بیش از حد بزرگ است.", "err"); return; }
+  const fr = new FileReader();
+  fr.onerror = () => showPgMsg("خواندن فایل ناموفق بود.", "err");
+  fr.onload = () => {
+    let data;
+    try { data = JSON.parse(fr.result); } catch (e) { showPgMsg("فایل پشتیبان معتبر نیست.", "err"); return; }
+    const list = Array.isArray(data) ? data : (data && Array.isArray(data.results) ? data.results : null);
+    if (!list) { showPgMsg("ساختار فایل پشتیبان نامعتبر است.", "err"); return; }
+    const cur = loadResults();
+    const key = r => r.id || [r.student, r.date, r.level, r.total, r.correct].join("|");
+    const seen = new Set(cur.map(key));
+    let added = 0, ignored = 0;
+    list.forEach(x => {
+      const r = normalizeRecord(x);
+      if (!r || seen.has(key(r))) { ignored++; return; }
+      seen.add(key(r)); cur.push(r); added++;
+    });
+    cur.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const ok = saveResults(cur);
+    renderProgress();
+    showPgMsg(`${fa(added)} نتیجه بازیابی شد` + (ignored ? `؛ ${fa(ignored)} مورد تکراری یا نامعتبر نادیده گرفته شد.` : ".") + (ok ? "" : " ⚠️ ذخیرهٔ دائمی ممکن نشد."), ok ? "ok" : "err");
+  };
+  fr.readAsText(file);
+}
+
+function bindRestore() {
+  const btn = document.getElementById("pgRestoreBtn"), inp = document.getElementById("pgRestoreFile");
+  if (!btn || !inp) return;
+  btn.onclick = () => inp.click();
+  inp.onchange = () => { restoreFrom(inp.files && inp.files[0]); inp.value = ""; };
+}
+
+function bindRename(want) {
+  const btn = elById("pgRename"), box = elById("pgRenameBox");
+  if (!btn) return;
+  const known = studentCatalog().find(s => nameKey(s.name) === nameKey(want));
+  const [sf, sl] = known ? studentParts(known) : splitName(want);
+  btn.onclick = () => { box.hidden = !box.hidden; if (!box.hidden) { elById("rnFirst").value = sf; elById("rnLast").value = sl; elById("rnError").textContent = ""; elById("rnFirst").focus(); } };
+  elById("rnCancel").onclick = () => { box.hidden = true; };
+  elById("rnSave").onclick = () => {
+    const f = validateNamePart(elById("rnFirst").value, "نام"), l = validateNamePart(elById("rnLast").value, "نام خانوادگی");
+    if (!f.ok || !l.ok) { elById("rnError").textContent = [f.msg, l.msg].filter(Boolean).join(" "); return; }
+    let full = `${f.value} ${l.value}`, fnn = f.value, lnn = l.value;
+    const cur = loadResults();
+    const other = cur.find(r => r.student !== want && nameKey(r.student) === nameKey(full));
+    if (other) { full = other.student; [fnn, lnn] = studentParts({ fn: other.fn, ln: other.ln, name: other.student }); }
+    const ok = saveResults(cur.map(r => r.student === want ? Object.assign({}, r, { student: full, fn: fnn, ln: lnn }) : r));
+    if (currentStudent === want) { currentStudent = full; currentFn = fnn; currentLn = lnn; }
+    pgForce = full;
+    renderProgress();
+    showPgMsg(other ? `نتایج «${want}» با «${full}» ادغام شد.` : `نام به «${full}» تغییر کرد.` + (ok ? "" : " ⚠️ ذخیرهٔ دائمی ممکن نشد."), ok ? "ok" : "err");
+  };
+}
+
+function profileHTML(mine, want) {
+  const cur = { father: currentFather, school: currentSchool, city: currentCity, province: currentProvince };
+  const pick = k => { for (let i = mine.length - 1; i >= 0; i--) { const v = mine[i][k]; if (v) return v; } return want === currentStudent ? (cur[k] || "") : ""; };
+  const fld = (label, v, cls) => `<div class="pf${cls ? " " + cls : ""}"><small>${label}</small>${v ? `<strong>${esc(v)}</strong>` : `<strong class="na">ثبت نشده</strong>`}</div>`;
+  return `<div class="pg-profile" aria-label="مشخصات دانش‌آموز">
+    ${fld("👤 نام و نام خانوادگی", want, "wide")}
+    ${fld("👨 نام پدر", pick("father"))}
+    ${fld("🏫 نام مدرسه", pick("school"))}
+    ${fld("🏙️ شهر", pick("city"))}
+    ${fld("🗺️ استان", pick("province"))}
+  </div>`;
+}
+
+function renderProgress() {
+  const all = loadResults();
+  const sel = document.getElementById("pgStudent");
+  const names = [...new Set(all.map(r => r.student))];
+  const want = names.includes(pgForce) ? pgForce : names.includes(sel.value) ? sel.value : (names.includes(currentStudent) ? currentStudent : names[0]);
+  pgForce = null;
+  sel.innerHTML = names.map(n => `<option value="${esc(n)}"${n === want ? " selected" : ""}>${esc(n)}</option>`).join("");
+  document.querySelectorAll("#pgChips .pg-chip").forEach(c => { const on = c.dataset.lv === pgLevel; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on ? "true" : "false"); });
+  const body = document.getElementById("pgBody");
+  document.querySelector(".pg-toolbar").style.display = names.length ? "" : "none";
+  const restoreHTML = `<button class="btn btn-secondary" id="pgRestoreBtn">📂 بازیابی از فایل پشتیبان</button><input type="file" id="pgRestoreFile" accept="application/json,.json" hidden>`;
+
+  if (!names.length) {
+    body.innerHTML = `${storageOk ? "" : `<div class="pg-warn">⚠️ ذخیرهٔ دائمی در این مرورگر کار نمی‌کند (مثلاً وقتی فایل از داخل پیام‌رسان باز شده). فایل را در حافظهٔ گوشی ذخیره کن و از طریق مرورگر باز کن؛ در غیر این صورت نتایج با بستن صفحه از بین می‌روند.</div>`}<div class="pg-empty"><div class="big">📊</div><p>هنوز آزمونی ثبت نشده است.</p><p style="margin-top:6px;">یک آزمون را تا آخر بده؛ نتیجه‌اش خودکار اینجا ثبت می‌شود.</p>
+      <div class="pg-actions"><button class="btn btn-primary" onclick="document.querySelector('[data-section=quiz]').click()">رفتن به آزمون 🎯</button>${restoreHTML}</div></div>`;
+    bindRestore();
+    return;
+  }
+  const mine = all.filter(r => r.student === want);
+  const recs = pgLevel === "all" ? mine : mine.filter(r => r.level === pgLevel);
+  if (!recs.length) {
+    body.innerHTML = profileHTML(mine, want) + `<div class="pg-empty"><div class="big">🔎</div><p>برای سطح «${LV[pgLevel]}» هنوز آزمونی ثبت نشده است.</p></div>`;
+    return;
+  }
+
+  const ps = recs.map(r => r.percent), n = recs.length;
+  let insight = "";
+  if (n >= 2) {
+    const k = Math.min(3, Math.floor(n / 2));
+    const a = avg(ps.slice(0, k)), b = avg(ps.slice(-k)), d = Math.round(b - a);
+    const mixed = new Set(recs.map(r => r.level)).size > 1;
+    const hint = (mixed ? "<small>چون سطح آزمون‌ها متفاوت است، برای مقایسهٔ دقیق‌تر یک سطح را از بالا انتخاب کن.</small>" : "")
+               + (n < 4 ? `<small>با ${fa(n)} آزمون این برآورد فقط تقریبی است.</small>` : "");
+    if (d >= 5) insight = `<div class="pg-insight up">📈 میانگین ${fa(k)} آزمون اخیر ${fa(Math.round(b))}٪ است؛ ${fa(d)}٪ بیشتر از ${fa(k)} آزمون اول.${hint}</div>`;
+    else if (d <= -5) insight = `<div class="pg-insight down">📉 میانگین ${fa(k)} آزمون اخیر (${fa(Math.round(b))}٪) از ${fa(k)} آزمون اول کمتر است. بخش آموزش را مرور کن.${hint}</div>`;
+    else insight = `<div class="pg-insight flat">➖ روند تقریباً ثابت است (میانگین اخیر ${fa(Math.round(b))}٪). با مرور مبحث‌های ضعیف‌تر می‌توانی جهش بزنی.${hint}</div>`;
+  }
+
+  const rows = strategyRows(recs);
+  let weak = rows.find(r => r.enough && r.acc < 75);
+  if (!weak) {
+    const enough = rows.filter(r => r.enough);
+    if (enough.length >= 2) {
+      const sorted = enough.slice().sort((a,b) => a.acc - b.acc);
+      if (sorted[0].acc < sorted[sorted.length-1].acc - 5) weak = sorted[0];
+    }
+  }
+  const barColor = a => a >= 75 ? "#10b981" : a >= 50 ? "#f59e0b" : "#ef4444";
+  const strat = rows.map(r => `
+    <div class="pg-srow">
+      <div class="pg-sname">${esc(r.name)}${r.delta === null || r.delta === 0 ? "" : `<span class="pg-delta ${r.delta > 0 ? "up" : "down"}">${r.delta > 0 ? "▲" : "▼"} ${fa(Math.abs(r.delta))}٪</span>`}</div>
+      <div class="pg-sbar" role="img" aria-label="${esc(r.name)}: ${fa(r.acc)} درصد"><div style="width:${r.acc}%;background:${r.enough ? barColor(r.acc) : "#64748b"};${r.enough ? "" : "opacity:.5"}"></div></div>
+      <div class="pg-sval">${r.enough ? fa(r.acc) + "٪" : "<span style='color:var(--text-muted)'>داده کافی نیست</span>"} <small>(${fa(r.t)} سؤال${r.k ? "، " + fa(r.k) + " ردشده" : ""})</small></div>
+    </div>`).join("");
+
+  const last10 = recs.map((r, i) => ({ r, i, d: (i && recs[i - 1].level === r.level) ? r.percent - recs[i - 1].percent : null })).slice(-10).reverse();
+  const table = last10.map(({ r, i, d }) => `<tr><td>${fa(i + 1)}</td><td>${esc(fmtDate(r.date))}</td><td>${LV[r.level] || ""}</td><td>${fa(r.correct)} / ${fa(r.wrong)} / ${fa(r.skipped)}</td><td><strong>${fa(r.percent)}٪</strong></td>
+    <td title="${d === null ? "قابل مقایسه با آزمون قبل نیست (اولین آزمون یا سطح متفاوت)" : ""}" style="color:${d === null ? "var(--text-muted)" : d > 0 ? "#34d399" : d < 0 ? "#f87171" : "var(--text-muted)"}">${d === null ? "—" : d > 0 ? "▲ " + fa(d) : d < 0 ? "▼ " + fa(-d) : "="}</td></tr>`).join("");
+
+  body.innerHTML = `
+    ${storageOk ? "" : `<div class="pg-warn">⚠️ ذخیرهٔ دائمی در این مرورگر فعال نیست؛ نتایج فقط تا بستن صفحه می‌مانند. پشتیبان JSON یا CSV بگیر.</div>`}
+    ${profileHTML(mine, want)}
+    <div class="pg-stats">
+      <div class="pg-stat"><b>${fa(n)}</b><span>تعداد آزمون</span></div>
+      <div class="pg-stat"><b>${fa(Math.round(avg(ps)))}٪</b><span>میانگین نمره</span></div>
+      <div class="pg-stat"><b>${fa(Math.max(...ps))}٪</b><span>بهترین نمره</span></div>
+      <div class="pg-stat"><b>${fa(ps[n - 1])}٪</b><span>آخرین آزمون</span></div>
+    </div>
+    ${insight}
+    <h3>نمودار نمرهٔ آزمون‌ها</h3>
+    <div class="pg-chart">${lineChartSVG(recs)}</div>
+    <div class="pg-legend">
+      <span><i style="background:#10b981"></i>ساده</span><span><i style="background:#f59e0b"></i>متوسط</span><span><i style="background:#ef4444"></i>سخت</span><span><i style="background:#38bdf8"></i>ترکیبی</span>
+      ${n >= 3 ? `<span><i class="ln"></i>خط روند</span>` : ""}
+    </div>
+    <p class="pg-note">نمره = درست ÷ کل سؤال‌ها. خط روند فقط یک شاخص توصیفی است و اثبات قطعی پیشرفت نیست؛ نمره‌ها به سختی آزمون و تعداد سؤال‌ها وابسته‌اند.</p>
+    <h3>درصد پاسخ درست در هر مبحث <small style="color:var(--text-muted);font-weight:400">(از کل سؤال‌های ارائه‌شده؛ ردشده‌ها درست حساب نمی‌شوند. حداقل ${fa(MIN_N)} سؤال لازم است. ▲▼ = تغییر نسبت به نیمهٔ اول)</small></h3>
+    ${strat}
+    ${weak ? `<div class="tip-box"><strong>💡 پیشنهاد:</strong> مبحث «${esc(weak.name)}» ضعیف‌ترین بخش توست (${fa(weak.acc)}٪ از ${fa(weak.t)} سؤال). <button class="back-btn" id="pgWeakBtn" style="margin:8px 0 0 0;" data-strategy="${esc(weak.name)}">مرور همین مبحث ←</button></div>` : ""}
+    ${strategyTrendHTML(recs)}
+    <h3>تاریخچهٔ آخرین آزمون‌ها</h3>
+    <div class="pg-tablewrap"><table><tr><th>#</th><th>تاریخ</th><th>سطح</th><th>درست / غلط / ردشده</th><th>نمره</th><th>تغییر</th></tr>${table}</table></div>
+    <div class="pg-actions">
+      <button class="btn btn-secondary" id="pgCsvOne">⬇️ CSV این دانش‌آموز</button>
+      <button class="btn btn-secondary" id="pgCsvAll">⬇️ CSV همهٔ دانش‌آموزان</button>
+      <button class="btn btn-secondary" id="pgBackup">💾 پشتیبان‌گیری (JSON)</button>
+      ${restoreHTML}
+      <button class="btn btn-secondary" id="pgRename">✏️ ویرایش نام</button>
+      <button class="btn btn-secondary" id="pgClear">🗑️ پاک کردن نتایج این دانش‌آموز</button>
+    </div>
+    <div class="pg-rename" id="pgRenameBox" hidden>
+      <div class="name-grid"><div><label for="rnFirst">نام</label><input id="rnFirst" type="text" maxlength="25"></div><div><label for="rnLast">نام خانوادگی</label><input id="rnLast" type="text" maxlength="25"></div></div>
+      <p class="field-error" id="rnError" role="alert"></p>
+      <div class="pg-actions" style="margin-top:6px"><button class="btn btn-primary" id="rnSave">ذخیرهٔ نام</button><button class="btn btn-secondary" id="rnCancel">انصراف</button></div>
+    </div>`;
+
+  const wk = document.getElementById("pgWeakBtn");
+  if (wk) wk.onclick = () => goLearn(wk.dataset.strategy);
+  document.getElementById("pgCsvOne").onclick = () => exportCsv(mine, "riazi7-f2-results-student.csv");
+  document.getElementById("pgCsvAll").onclick = () => exportCsv(all, "riazi7-f2-results-all.csv");
+  document.getElementById("pgBackup").onclick = exportBackup;
+  bindRestore();
+  bindRename(want);
+  const clr = document.getElementById("pgClear");
+  clr.onclick = () => {
+    if (!pgClearArmed) {
+      pgClearArmed = true; clr.textContent = `مطمئنی؟ دوباره بزن تا نتایج «${want}» پاک شود`;
+      setTimeout(() => { pgClearArmed = false; const b = document.getElementById("pgClear"); if (b) b.textContent = "🗑️ پاک کردن نتایج این دانش‌آموز"; }, 4000);
+      return;
+    }
+    pgClearArmed = false;
+    saveResults(loadResults().filter(r => r.student !== want));
+    renderProgress();
+    showPgMsg(`نتایج «${want}» پاک شد.`, "ok");
+  };
+}
+
+document.getElementById("pgStudent").addEventListener("change", renderProgress);
+document.querySelectorAll("#pgChips .pg-chip").forEach(c => c.addEventListener("click", () => { pgLevel = c.dataset.lv; renderProgress(); }));
+
+// ==================== APP LOGIC ====================
+let selectedLevel = "medium";
+let selectedCount = 8;
+let currentQuiz = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+
+// Navigation
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    document.getElementById(btn.dataset.section).classList.add("active");
+    if (btn.dataset.section === "learn") showStrategyList();
+    if (btn.dataset.section === "progress") renderProgress();
+  });
+});
+
+// Render strategy cards
+function renderStrategyCards(containerId, clickable = true) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = strategies.map(s => `
+    <div class="strategy-card" data-id="${s.id}" ${clickable ? `role="button" tabindex="0" onclick="showStrategy(${s.id})"` : ""}>
+      <div class="num">${s.id}</div>
+      <h4>${s.icon} ${s.name}</h4>
+      <p>${s.desc.substring(0, 60)}...</p>
+    </div>
+  `).join("");
+}
+renderStrategyCards("home-strategies");
+renderStrategyCards("learn-strategies");
+
+// ---------- Math direction: عبارت‌های ریاضی همیشه چپ‌به‌راست ----------
+const MATH_RE = (() => {
+  const D = "[0-9۰-۹]";
+  const NUM = `${D}+(?:[٫.]${D}+)?`;
+  const W = "[\\u0622-\\u06CC\\u200c]+(?:\\s[\\u0622-\\u06CC\\u200c]+)*"; // کلمه‌های فارسی داخل پرانتز فرمول
+  const VAR = "(?<![A-Za-z])[A-Za-z](?![A-Za-z])";
+  const SUP = "[²³ⁿ]?";
+  const PAREN = `\\(${W}(?:\\s*[+\\-−×÷]\\s*(?:${W}|${D}+))+\\)`;
+  const TUPLE = `\\(\\s*[+−-]?${NUM}(?:\\s*[,،]\\s*[+−-]?${NUM})+\\s*\\)`;               // مثل (۲، ۵)
+  const ATOM = `(?:${PAREN}|${TUPLE}|(?<=\\()[+−]${NUM}[A-Za-z]?|${NUM}[A-Za-z]?${SUP}[°%٪]?[↑↓]?|${VAR}${SUP}|□|…|\\.{3})`;
+  const OP = "[+\\-−×÷=<>≤≥*/^]";
+  const T = `(?:${TUPLE}|\\(*${ATOM}\\)*)`;
+  // دنباله/فهرست عددی: ۶،۱۱،۱۶،... یا (۱،۴،۷،...) یا (۰,۹)، (۱,۷)  (حداقل ۳ عضو یا دارای «...»؛ فهرست «الف، ب و ج» دست‌نخورده می‌ماند)
+  const SEPC = "\\s*[،,]\\s*";
+  const ITEM = `(?:[+−-]?${NUM}|${TUPLE}|…|\\.{3})`;
+  const SEQ = `(?:${ITEM}(?:${SEPC}${ITEM})+|\\(${ITEM}(?:${SEPC}${ITEM})+\\))(?!\\s*و\\s*${D})`;
+  const EXPR = `[-−]?${T}(?:\\s*${OP}\\s*[-−+]?${T}|(?=\\()${T})+`;                    // شامل ضرب ضمنی مثل n(n−۱)
+  const SIGNED = `(?<![0-9۰-۹A-Za-z)\\]])[+−](?=${D})${NUM}[A-Za-z]?${SUP}[°%٪]?(?!\\s*${OP})`; // +۱ و −۲ (علامت نباید جابه‌جا شود)
+  const VSUP = `(?<![A-Za-z])[A-Za-z][²³ⁿ](?![A-Za-z])`;                              // n²
+  const FUNC = `(?<![A-Za-z])[A-Za-z]${TUPLE}`;                                       // C(۵، ۳)
+  return new RegExp(`(?:[+−]\\()+[+−]?${NUM}\\)+|${SEQ}|${EXPR}|${FUNC}|${VSUP}|${SIGNED}`, "g");
+})();
+function ltrMath(root) {
+  if (!root) return;
+  const walker = document.createTreeWalker(root, 4);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n => {
+    const par = n.parentNode && n.parentNode.nodeName;
+    if (/^(SCRIPT|STYLE|TEXTAREA|OPTION)$/i.test(par || "")) return;
+    let t = n.nodeValue;
+    if (!t || t.includes("\u2066")) return;
+    if (n.parentNode && n.parentNode.closest && n.parentNode.closest(".mth")) return;
+    let out = t.replace(MATH_RE, m => {
+      // پرانتزهای نامتوازن (باز یا بسته) متعلق به جملهٔ فارسی‌اند و باید بیرون از عبارت ریاضی بمانند
+      let pre = "", post = "", core = m;
+      const cnt = (s, ch) => s.split(ch).length - 1;
+      while (core.endsWith(")") && cnt(core, ")") > cnt(core, "(")) { post = ")" + post; core = core.slice(0, -1); }
+      while (core.startsWith("(") && cnt(core, "(") > cnt(core, ")")) { pre += "("; core = core.slice(1); }
+      return core ? pre + "\u2066" + core + "\u2069" + post : m;
+    });
+    // پیکان درون متن راست‌به‌چپ باید به سمت چپ باشد (جهت خواندن)
+    if (out.includes("→") && out.trim().length > 1) out = out.replace(/→/g, "←");
+    if (out !== t) n.nodeValue = out;
+  });
+}
+
+function fitSvgText(root) {
+  try {
+    root.querySelectorAll("svg").forEach(svg => {
+      const vb = svg.viewBox && svg.viewBox.baseVal;
+      if (!vb || !vb.width) return;
+      svg.querySelectorAll("text").forEach(t => {
+        if (typeof t.getBBox !== "function") return;
+        let b; try { b = t.getBBox(); } catch (e) { return; }
+        if (!b || !b.width) return;
+        let dx = 0;
+        if (b.x < 2) dx = 2 - b.x;
+        else if (b.x + b.width > vb.width - 2) dx = vb.width - 2 - (b.x + b.width);
+        if (dx) t.setAttribute("transform", ((t.getAttribute("transform") || "") + ` translate(${dx.toFixed(1)},0)`).trim());
+      });
+    });
+  } catch (e) { /* نمایش شکل نباید به خاطر این اصلاح مختل شود */ }
+}
+
+function showStrategyList() {
+  document.getElementById("strategy-list").style.display = "block";
+  document.getElementById("strategy-details").innerHTML = "";
+}
+
+function showStrategy(id) {
+  const s = strategies.find(x => x.id === id);
+  document.getElementById("strategy-list").style.display = "none";
+  const detail = document.getElementById("strategy-details");
+  detail.innerHTML = `
+    <button class="back-btn" onclick="showStrategyList()">← بازگشت به لیست مبحث‌ها</button>
+    <div class="card">
+      <h2>${s.icon} مبحث ${s.id}: ${s.name}</h2>
+      <p style="font-size:1.05rem; margin-bottom:16px;">${s.desc}</p>
+      ${s.body || ""}<div class="tip-box"><strong>💡 نکته طلایی:</strong> ${s.tip}</div>${s.mistake ? `<div class="tip-box" style="border-color:#f87171"><strong>⚠️ اشتباه رایج:</strong> ${s.mistake}</div>` : ""}
+      ${s.examples.map((ex, i) => `
+        <div class="example-box">
+          <span class="label">مثال ${i+1}</span>
+          <p style="margin-bottom:8px;"><strong>سؤال:</strong> ${ex.q}</p>
+          ${ex.diagram ? `<div class="diagram-box">${ex.diagram}<div class="diagram-caption">شکل کمکی برای فهم بهتر</div></div>` : ""}
+          <div class="answer-box"><strong>حل گام‌به‌گام:</strong><br>${ex.a}</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  ltrMath(detail);
+  fitSvgText(detail);
+}
+
+// ---------- Question bank: ids + validation ----------
+questionBank.forEach((q, i) => { q.id = "q" + String(i + 1).padStart(3, "0"); });
+const validBank = questionBank.filter(q => q && typeof q.q === "string" && Array.isArray(q.options) && q.options.length === 4
+  && q.options.every(o => typeof o === "string" && o.trim()) && new Set(q.options).size === 4
+  && Number.isInteger(q.answer) && q.answer >= 0 && q.answer < 4
+  && ["easy", "medium", "hard"].includes(q.level) && typeof q.strategy === "string" && typeof q.explain === "string");
+function poolFor(level) { return level === "mixed" ? validBank : validBank.filter(q => q.level === level); }
+function shuffle(arr) { // Fisher–Yates
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function stratifiedPick(pool, n) { // انتخاب چرخشی بین مبحث‌ها تا هر آزمون روی مبحث‌های مختلف پخش شود
+  const g = {};
+  pool.forEach(q => { (g[q.strategy] = g[q.strategy] || []).push(q); });
+  const lists = shuffle(Object.keys(g)).map(k => shuffle(g[k]));
+  const picked = [];
+  while (picked.length < n && lists.some(l => l.length)) {
+    for (const l of lists) { if (picked.length < n && l.length) picked.push(l.pop()); }
+  }
+  return shuffle(picked);
+}
+let practiceMode = false, attemptSaved = false, finished = false, wrongPool = [];
+
+// ---------- Quiz setup ----------
+function setNotice(t) { document.getElementById("quizNotice").textContent = t || ""; }
+function refreshSetup(note) {
+  refreshKnownStudents();
+  const avail = poolFor(selectedLevel).length;
+  const btns = [...document.querySelectorAll(".q-count button")];
+  btns.forEach(b => { const off = parseInt(b.dataset.count) > avail; b.disabled = off; b.title = off ? `در این سطح فقط ${fa(avail)} سؤال داریم` : ""; });
+  let msg = note || "";
+  if (selectedCount > avail) {
+    const ok = btns.filter(b => !b.disabled).pop();
+    selectedCount = ok ? parseInt(ok.dataset.count) : avail;
+    msg = `در سطح «${LV[selectedLevel]}» فقط ${fa(avail)} سؤال داریم؛ تعداد سؤال‌ها روی ${fa(selectedCount)} تنظیم شد.`;
+  }
+  btns.forEach(b => b.classList.toggle("selected", parseInt(b.dataset.count) === selectedCount));
+  document.querySelectorAll(".level-card").forEach(c => { const on = c.dataset.level === selectedLevel; c.classList.toggle("selected", on); c.setAttribute("aria-checked", on ? "true" : "false"); });
+  document.getElementById("startQuizBtn").disabled = avail === 0;
+  setNotice(avail === 0 ? "برای این سطح سؤالی در بانک نیست." : msg);
+}
+document.querySelectorAll(".level-card").forEach(card => {
+  card.addEventListener("click", () => { selectedLevel = card.dataset.level; refreshSetup(); });
+});
+document.querySelectorAll(".q-count button").forEach(btn => {
+  btn.addEventListener("click", () => { if (btn.disabled) return; selectedCount = parseInt(btn.dataset.count); refreshSetup(); });
+});
+document.addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches('[role="radio"],[role="button"]')) { e.preventDefault(); e.target.click(); }
+});
+refreshSetup();
+ltrMath(document.body);
+
+document.getElementById("startQuizBtn").addEventListener("click", () => startQuiz());
+
+function startQuiz(retryPool) {
+  practiceMode = Array.isArray(retryPool);
+  let pool, n;
+  if (practiceMode) { pool = retryPool; n = pool.length; }
+  else {
+    pool = poolFor(selectedLevel);
+    if (!pool.length) { setNotice("برای این سطح سؤالی در بانک نیست."); return; }
+    if (pool.length < selectedCount) { setNotice(`در سطح «${LV[selectedLevel]}» فقط ${fa(pool.length)} سؤال داریم؛ تعداد را کم کن یا سطح دیگری انتخاب کن.`); return; }
+    n = selectedCount;
+    const nm = readStudentName();
+    if (!nm) return;
+    currentStudent = nm.full; currentFn = nm.fn; currentLn = nm.ln;
+    currentFather = nm.father; currentSchool = nm.school;
+    currentCity = nm.city; currentProvince = nm.province;
+    lsSet(STUDENT_KEY, JSON.stringify({
+      f: nm.fn, l: nm.ln, father: nm.father, school: nm.school,
+      city: nm.city, province: nm.province
+    }));
+  }
+  currentQuiz = practiceMode ? shuffle(pool).slice(0, n) : stratifiedPick(pool, n);
+  currentIndex = 0; score = 0; answered = false; finished = false; attemptSaved = false;
+  currentAnswers = [];
+  document.getElementById("resultCompare").style.display = "none";
+  setNotice("");
+
+  document.getElementById("quiz-setup").style.display = "none";
+  document.getElementById("quiz-result").style.display = "none";
+  document.getElementById("quiz-area").style.display = "block";
+  document.getElementById("qTotal").textContent = currentQuiz.length;
+  document.getElementById("liveScore").textContent = "0";
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  const q = currentQuiz[currentIndex];
+  document.getElementById("qNum").textContent = currentIndex + 1;
+  document.getElementById("progressBar").style.width = ((currentIndex) / currentQuiz.length * 100) + "%";
+  document.getElementById("nextBtn").disabled = true;
+  document.getElementById("skipBtn").style.display = "inline-block";
+
+  const letters = ["آ", "ب", "ج", "د"];
+  const card = document.getElementById("questionCard");
+  card.innerHTML = `
+    <div class="q-meta">
+      <span class="q-tag level-${q.level}">${LV[q.level]}</span>
+      <span class="q-tag strategy">${q.strategy}</span>
+      ${practiceMode ? `<span class="q-tag">تمرین (ثبت نمی‌شود)</span>` : ""}
+    </div>
+    <div class="question-text">${q.q}</div>
+    <div class="options" role="group" aria-label="گزینه‌ها">
+      ${q.options.map((opt, i) => `
+        <button type="button" class="option" data-index="${i}">
+          <span class="opt-letter">${letters[i]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join("")}
+    </div>
+    <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+  `;
+  card.querySelectorAll(".option").forEach(b => b.addEventListener("click", () => selectOption(b, parseInt(b.dataset.index))));
+  ltrMath(card);
+}
+
+function selectOption(el, index) {
+  if (answered || finished) return;
+  answered = true;
+  const q = currentQuiz[currentIndex];
+  const options = document.querySelectorAll(".option");
+  options.forEach(o => { o.disabled = true; });
+
+  el.classList.add("selected");
+  const feedback = document.getElementById("feedback");
+
+  recordAnswer(q, index, false);
+  if (index === q.answer) {
+    el.classList.add("correct");
+    score++;
+    document.getElementById("liveScore").textContent = score;
+    feedback.className = "feedback show correct";
+    feedback.innerHTML = `✅ آفرین! درست بود.<br><small>${q.explain}</small>`; ltrMath(feedback);
+  } else {
+    el.classList.add("wrong");
+    options[q.answer].classList.add("correct");
+    feedback.className = "feedback show wrong";
+    feedback.innerHTML = `❌ اشتباه بود. پاسخ درست گزینه «${["آ", "ب", "ج", "د"][q.answer]}» است.<br><small>${q.explain}</small>`; ltrMath(feedback);
+  }
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = false;
+  document.getElementById("skipBtn").style.display = "none";
+  nb.focus();
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (!answered || finished) return;
+  currentIndex++;
+  if (currentIndex >= currentQuiz.length) showResult();
+  else showQuestion();
+});
+
+document.getElementById("skipBtn").addEventListener("click", () => {
+  if (answered || finished) return;
+  answered = true;
+  const q = currentQuiz[currentIndex];
+  const options = document.querySelectorAll(".option");
+  options.forEach(o => { o.disabled = true; });
+  recordAnswer(q, null, true);
+  options[q.answer].classList.add("correct");
+  const feedback = document.getElementById("feedback");
+  feedback.className = "feedback show wrong";
+  feedback.innerHTML = `سؤال را رد کردی (نمره‌ای نمی‌گیرد، غلط هم حساب نمی‌شود). پاسخ صحیح: گزینه «${["آ", "ب", "ج", "د"][q.answer]}»<br><small>${q.explain}</small>`; ltrMath(feedback);
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = false;
+  document.getElementById("skipBtn").style.display = "none";
+  nb.focus();
+});
+
+function summarize() {
+  const total = currentQuiz.length;
+  let correct = 0, wrong = 0, skipped = 0;
+  for (let i = 0; i < total; i++) {
+    const a = currentAnswers[i];
+    if (!a || a.k) skipped++; else if (a.c) correct++; else wrong++;
+  }
+  return { total, correct, wrong, skipped, percent: total ? Math.round(100 * correct / total) : 0 };
+}
+
+function renderReview() {
+  const letters = ["آ", "ب", "ج", "د"];
+  wrongPool = [];
+  const items = [];
+  currentQuiz.forEach((q, i) => {
+    const a = currentAnswers[i];
+    if (a && a.c) return;
+    wrongPool.push(q);
+    const skip = !a || a.k;
+    items.push(`<details class="rv"><summary><span class="rv-tag ${skip ? "skip" : "wrong"}">${skip ? "ردشده" : "غلط"}</span>${fa(i + 1)}. ${q.q}</summary>
+      <div class="rv-body">
+        ${skip ? "" : `<p class="rv-bad">پاسخ تو: ${letters[a.a]}) ${q.options[a.a]}</p>`}
+        <p class="rv-ok">پاسخ درست: ${letters[q.answer]}) ${q.options[q.answer]}</p>
+        <p class="rv-ex">${q.explain}</p>
+      </div></details>`);
+  });
+  document.getElementById("reviewBox").innerHTML = items.length
+    ? `<div class="rv-wrap"><h3>🔍 مرور سؤال‌های اشتباه و ردشده</h3>${items.join("")}</div>` : "";
+  ltrMath(document.getElementById("reviewBox"));
+  const rb = document.getElementById("retryWrongBtn");
+  rb.style.display = items.length ? "inline-block" : "none";
+  rb.onclick = () => startQuiz(wrongPool.slice());
+}
+
+function showResult() {
+  if (finished) return;
+  finished = true;
+  for (let i = 0; i < currentQuiz.length; i++) if (!currentAnswers[i]) { currentIndex = i; recordAnswer(currentQuiz[i], null, true); }
+  const sum = summarize();
+  score = sum.correct;
+  document.getElementById("quiz-area").style.display = "none";
+  document.getElementById("quiz-result").style.display = "block";
+  const percent = sum.percent;
+  document.getElementById("resultScore").textContent = percent + "%";
+  document.getElementById("statCorrect").textContent = sum.correct;
+  document.getElementById("statWrong").textContent = sum.wrong;
+  document.getElementById("statSkipped").textContent = sum.skipped;
+  document.getElementById("statTotal").textContent = sum.total;
+  const answeredN = sum.correct + sum.wrong;
+  const accuracy = answeredN ? Math.round(100 * sum.correct / answeredN) : null;
+  const completion = Math.round(100 * answeredN / sum.total);
+  document.getElementById("scoreNote").innerHTML =
+    `<strong>نمره آزمون:</strong> ${fa(sum.correct)} از ${fa(sum.total)} = ${fa(sum.percent)}٪<br>` +
+    `<strong>دقت پاسخ‌گویی:</strong> ${accuracy === null ? "قابل محاسبه نیست (هیچ سؤالی پاسخ داده نشد)" : fa(accuracy) + "٪ (" + fa(sum.correct) + " از " + fa(answeredN) + " پاسخ‌داده‌شده)"}<br>` +
+    `<strong>نرخ تکمیل:</strong> ${fa(completion)}٪` +
+    (sum.skipped ? ` — ${fa(sum.skipped)} سؤال ردشده نمره نگرفته و غلط هم حساب نشده است.` : "");
+
+  let stars = "", msg = "";
+  if (percent >= 90) { stars = "⭐⭐⭐⭐⭐"; msg = "عالی بودی! تو یک قهرمان عددهای صحیح هستی! 🏆"; launchConfetti(); }
+  else if (percent >= 75) { stars = "⭐⭐⭐⭐"; msg = "خیلی خوب بود! ادامه بده، داری عالی پیشرفت می‌کنی! 💪"; launchConfetti(); }
+  else if (percent >= 60) { stars = "⭐⭐⭐"; msg = "خوب بود! با کمی تمرین بیشتر عالی می‌شی! 🌟"; }
+  else if (percent >= 40) { stars = "⭐⭐"; msg = "نمره قابل قبولی گرفتی. بخش آموزش را دوباره مرور کن! 📚"; }
+  else { stars = "⭐"; msg = "اشکالی نداره! یادگیری با تمرین بهتر می‌شه. دوباره تلاش کن! 🔄"; }
+  document.getElementById("resultStars").textContent = stars;
+  document.getElementById("resultMsg").textContent = msg;
+  document.getElementById("progressBar").style.width = "100%";
+  renderReview();
+  finishAttempt(sum);
+}
+
+function resetQuiz() {
+  document.getElementById("quiz-result").style.display = "none";
+  document.getElementById("quiz-area").style.display = "none";
+  document.getElementById("quiz-setup").style.display = "block";
+  refreshSetup();
+}
+
+function launchConfetti() {
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const container = document.getElementById("confetti");
+  const colors = ["#6366f1","#ec4899","#10b981","#f59e0b","#3b82f6","#f472b6"];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "%";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    c.style.animationDelay = Math.random() * 0.5 + "s";
+    c.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+    c.style.width = (Math.random() * 8 + 6) + "px";
+    c.style.height = c.style.width;
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+
+/* ===== اتصال به Supabase ===== */
+const SB='https://qwpmbprjdwrxwhwgdekt.supabase.co',KEY='sb_publishable_p8FrC24bNtoAlgyxoFvPsQ_tFj0L9fB',CH='g7-c2';
+const S8={"1": "مقایسه و ترتیب", "2": "قرینه", "3": "جمع", "4": "تفریق", "5": "ضرب و تقسیم", "6": "اولویت عملیات", "7": "میانگین و دما", "8": "الگوهای عددی"};
+const L2I={"تفریق": "4", "قرینه": "2", "میانگین و دما": "7", "مقایسه و ترتیب": "1", "جمع": "3", "ضرب و تقسیم": "5", "الگوهای عددی": "8", "اولویت عملیات": "6"};
+const tkey=x=>{x=String(x);if(S8[x])return x;if(L2I[x])return L2I[x];const f=Object.entries(S8).find(e=>e[1]===x);return f?f[0]:x};
+async function rpc(fn,b){const r=await fetch(SB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify(b)});const t=await r.text();if(!r.ok){let m='';try{m=JSON.parse(t).message||''}catch(e){}throw new Error(m||('HTTP '+r.status))}return t?JSON.parse(t):null}
+const ERR={'wrong pin':'رمز اشتباه است.','bad class':'کد کلاس معتبر نیست.','bad pin':'رمز باید دقیقاً ۴ رقم باشد.'};
+const $$=id=>document.getElementById(id);
+const ses=()=>{try{return JSON.parse(lsGet('r7s')||'null')}catch(e){return null}};
+function who(){const x=ses();$$('who').innerHTML=x?'👤 '+esc(x.name)+' — <a href="#" id="out" style="color:#94a3b8">خروج</a>':'مهمان (نتیجه ثبت نمی‌شود) — <a href="#" id="inn" style="color:#94a3b8">ورود</a>';
+ const o=$$('out')||$$('inn');o.onclick=e=>{e.preventDefault();if(x)lsSet('r7s','null');$$('lg').style.display='flex'}}
+$$('lgs').onclick=()=>{$$('lg').style.display='none';who()};
+$$('lgo').onclick=async()=>{const code=$$('lc').value.trim(),name=$$('ln2').value.trim(),pin=$$('lp').value.trim();
+ if(!code||name.length<3||!/^\d{4}$/.test(pin)){$$('lgm').textContent='کلاس، نام کامل و رمز ۴ رقمی را وارد کن.';return}
+ $$('lgm').textContent='در حال ورود…';
+ try{const id=await rpc('join_class',{p_code:code,p_name:name,p_pin:pin});lsSet('r7s',JSON.stringify({sid:id,pin,name}));$$('lg').style.display='none';who();flush()}
+ catch(e){$$('lgm').textContent=ERR[e.message]||(e.message.startsWith('HTTP')||e.name==='TypeError'?'ارتباط با سرور برقرار نشد. اینترنت را بررسی کن.':'ورود انجام نشد: '+e.message)}};
+const qget=()=>{try{return JSON.parse(lsGet('r7q')||'[]')}catch(e){return[]}};
+async function flush(){const x=ses();if(!x)return 0;const left=[];
+ for(const r of qget()){try{await rpc('submit_result',{p_sid:x.sid,p_pin:x.pin,p_chapter:CH,p_level:r.l,p_total:r.n,p_correct:r.ok,p_by_topic:r.t})}catch(e){left.push(r)}}
+ lsSet('r7q',JSON.stringify(left));return left.length}
+function toast(t){const e=$$('sst');e.textContent=t;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',6000)}
+async function sendResult(sum){const x=ses();if(!x){toast('نتیجه برای معلم ثبت نشد (بدون ورود).');return}
+ const t={};currentAnswers.forEach(a=>{if(!a)return;const k=tkey(a.s),v=t[k]||(t[k]=[0,0]);v[1]++;if(a.c)v[0]++});
+ const q=qget();q.push({l:Math.max(0,LEVELS.indexOf(selectedLevel)),n:sum.total,ok:sum.correct,t});lsSet('r7q',JSON.stringify(q));
+ toast('در حال ثبت نتیجه…');const left=await flush();toast(left?'ثبت انجام نشد؛ نتیجه نگه داشته شد و بعداً دوباره ارسال می‌شود.':'✅ نتیجه برای معلم ثبت شد.')}
+who();if(!ses())$$('lg').style.display='flex';else flush();
+
+/* فهرست کلاس‌های همین پایه */
+async function loadClasses(g){const s=document.getElementById('lc');
+ try{const L=await rpc('list_classes',{p_grade:g});const e=t=>String(t).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+  s.innerHTML='<option value="">— کلاس خودت را انتخاب کن —</option>'+L.map(c=>'<option value="'+e(c.code)+'">'+e(c.title)+'</option>').join('')}
+ catch(err){s.outerHTML='<input type="text" id="lc" maxlength="20" autocomplete="off" placeholder="کد کلاس را بنویس">'}}
+loadClasses(7);
+</script>
+</body>
+</html>
