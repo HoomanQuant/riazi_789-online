@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ماز اعداد اول</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ee;--card:#fff;--ink:#1f1b16;--mut:#6b6258;--line:#2b2620;--acc:#e8814a;--ok:#2e9e5b;--okbg:#d8f3e2;--bad:#d64545;--badbg:#fde0e0;--hint:#ffe58a;--sol:#cfe3ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1713;--card:#272019;--ink:#f3ece3;--mut:#a89d90;--line:#6f6558;--acc:#f09560;--ok:#5fd18b;--okbg:#1f4a31;--bad:#ff7a7a;--badbg:#5a2525;--hint:#7a6420;--sol:#26406b}}
+:root[data-theme="dark"]{--bg:#1b1713;--card:#272019;--ink:#f3ece3;--mut:#a89d90;--line:#6f6558;--acc:#f09560;--ok:#5fd18b;--okbg:#1f4a31;--bad:#ff7a7a;--badbg:#5a2525;--hint:#7a6420;--sol:#26406b}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Vazirmatn",Tahoma,sans-serif;display:flex;flex-direction:column;align-items:center;padding:12px 8px 24px}
+h1{margin:4px 0;background:var(--acc);color:#fff;padding:6px 26px;border-radius:10px;font-size:clamp(22px,6vw,32px);font-weight:900}
+p.sub{margin:6px 8px;text-align:center;color:var(--mut);font-size:clamp(13px,3.6vw,16px);max-width:520px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 12px;font-size:14px}
+.stat b{color:var(--acc)}
+#msg{min-height:30px;margin:4px 0;padding:4px 12px;border-radius:10px;font-weight:700;text-align:center;font-size:clamp(13px,3.6vw,16px);max-width:520px}
+#msg.bad{background:var(--badbg);color:var(--bad)}#msg.ok{background:var(--okbg);color:var(--ok)}
+#grid{direction:ltr;display:grid;grid-template-columns:repeat(7,1fr);gap:4px;width:min(96vw,520px);margin:6px 0}
+.c{aspect-ratio:1/0.85;background:var(--card);border:2px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:clamp(18px,5.6vw,30px);font-weight:900;cursor:pointer;position:relative;user-select:none;-webkit-tap-highlight-color:transparent;font-family:inherit;color:var(--ink);padding:0;transition:background .15s}
+.c.sp{font-size:clamp(11px,3.2vw,16px)}
+.c.vis{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.c.sol:not(.vis){background:var(--sol)}
+.c.hint{background:var(--hint);animation:pulse .6s 3}
+.c.cur{outline:3px solid var(--acc)}
+.c.cur::after{content:"🐐";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(22px,7vw,38px);background:var(--okbg);border-radius:4px}
+.c.shake{animation:shake .35s;background:var(--badbg);border-color:var(--bad)}
+.c.end{background:#e9f7d6;color:#2f6b12;border-color:#5a9e2f}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+button.b{font-family:inherit;font-size:15px;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 14px;cursor:pointer}
+button.b:active{transform:scale(.97)}
+button.b.p{background:var(--acc);border-color:var(--acc);color:#fff}
+#found{max-width:520px;margin-top:12px;text-align:center;font-size:15px;line-height:2}
+#found span{display:inline-block;background:var(--okbg);color:var(--ok);border-radius:8px;padding:0 9px;margin:2px;font-weight:700}
+#win{display:none;margin-top:10px;background:var(--okbg);border:2px solid var(--ok);color:var(--ok);padding:12px 18px;border-radius:14px;font-weight:900;font-size:18px;text-align:center;max-width:520px}
+.info{display:grid;grid-template-columns:1fr;gap:8px;width:min(96vw,520px);margin:8px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}
+.info label{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mut);font-weight:700}
+.info input{font-family:inherit;font-size:16px;padding:8px 10px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+.info input:focus{outline:none;border-color:var(--acc)}
+@media (min-width:480px){.info{grid-template-columns:1fr 1fr}.info label.w{grid-column:1/-1}}
+footer{margin-top:16px;padding:3px 14px;background:#1e63d6;border-radius:10px;width:fit-content;max-width:96vw;text-align:center;color:#fff;font-family:"B Nazanin","Nazanin","Noto Naskh Arabic","Vazirmatn",serif;font-size:14px;font-weight:700;line-height:1.7}
+footer b{color:#fff;font-size:16px;font-weight:700}
+#who{margin-top:4px;font-size:14px;font-weight:700;color:var(--mut)}
+</style>
+</head>
+<body>
+<h1>ماز اعداد اول</h1>
+<p class="sub">با مشخص کردن اعداد اول از ۲ تا ۹۷، بزغاله را به غذای مورد علاقه‌اش برسانید 🌿<br>از خانهٔ «شروع» حرکت کنید؛ هر بار فقط به یکی از خانه‌های مجاور (حتی مورب) بروید.</p>
+<div class="info">
+  <label class="w">نام و نام خانوادگی<input id="fn" type="text" autocomplete="name" placeholder="مثلاً: علی رضایی"></label>
+  <label>نام کلاس<input id="cl" type="text" placeholder="مثلاً: هشتم ۲"></label>
+  <label>نام مدرسه<input id="sc" type="text" placeholder="نام مدرسه"></label>
+</div>
+<div class="bar">
+  <div class="stat">اعداد اول پیدا شده: <b id="nP">۰</b> از <b id="nT">۲۵</b></div>
+  <div class="stat">گام‌ها: <b id="nS">۰</b></div>
+  <div class="stat">اشتباه: <b id="nM">۰</b></div>
+</div>
+<div id="msg" class="ok">روی خانهٔ کناریِ «شروع» که عدد اول است بزنید.</div>
+<div id="grid"></div>
+<div class="btns">
+  <button class="b" id="undo">↩ برگشت</button>
+  <button class="b" id="hint">💡 راهنما</button>
+  <button class="b" id="sol">👁 نمایش پاسخ</button>
+  <button class="b p" id="reset">🔄 شروع دوباره</button>
+</div>
+<div id="found"></div>
+<div id="win">🎉 <span id="winName"></span>آفرین! بزغاله به غذایش رسید و همهٔ ۲۵ عدد اول بین ۲ تا ۹۷ را پیدا کردید!<div id="who"></div></div>
+
+<footer>ساخته شده توسط <b>علیرضا هومان</b> برای دانش‌آموزان کلاس هشتم</footer>
+
+<script>
+const G=[[0,2,3,14,33,35,40],[8,4,5,20,37,41,42],[9,7,6,16,31,39,43],[10,11,15,29,39,51,47],[13,12,22,23,25,53,54],[18,17,19,21,38,59,55],[45,70,20,64,61,60,57],[50,72,71,67,63,62,68],[52,73,75,76,65,96,90],[80,77,79,85,91,97,99],[81,78,82,83,89,98,-1]];
+const R=G.length,C=7;
+const fa=n=>String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+const isP=n=>{if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true};
+const smallest=n=>{for(let i=2;i*i<=n;i++)if(n%i===0)return i;return n};
+const ok=(r,c)=>G[r][c]===-1||(G[r][c]>0&&isP(G[r][c]));
+const total=G.flat().filter(v=>v>0&&isP(v)).length;
+document.getElementById("nT").textContent=fa(total);
+const grid=document.getElementById("grid"),msg=document.getElementById("msg");
+let path,done,mistakes,showSol=false,cells=[];
+
+const END=[R-1,C-1];
+const primeCells=[];
+G.forEach((row,r)=>row.forEach((v,c)=>{if(v>0&&isP(v))primeCells.push([v,r,c])}));
+primeCells.sort((x,y)=>x[0]-y[0]);
+/* مسیری از ادامهٔ مسیر فعلی می‌یابد که از همهٔ اعداد اول بگذرد و به غذا برسد (جست‌وجوی بازگشتی) */
+function solve(start){
+  const vis=new Set(start.map(([r,c])=>r*C+c)),out=start.slice();
+  let cnt=start.filter(([r,c])=>G[r][c]>0).length;
+  function dfs(){
+    const [r,c]=out[out.length-1];
+    if(cnt===total){
+      if(Math.max(Math.abs(r-END[0]),Math.abs(c-END[1]))===1){out.push(END);return true}
+      return false;
+    }
+    const nb=[];
+    for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){
+      if(!dr&&!dc)continue;const nr=r+dr,nc=c+dc;
+      if(nr<0||nc<0||nr>=R||nc>=C)continue;
+      if(vis.has(nr*C+nc)||G[nr][nc]<=0||!isP(G[nr][nc]))continue;
+      nb.push([nr,nc]);
+    }
+    nb.sort((a,b)=>G[a[0]][a[1]]-G[b[0]][b[1]]);
+    for(const [nr,nc] of nb){
+      vis.add(nr*C+nc);out.push([nr,nc]);cnt++;
+      if(dfs())return true;
+      cnt--;out.pop();vis.delete(nr*C+nc);
+    }
+    return false;
+  }
+  return dfs()?out:null;
+}
+const solution=solve([[0,0]]);
+
+function build(){
+  grid.innerHTML="";cells=[];
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const v=G[r][c],b=document.createElement("button");
+    b.className="c"+(v<=0?" sp":"")+(v===-1?" end":"");
+    b.textContent=v===0?"شروع":v===-1?"🌿 پایان":fa(v);
+    b.setAttribute("aria-label",b.textContent);
+    b.onclick=()=>move(r,c);
+    grid.appendChild(b);cells.push(b);
+  }
+}
+function say(t,cls){msg.textContent=t;msg.className=cls}
+function render(){
+  const vis=new Set(path.map(([r,c])=>r*C+c)),cur=path[path.length-1];
+  const solSet=new Set((solution||[]).map(([r,c])=>r*C+c));
+  cells.forEach((b,i)=>{
+    b.classList.remove("vis","cur","hint","sol","shake");
+    if(vis.has(i))b.classList.add("vis");
+    if(showSol&&solSet.has(i))b.classList.add("sol");
+  });
+  cells[cur[0]*C+cur[1]].classList.add("cur");
+  const primes=path.map(([r,c])=>G[r][c]).filter(v=>v>0);
+  document.getElementById("nP").textContent=fa(primes.length);
+  document.getElementById("nS").textContent=fa(path.length-1);
+  document.getElementById("nM").textContent=fa(mistakes);
+  document.getElementById("found").innerHTML=primes.length?"اعداد اول پیدا شده: "+primes.map(p=>"<span>"+fa(p)+"</span>").join(""):"";
+  document.getElementById("win").style.display=done?"block":"none";
+  if(done)showWho();
+}
+function move(r,c){
+  if(done)return;
+  const [cr,cc]=path[path.length-1],v=G[r][c];
+  if(r===cr&&c===cc)return;
+  if(path.some(([a,b])=>a===r&&b===c)){say("این خانه را قبلاً رد کرده‌اید.","bad");return}
+  if(Math.max(Math.abs(r-cr),Math.abs(c-cc))!==1){say("فقط می‌توانید به خانه‌های مجاور (بالا، پایین، چپ، راست یا مورب) بروید.","bad");return}
+  if(v===0)return;
+  if(v===-1){
+    const got=path.filter(([a,b])=>G[a][b]>0).length;
+    if(got<total){say("هنوز "+fa(total-got)+" عدد اول را پیدا نکرده‌اید؛ باید از همهٔ اعداد اول بگذرید.","bad");return}
+    path.push([r,c]);done=true;say("به غذا رسیدید! 🌿","ok");render();return}
+  if(isP(v)){
+    if(!solve([...path,[r,c]])){
+      mistakes++;
+      const miss=primeCells.find(q=>q[0]<v&&!path.some(([x,y])=>G[x][y]===q[0]));
+      say(miss?"اشتباه! اگر به "+fa(v)+" بروید، عدد اول "+fa(miss[0])+" را جا می‌اندازید. همهٔ اعداد اول را به ترتیب پیدا کنید.":"اشتباه! از این خانه نمی‌شود همهٔ اعداد اول را پیدا کرد؛ مسیر دیگری را امتحان کنید.","bad");
+      render();const b=cells[r*C+c];void b.offsetWidth;b.classList.add("shake");return;
+    }
+    path.push([r,c]);say(fa(v)+" اول است ✓ (فقط بر ۱ و خودش بخش‌پذیر است)","ok");render()}
+  else{
+    mistakes++;const d=smallest(v);
+    say(fa(v)+" اول نیست: "+fa(v)+" = "+fa(d)+" × "+fa(v/d),"bad");
+    render();const b=cells[r*C+c];void b.offsetWidth;b.classList.add("shake");
+  }
+}
+function reset(){path=[[0,0]];done=false;mistakes=0;say("روی خانهٔ کناریِ «شروع» که عدد اول است بزنید.","ok");render()}
+document.getElementById("reset").onclick=reset;
+document.getElementById("undo").onclick=()=>{if(path.length>1){path.pop();done=false;say("یک گام برگشتید.","ok");render()}};
+document.getElementById("sol").onclick=e=>{showSol=!showSol;e.target.textContent=showSol?"🙈 پنهان کردن پاسخ":"👁 نمایش پاسخ";render()};
+document.getElementById("hint").onclick=()=>{
+  if(done)return;
+  const p=solve(path);
+  if(!p||p.length<=path.length){say("بن‌بست! از اینجا نمی‌شود از همهٔ اعداد اول گذشت؛ با دکمهٔ «برگشت» به عقب برگردید.","bad");return}
+  const [r,c]=p[path.length];cells[r*C+c].classList.add("hint");
+  say("خانهٔ زردرنگ گام درست بعدی است.","ok");
+};
+const F=["fn","cl","sc"].map(id=>document.getElementById(id));
+function showWho(){
+  const [n,c,s]=F.map(i=>i.value.trim());
+  document.getElementById("winName").textContent=n?n+"، ":"";
+  document.getElementById("who").textContent=[n,c&&"کلاس "+c,s&&"مدرسهٔ "+s].filter(Boolean).join(" | ");
+}
+F.forEach((i,k)=>{
+  try{i.value=localStorage.getItem("pm_"+i.id)||""}catch(e){}
+  i.addEventListener("input",()=>{try{localStorage.setItem("pm_"+i.id,i.value)}catch(e){}if(done)showWho()});
+});
+build();reset();
+</script>
+</body>
+</html>
