@@ -33,15 +33,12 @@ footer{text-align:center;color:var(--mu);font-size:.85rem;padding:14px}footer a{
 </div>
 <script>
 const FA=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
-// برای افزودن فصل جدید فقط یک سطر به فهرست همان پایه اضافه کن: [عنوان، توضیح، پوشه]
-const G=[
- {n:7,t:'پایهٔ هفتم',ch:[['فصل ۱','راهبردهای حل مسئله','g7-c1/']]},
- {n:8,t:'پایهٔ هشتم',ch:[['فصل ۱','عددهای صحیح و گویا','g8-c1/']]},
- {n:9,t:'پایهٔ نهم',ch:[['فصل ۱','مجموعه‌ها و احتمال','g9-c1/']]}];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-document.getElementById('g').innerHTML=G.map(g=>`<section class="g"><div class="n">${FA(g.n)}</div><h2>${esc(g.t)}</h2>`+
- g.ch.map(c=>`<a class="ch" href="${esc(c[2])}">${esc(c[0])}<small>${esc(c[1])}</small></a>`).join('')+
- '<div class="soon">فصل‌های بعدی به‌زودی اضافه می‌شوند.</div></section>').join('');
+fetch('chapters.json').then(r=>r.json()).then(j=>{
+ document.getElementById('g').innerHTML=j.grades.map(g=>`<section class="g"><div class="n">${FA(g.n)}</div><h2>${esc(g.t)}</h2>`+
+  g.chapters.map(c=>`<a class="ch" href="${esc(c.url)}">${esc(c.title)}<small>${esc(c.sub)}</small></a>`).join('')+
+  '<div class="soon">فصل‌های بعدی به‌زودی اضافه می‌شوند.</div></section>').join('')
+}).catch(()=>{document.getElementById('g').textContent='فهرست فصل‌ها بارگذاری نشد. صفحه را دوباره باز کن.'});
 </script>
 </body>
 </html>

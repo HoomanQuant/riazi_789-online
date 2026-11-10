@@ -50,7 +50,11 @@ tr.s{cursor:pointer}tr.s:hover{background:#1b2c47}
 </div>
 <script>
 const SB='https://qwpmbprjdwrxwhwgdekt.supabase.co',KEY='sb_publishable_p8FrC24bNtoAlgyxoFvPsQ_tFj0L9fB';
-const TN={'g9-c1':['مجموعه و عضو','زیرمجموعه','اجتماع، اشتراک، تفاضل','نمودار ون و شمارش','احتمال تاس و سکه','احتمال و مجموعه‌ها']};
+let TN={'g9-c1':['مجموعه و عضو','زیرمجموعه','اجتماع، اشتراک، تفاضل','نمودار ون و شمارش','احتمال تاس و سکه','احتمال و مجموعه‌ها'],
+ 'g8-c1':{1:'عددهای گویا و محور',2:'قرینه و معکوس',3:'جمع و تفریق',4:'ضرب و تقسیم',5:'اولویت عملیات',6:'گرد کردن و تقریب',7:'مقایسه و ترتیب',8:'الگوها و ترفندها'},
+ 'g7-c1':{"1": "رسم شکل", "2": "الگوسازی (تفکر نظام‌دار)", "3": "حذف حالت‌های نامطلوب", "4": "الگویابی", "5": "حدس و آزمایش", "6": "زیرمسئله", "7": "حل مسئله ساده‌تر", "8": "روش‌های نمادین"}};
+let CHN={'g9-c1':'نهم ف۱','g8-c1':'هشتم ف۱','g7-c1':'هفتم ف۱'};
+const tname=key=>{const[c,k]=key.split('|');return (CHN[c]?CHN[c]+' — ':'')+((TN[c]||{})[k]||k)};
 const LV=['آسان','متوسط','سخت','ترکیبی'];
 const FA=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -68,7 +72,9 @@ async function login(){
  try{const j=await api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:$('em').value.trim(),password:$('pw').value})});
   TOK=j.access_token;try{sessionStorage.setItem('tk',TOK)}catch(e){}$('pw').value='';start()}
  catch(e){$('msg').textContent='ورود انجام نشد: '+e.message}}
-async function start(){
+async function loadCh(){try{const j=await (await fetch('../chapters.json')).json();const tn={},cn={};
+  j.grades.forEach(g=>g.chapters.forEach(c=>{tn[c.id]=c.topics;cn[c.id]=g.t.replace('پایهٔ ','')+' '+c.title.replace('فصل ','ف')}));TN=tn;CHN=cn}catch(e){}}
+async function start(){await loadCh();
  $('lg').style.display='none';$('app').style.display='block';
  try{const cs=await api('/rest/v1/classes?select=code,title,grade&order=grade,code');
   $('cl').innerHTML=cs.map(c=>`<option value="${esc(c.code)}">${esc(c.title)} (${esc(c.code)})</option>`).join('');
@@ -80,8 +86,8 @@ async function load(){
   RS=ST.length?await api('/rest/v1/results?select=student_id,chapter,level,total,correct,by_topic,created_at&order=created_at.desc&limit=3000&student_id=in.('+ST.map(s=>s.id).join(',')+')'):[];
   $('emp').textContent=ST.length?'':'هنوز دانش‌آموزی با این کد کلاس وارد نشده است.';render()}
  catch(e){$('emp').textContent='خطا: '+e.message}}
-function agg(rs){const t={};let ok=0,n=0;rs.forEach(r=>{ok+=r.correct;n+=r.total;const ch=TN[r.chapter]?r.chapter:'g9-c1';
-  Object.entries(r.by_topic||{}).forEach(([k,v])=>{const a=t[k]||(t[k]=[0,0]);a[0]+=v[0];a[1]+=v[1]})});
+function agg(rs){const t={};let ok=0,n=0;rs.forEach(r=>{ok+=r.correct;n+=r.total;
+  Object.entries(r.by_topic||{}).forEach(([k,v])=>{const key=r.chapter+'|'+k,a=t[key]||(t[key]=[0,0]);a[0]+=v[0];a[1]+=v[1]})});
  let weak=null;Object.entries(t).forEach(([k,v])=>{const p=v[0]/v[1];if(!weak||p<weak.p)weak={k,p,v}});
  return{ok,n,pct:n?Math.round(ok/n*100):null,t,weak}}
 const days=d=>Math.floor((Date.now()-new Date(d))/864e5);
@@ -91,26 +97,28 @@ function render(){
  ROWS=ST.map(s=>{const rs=RS.filter(r=>r.student_id===s.id),a=agg(rs);return{s,rs,a,last:rs[0]&&rs[0].created_at}});
  const act=ROWS.filter(r=>r.a.n),avg=act.length?Math.round(act.reduce((x,r)=>x+r.a.pct,0)/act.length):null,help=act.filter(r=>r.a.pct<50).length;
  const all={};ROWS.forEach(r=>Object.entries(r.a.t).forEach(([k,v])=>{const a=all[k]||(all[k]=[0,0]);a[0]+=v[0];a[1]+=v[1]}));
- let hard='—';const w=Object.entries(all).sort((x,y)=>x[1][0]/x[1][1]-y[1][0]/y[1][1])[0];if(w)hard=TN['g9-c1'][w[0]]||'—';
+ let hard='—';const w=Object.entries(all).sort((x,y)=>x[1][0]/x[1][1]-y[1][0]/y[1][1])[0];if(w)hard=tname(w[0]);
  $('sum').innerHTML=[['دانش‌آموزان',ST.length],['فعال (آزمون داده)',act.length],['میانگین کلاس',avg===null?'—':avg+'٪'],['نیازمند کمک',help],['سخت‌ترین مبحث کلاس',hard]].map(x=>`<div><b>${FA(x[1])}</b><span style="color:var(--mu)">${x[0]}</span></div>`).join('');
- $('tb').innerHTML=ROWS.map((r,i)=>`<tr class="s" data-i="${i}"><td>${esc(r.s.full_name)}</td><td>${FA(r.rs.length)}</td><td>${r.a.pct===null?'—':FA(r.a.pct)+'٪'}</td><td>${r.a.weak?esc(TN['g9-c1'][r.a.weak.k]||'')+' ('+FA(Math.round(r.a.weak.p*100))+'٪)':'—'}</td><td>${r.last?new Date(r.last).toLocaleDateString('fa-IR'):'—'}</td><td>${badge(r.a,r.last)}</td></tr>`).join('');
+ $('tb').innerHTML=ROWS.map((r,i)=>`<tr class="s" data-i="${i}"><td>${esc(r.s.full_name)}</td><td>${FA(r.rs.length)}</td><td>${r.a.pct===null?'—':FA(r.a.pct)+'٪'}</td><td>${r.a.weak?esc(tname(r.a.weak.k))+' ('+FA(Math.round(r.a.weak.p*100))+'٪)':'—'}</td><td>${r.last?new Date(r.last).toLocaleDateString('fa-IR'):'—'}</td><td>${badge(r.a,r.last)}</td></tr>`).join('');
  document.querySelectorAll('tr.s').forEach(tr=>tr.onclick=()=>detail(+tr.dataset.i))}
 function detail(i){
- const r=ROWS[i],a=r.a,nm=esc(r.s.full_name),top=TN['g9-c1'];
+ const r=ROWS[i],a=r.a,nm=esc(r.s.full_name);
+ const chs=[...new Set(r.rs.map(x=>x.chapter))],top=[];
+ chs.forEach(c=>Object.keys(TN[c]||{}).forEach(k=>top.push({key:c+'|'+k,t:tname(c+'|'+k),v:a.t[c+'|'+k]})));
  let h=`<h2>${nm}</h2>`;
  if(!a.n){h+='<p style="color:var(--mu)">هنوز آزمونی نداده است. پیشنهاد: یک پیام یادآوری بفرستید.</p>'}
  else{h+=`<p>${FA(r.rs.length)} آزمون | میانگین کل: <b>${FA(a.pct)}٪</b></p><h3 style="margin-top:10px">عملکرد در هر مبحث</h3>`;
-  top.forEach((t,k)=>{const v=a.t[k];const p=v?Math.round(v[0]/v[1]*100):0;h+=`<div>${esc(t)} <span style="color:var(--mu)">${v?FA(p)+'٪ ('+FA(v[0])+'/'+FA(v[1])+')':'تمرین نکرده'}</span></div><div class="bar"><i style="width:${p}%"></i></div>`});
-  const weak=top.map((t,k)=>({t,v:a.t[k]})).filter(x=>x.v&&x.v[0]/x.v[1]<.7).sort((x,y)=>x.v[0]/x.v[1]-y.v[0]/y.v[1]).slice(0,2),un=top.filter((t,k)=>!a.t[k]).slice(0,2);
-  const parts=[];if(weak.length)parts.push('مرور و تمرین مبحث «'+weak.map(x=>x.t).join('» و «')+'»');if(un.length)parts.push('شروع مبحث «'+un.join('» و «')+'»');
+  top.forEach(x=>{const v=x.v,p=v?Math.round(v[0]/v[1]*100):0;h+=`<div>${esc(x.t)} <span style="color:var(--mu)">${v?FA(p)+'٪ ('+FA(v[0])+'/'+FA(v[1])+')':'تمرین نکرده'}</span></div><div class="bar"><i style="width:${p}%"></i></div>`});
+  const weak=top.filter(x=>x.v&&x.v[0]/x.v[1]<.7).sort((x,y)=>x.v[0]/x.v[1]-y.v[0]/y.v[1]).slice(0,2),un=top.filter(x=>!x.v).slice(0,2);
+  const parts=[];if(weak.length)parts.push('مرور و تمرین مبحث «'+weak.map(x=>x.t).join('» و «')+'»');if(un.length)parts.push('شروع مبحث «'+un.map(x=>x.t).join('» و «')+'»');
   const plan=parts.length?parts.join('، سپس '):'ادامهٔ آزمون‌های سطح سخت یا ترکیبی';
   const msg=`سلام ${r.s.full_name}، آزمون‌هایت را دیدم و میانگینت ${FA(a.pct)}٪ است. این هفته: ${plan}. موفق باشی!`;
   h+=`<div class="tip"><b>پیشنهاد کوچینگ:</b> ${esc(plan)}.</div><p style="color:var(--mu)">متن آمادهٔ پیام:</p><textarea id="mt" rows="3" style="width:100%;background:#0f1a30;color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px;font:inherit">${esc(msg)}</textarea><button class="btn" id="cp">کپی پیام</button>`;
-  h+='<h3 style="margin-top:12px">آخرین آزمون‌ها</h3>'+r.rs.slice(0,8).map(x=>`<p>${new Date(x.created_at).toLocaleDateString('fa-IR')} — ${LV[x.level]||''} — ${FA(x.correct)} از ${FA(x.total)}</p>`).join('')}
+  h+='<h3 style="margin-top:12px">آخرین آزمون‌ها</h3>'+r.rs.slice(0,8).map(x=>`<p>${new Date(x.created_at).toLocaleDateString('fa-IR')} — ${esc(CHN[x.chapter]||x.chapter)} — ${LV[x.level]||''} — ${FA(x.correct)} از ${FA(x.total)}</p>`).join('')}
  $('dt').innerHTML=h;$('dt').style.display='block';$('dt').scrollIntoView({behavior:'smooth'});
  const cp=$('cp');if(cp)cp.onclick=()=>{$('mt').select();try{navigator.clipboard.writeText($('mt').value);cp.textContent='کپی شد ✅'}catch(e){document.execCommand('copy')}}}
 function csvCell(v){let s=String(v);if(/^[=+\-@]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
-$('csv').onclick=()=>{const rows=[['نام','تعداد آزمون','میانگین درصد','ضعیف‌ترین مبحث','آخرین فعالیت']].concat(ROWS.map(r=>[r.s.full_name,r.rs.length,r.a.pct??'',r.a.weak?TN['g9-c1'][r.a.weak.k]:'',r.last?r.last.slice(0,10):'']));
+$('csv').onclick=()=>{const rows=[['نام','تعداد آزمون','میانگین درصد','ضعیف‌ترین مبحث','آخرین فعالیت']].concat(ROWS.map(r=>[r.s.full_name,r.rs.length,r.a.pct??'',r.a.weak?tname(r.a.weak.k):'',r.last?r.last.slice(0,10):'']));
  const b=new Blob(['\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\n')],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='class-'+$('cl').value+'.csv';a.click()};
 $('mk').onclick=async()=>{const c=$('nc').value.trim();if(!/^[A-Za-z0-9_-]{2,20}$/.test(c)||!$('nt').value.trim()){alert('کد کلاس: حروف انگلیسی/عدد (۲ تا ۲۰ نویسه) و عنوان لازم است.');return}
  try{await api('/rest/v1/classes',{method:'POST',body:JSON.stringify({code:c,title:$('nt').value.trim(),grade:+$('ng').value})});$('nc').value='';$('nt').value='';await start();$('cl').value=c;load()}catch(e){alert('ساخت کلاس انجام نشد: '+e.message)}};
