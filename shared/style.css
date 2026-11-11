@@ -34,3 +34,5 @@ canvas{width:100%;max-width:340px;display:block;margin:10px auto;border-radius:1
 #lg{position:fixed;inset:0;background:rgba(5,10,25,.92);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
 #lg .card{width:100%;max-width:380px}#lg label{display:block;margin:8px 0}#lg input{width:100%;font:inherit;color:#f1f5f9;background:#0f1a30;border:1px solid #2a3f5f;border-radius:10px;padding:8px 10px}#lg input:-webkit-autofill{-webkit-text-fill-color:#f1f5f9;box-shadow:0 0 0 40px #0f1a30 inset}
 #lgm{color:#fca5a5;min-height:1.6em}
+
+input[type=number]{font:inherit;background:#0f1a30;color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:6px 10px}

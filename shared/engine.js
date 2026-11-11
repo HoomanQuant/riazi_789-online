@@ -13,7 +13,7 @@ let mem={};
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return mem[k]??null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}};
 let T=[],L2=[],Q=[],WG=[],TID=[];
 T=C.topics.map(t=>[t.title,t.desc]);L2=C.topics.map(t=>t.html);WG=C.topics.map(t=>t.widget);TID=C.topics.map(t=>t.id);
-{const LI={easy:0,medium:1,hard:2},ix={};C.topics.forEach((t,i)=>ix[t.id]=i);Q=C.questions.map(q=>[ix[q.t],LI[q.l],q.q,q.a,q.w,q.e,q.id])}
+{const LI={easy:0,medium:1,hard:2},ix={};C.topics.forEach((t,i)=>ix[t.id]=i);Q=C.questions.map(q=>[ix[q.t],LI[q.l],q.q,q.a,q.w,q.e,q.id,q.f||'',q.ef||''])}
 // nav
 const secs=[['home','🏠 خانه'],['learn','📚 آموزش'],['quiz','🎯 آزمون'],['prog','📈 پیشرفت']];
 secs.forEach(([id,t])=>{const b=document.createElement('button');b.textContent=t;b.dataset.s=id;b.onclick=()=>go(id);$('nav').append(b)});
@@ -23,7 +23,7 @@ T.forEach((t,i)=>{const b=document.createElement('button');b.className='tp';b.in
 function learn(i){
  $('lbody').innerHTML=`<div class="card"><div class="row">${T.map((t,j)=>`<button class="btn ${j===i?'pri':''}" onclick="learn(${j})">${FA(j+1)}</button>`).join('')}</div><h2>${FA(i+1)}. ${T[i][0]}</h2>${L2[i]}</div>`;
  if(WG[i]==='subsets'){Object.assign($('sl'),{min:0,max:8,value:3});const u=()=>{const n=+$('sl').value;$('sn').textContent=FA(n);$('sa').textContent=FA(2**n);$('sb').textContent=FA(2**n-1);$('sc').textContent=FA(2**n-1)};$('sl').oninput=u;u()}
- if(WG[i]==='venn3')venn();if(WG[i]==='dice')dice();
+ if(WG[i]==='venn3')venn();if(WG[i]==='dice')dice();{const w=(WG[i]||'').split('+');if(w.includes('sieve'))sieve();if(w.includes('gcd'))gcdTool();if(w.includes('ptest'))ptest();if(w.includes('tree'))treeTool()}
 }
 // Venn
 const VX=[['A ∪ B',(a,b,c)=>a||b],['A ∩ B',(a,b)=>a&&b],['A − B',(a,b)=>a&&!b],['B − A',(a,b)=>b&&!a],['(A ∪ B) − C',(a,b,c)=>(a||b)&&!c],['(A ∩ B) − C',(a,b,c)=>a&&b&&!c],['A − (B ∪ C)',(a,b,c)=>a&&!b&&!c],['(B ∩ C) − A',(a,b,c)=>b&&c&&!a],['(B ∪ C) − A',(a,b,c)=>(b||c)&&!a],['A ∩ B ∩ C',(a,b,c)=>a&&b&&c]];
@@ -65,7 +65,7 @@ function ask(){
  const q=S.qs[S.i],o=shuf([q[3],...q[4]]);
  $('qbox').innerHTML=`<div class="bar"><i style="width:${S.i/S.qs.length*100}%"></i></div>
  <p style="color:var(--mu);margin-top:6px">سؤال ${FA(S.i+1)} از ${FA(S.qs.length)} — ${T[q[0]][0]}</p>
- <h2>${M(q[2])}</h2><div id="os">${o.map(x=>`<button class="opt">${M(x)}</button>`).join('')}</div><div id="fb"></div>`;
+ <h2>${M(q[2])}</h2>${q[7]||''}<div id="os">${o.map(x=>`<button class="opt">${M(x)}</button>`).join('')}</div><div id="fb"></div>`;
  document.querySelectorAll('.opt').forEach((b,k)=>b.onclick=()=>pick(b,o[k]===q[3],q,o.indexOf(q[3])));
 }
 function pick(b,ok,q,ri){
@@ -74,7 +74,7 @@ function pick(b,ok,q,ri){
  document.querySelectorAll('.opt')[ri].classList.add('right');
  const t=S.t[q[0]]||(S.t[q[0]]=[0,0]);t[1]++;if(ok){S.ok++;t[0]++}else S.w.push(q);
  const last=S.i==S.qs.length-1;
- $('fb').innerHTML=`<div class="tip">${ok?'✅ آفرین!':'❌ نادرست.'} ${M(q[5])}</div><button class="btn pri" id="nx">${last?'دیدن نتیجه':'سؤال بعدی'}</button>`;
+ $('fb').innerHTML=`<div class="tip">${ok?'✅ آفرین!':'❌ نادرست.'} ${M(q[5])}</div>${q[8]||''}<button class="btn pri" id="nx">${last?'دیدن نتیجه':'سؤال بعدی'}</button>`;
  $('nx').onclick=()=>{S.i++;last?finish():ask()};$('nx').focus();
 }
 function finish(){
@@ -143,6 +143,51 @@ async function loadClasses(g){const s=document.getElementById('lc');
   s.innerHTML='<option value="">— کلاس خودت را انتخاب کن —</option>'+L.map(c=>'<option value="'+e(c.code)+'">'+e(c.title)+'</option>').join('')}
  catch(err){s.outerHTML='<input type="text" id="lc" maxlength="20" autocomplete="off" placeholder="کد کلاس را بنویس">'}}
 loadClasses(C.meta.grade);
+
+function sieve(){const el=$('sv');if(!el)return;const P=[2,3,5,7];let k=0;
+ const draw=()=>{const done=new Set([1]),neu=new Set();
+  P.slice(0,k).forEach((p,i)=>{for(let m=p*p;m<=100;m+=p){if(!done.has(m)){done.add(m);if(i===k-1)neu.add(m)}}});
+  let h='<div style="display:grid;grid-template-columns:repeat(10,1fr);gap:3px;direction:ltr;max-width:380px;margin:8px auto">';
+  for(let n=1;n<=100;n++){const c=neu.has(n)?'background:#f59e0b;color:#111':done.has(n)?'background:#3b1d2a;color:#fca5a5;text-decoration:line-through':(k===4&&n>1)?'background:rgba(16,185,129,.25);color:#6ee7b7;font-weight:700':'background:#0f1a30';h+='<div style="'+c+';text-align:center;border-radius:6px;font-size:.8rem;padding:2px 0">'+FA(n)+'</div>'}
+  h+='</div>';
+  const msg=k===0?'ابتدا فقط عدد ۱ خط می‌خورد (نه اول است و نه مرکب).':k<4?'مضرب‌های '+FA(P[k-1])+' از '+FA(P[k-1]*P[k-1])+' شروع می‌شوند و خط می‌خورند (زرد = تازه خط‌خورده).':'پایان! عددهای سبز اولند: '+FA(25)+' عدد اول بین ۱ تا ۱۰۰.';
+  el.innerHTML='<div class="row"><button class="btn" id="svp">⬅ قبلی</button><button class="btn pri" id="svn">گام بعدی ➡</button></div>'+h+'<p style="text-align:center">'+msg+'</p>';
+  $('svp').onclick=()=>{if(k>0){k--;draw()}};$('svn').onclick=()=>{if(k<4){k++;draw()}}};draw()}
+function gcdTool(){const el=$('gt');if(!el)return;
+ el.innerHTML='<div class="row"><label>عدد اول <input type="number" id="gA" value="24" min="1" max="10000" style="width:100px"></label><label>عدد دوم <input type="number" id="gB" value="80" min="1" max="10000" style="width:100px"></label></div><div id="go"></div>';
+ const dv=n=>{const r=[];for(let i=1;i<=n;i++)if(n%i===0)r.push(i);return r},
+ fc=n=>{const f={};for(let p=2;p*p<=n;p++)while(n%p===0){f[p]=(f[p]||0)+1;n/=p}if(n>1)f[n]=(f[n]||0)+1;return f},
+ fs=n=>n===1?'1':Object.entries(fc(n)).map(([p,e])=>FA(p)+(e>1?'^'+FA(e):'')).join(' × '),
+ g=(a,b)=>b?g(b,a%b):a,L=l=>l.map(FA).join('، ');
+ const u=()=>{const a=+$('gA').value,b=+$('gB').value;
+  if(!(Number.isInteger(a)&&Number.isInteger(b)&&a>=1&&b>=1&&a<=10000&&b<=10000)){$('go').textContent='دو عدد طبیعی بین ۱ تا ۱۰۰۰۰ وارد کن.';return}
+  const da=dv(a),db=dv(b),cm=da.filter(x=>b%x===0),G=g(a,b),Lc=a/G*b;
+  $('go').innerHTML='<p>شمارنده‌های '+FA(a)+': <bdi dir="ltr">'+L(da)+'</bdi></p><p>شمارنده‌های '+FA(b)+': <bdi dir="ltr">'+L(db)+'</bdi></p><p>شمارنده‌های مشترک: <bdi dir="ltr">'+L(cm)+'</bdi></p><p>تجزیه: <bdi dir="ltr">'+FA(a)+' = '+fs(a)+'</bdi> ، <bdi dir="ltr">'+FA(b)+' = '+fs(b)+'</bdi></p><div class="tip">ب.م.م = <b>'+FA(G)+'</b> | ک.م.م = <b>'+FA(Lc)+'</b>'+(G===1?' | نسبت به هم اول‌اند ✓':'')+'<br>بررسی: <bdi dir="ltr">'+FA(G)+' × '+FA(Lc)+' = '+FA(a)+' × '+FA(b)+' = '+FA(a*b)+'</bdi></div>'};
+ $('gA').oninput=u;$('gB').oninput=u;u()}
+
+function ptest(){const el=$('pt');if(!el)return;
+ el.innerHTML='<div class="row"><label>یک عدد بنویس (۲ تا ۱۰۰۰۰) <input type="number" id="pn" value="251" min="2" max="10000" style="width:110px"></label></div><div id="po"></div>';
+ const isP=n=>{if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true};
+ const u=()=>{const n=+$('pn').value;if(!(Number.isInteger(n)&&n>=2&&n<=10000)){$('po').textContent='یک عدد طبیعی بین ۲ تا ۱۰۰۰۰ وارد کن.';return}
+  const s=Math.sqrt(n),ps=[];for(let p=2;p<=s;p++)if(isP(p))ps.push(p);let first=null;
+  const rows=ps.map(p=>{const r=n%p;if(r===0&&first===null)first=p;return '<p style="margin:2px 0"><bdi dir="ltr">'+FA(n)+' ÷ '+FA(p)+'</bdi> ⇒ باقی‌مانده <b>'+FA(r)+'</b> '+(r===0?'✗ بخش‌پذیر':'✓')+'</p>'}).join('');
+  $('po').innerHTML='<p>جذر تقریبی '+FA(n)+' برابر <b>'+FA(s.toFixed(1)).replace('.','٫')+'</b> است؛ پس بر عددهای اول <b>کوچک‌تر از جذر</b> تقسیم می‌کنیم'+(ps.length?': <bdi dir="ltr">'+ps.map(FA).join('، ')+'</bdi>':' (عدد اولی کوچک‌تر از جذر وجود ندارد)')+'.</p>'+rows+'<div class="tip">'+(first===null?'بر هیچ‌کدام بخش‌پذیر نیست ⇒ <b>'+FA(n)+' اول است.</b>':FA(n)+' بر '+FA(first)+' بخش‌پذیر است ⇒ <b>مرکب است</b> (<bdi dir="ltr">'+FA(n)+' = '+FA(first)+' × '+FA(n/first)+'</bdi>).')+'</div>'};
+ $('pn').oninput=u;u()}
+function treeTool(){const el=$('tr');if(!el)return;
+ el.innerHTML='<div class="row"><label>یک عدد بنویس (۲ تا ۹۹۹) <input type="number" id="tn" value="80" min="2" max="999" style="width:100px"></label></div><div id="to"></div>';
+ const spf=n=>{for(let p=2;p*p<=n;p++)if(n%p===0)return p;return n};
+ const node=(x,y,v,pr)=>(pr?'<circle cx="'+x+'" cy="'+y+'" r="17" fill="rgba(245,158,11,.25)" stroke="#f59e0b" stroke-width="2"/>':'<rect x="'+(x-20)+'" y="'+(y-15)+'" width="40" height="30" rx="8" fill="#1b2c47" stroke="#2a3f5f"/>')+'<text x="'+x+'" y="'+(y+5)+'" text-anchor="middle" font-size="14" fill="#f1f5f9" direction="ltr" unicode-bidi="bidi-override">'+FA(v)+'</text>';
+ const u=()=>{const n=+$('tn').value;if(!(Number.isInteger(n)&&n>=2&&n<=999)){$('to').textContent='یک عدد طبیعی بین ۲ تا ۹۹۹ وارد کن.';return}
+  const f=[];let c=n;while(c>1){const p=spf(c);f.push(p);c/=p}
+  const st=f.length-1,w=130+45*st,h=70+50*st;let s='',x=60,y=30,cur=n;
+  if(!st){s=node(60,40,n,true)}else{for(let k=0;k<st;k++){const p=f[k];
+   s+='<line x1="'+x+'" y1="'+(y+15)+'" x2="'+(x-35)+'" y2="'+(y+38)+'" stroke="#64748b"/><line x1="'+x+'" y1="'+(y+15)+'" x2="'+(x+45)+'" y2="'+(y+35)+'" stroke="#64748b"/>'+node(x,y,cur,false)+node(x-35,y+55,p,true);cur/=p;x+=45;y+=50}
+   s+=node(x,y,cur,true)}
+  const cnt={};f.forEach(p=>cnt[p]=(cnt[p]||0)+1);
+  const pw=Object.entries(cnt).map(([p,e])=>FA(p)+(e>1?'^'+FA(e):'')).join(' × ');
+  $('to').innerHTML='<svg viewBox="0 0 '+(st?w:120)+' '+(st?h:80)+'" style="width:100%;max-width:'+(st?w+40:200)+'px;display:block;margin:6px auto;background:#0f1a30;border-radius:12px" role="img" aria-label="نمودار درختی">'+s+'</svg>'+
+   (st?'<div class="tip"><bdi dir="ltr">'+FA(n)+' = '+f.map(FA).join(' × ')+(pw!==f.map(FA).join(' × ')?' = '+pw:'')+'</bdi></div>':'<div class="tip">'+FA(n)+' خودش اول است و تجزیه‌ای ندارد.</div>')};
+ $('tn').oninput=u;u()}
 
 window.learn=learn;
 })();

@@ -63,7 +63,7 @@ footer b{color:#fff;font-size:16px;font-weight:700}
   <div class="stat">گام‌ها: <b id="nS">۰</b></div>
   <div class="stat">اشتباه: <b id="nM">۰</b></div>
 </div>
-<div id="msg" class="ok" role="status" aria-live="polite">روی خانهٔ کناریِ «شروع» که عدد اول است بزنید.</div>
+<div id="msg" class="ok">روی خانهٔ کناریِ «شروع» که عدد اول است بزنید.</div>
 <div id="grid"></div>
 <div class="btns">
   <button class="b" id="undo">↩ برگشت</button>
@@ -77,7 +77,7 @@ footer b{color:#fff;font-size:16px;font-weight:700}
 <footer>ساخته شده توسط <b>علیرضا هومان</b> برای دانش‌آموزان کلاس هشتم</footer>
 
 <script>
-const G=[[0,2,3,14,33,35,40],[8,4,5,20,37,41,42],[9,7,6,16,31,39,43],[10,11,15,29,49,51,47],[13,12,22,23,25,53,54],[18,17,19,21,38,59,55],[45,70,24,64,61,60,57],[50,72,71,67,63,62,68],[52,73,75,76,65,96,90],[80,77,79,85,91,97,99],[81,78,82,83,89,98,-1]];
+const G=[[0,2,3,14,33,35,40],[8,4,5,20,37,41,42],[9,7,6,16,31,39,43],[10,11,15,29,39,51,47],[13,12,22,23,25,53,54],[18,17,19,21,38,59,55],[45,70,20,64,61,60,57],[50,72,71,67,63,62,68],[52,73,75,76,65,96,90],[80,77,79,85,91,97,99],[81,78,82,83,89,98,-1]];
 const R=G.length,C=7;
 const fa=n=>String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
 const isP=n=>{if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true};
@@ -89,9 +89,6 @@ const grid=document.getElementById("grid"),msg=document.getElementById("msg");
 let path,done,mistakes,showSol=false,cells=[];
 
 const END=[R-1,C-1];
-const primeCells=[];
-G.forEach((row,r)=>row.forEach((v,c)=>{if(v>0&&isP(v))primeCells.push([v,r,c])}));
-primeCells.sort((x,y)=>x[0]-y[0]);
 /* مسیری از ادامهٔ مسیر فعلی می‌یابد که از همهٔ اعداد اول بگذرد و به غذا برسد (جست‌وجوی بازگشتی) */
 function solve(start){
   const vis=new Set(start.map(([r,c])=>r*C+c)),out=start.slice();
@@ -161,14 +158,7 @@ function move(r,c){
     const got=path.filter(([a,b])=>G[a][b]>0).length;
     if(got<total){say("هنوز "+fa(total-got)+" عدد اول را پیدا نکرده‌اید؛ باید از همهٔ اعداد اول بگذرید.","bad");return}
     path.push([r,c]);done=true;say("به غذا رسیدید! 🌿","ok");render();return}
-  if(isP(v)){
-    if(!solve([...path,[r,c]])){
-      mistakes++;
-      const miss=primeCells.find(q=>q[0]<v&&!path.some(([x,y])=>G[x][y]===q[0]));
-      say(miss?"اشتباه! اگر به "+fa(v)+" بروید، عدد اول "+fa(miss[0])+" را جا می‌اندازید. همهٔ اعداد اول را به ترتیب پیدا کنید.":"اشتباه! از این خانه نمی‌شود همهٔ اعداد اول را پیدا کرد؛ مسیر دیگری را امتحان کنید.","bad");
-      render();const b=cells[r*C+c];void b.offsetWidth;b.classList.add("shake");return;
-    }
-    path.push([r,c]);say(fa(v)+" اول است ✓ (فقط بر ۱ و خودش بخش‌پذیر است)","ok");render()}
+  if(isP(v)){path.push([r,c]);say(fa(v)+" اول است ✓ (فقط بر ۱ و خودش بخش‌پذیر است)","ok");render()}
   else{
     mistakes++;const d=smallest(v);
     say(fa(v)+" اول نیست: "+fa(v)+" = "+fa(d)+" × "+fa(v/d),"bad");
