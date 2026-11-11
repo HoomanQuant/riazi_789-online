@@ -7,6 +7,7 @@ document.querySelector('header h1').textContent=C.meta.title;document.querySelec
 document.getElementById('rules').innerHTML='<h2>'+C.meta.rulesTitle+'</h2>'+C.rules;
 
 const FA=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const SP=s=>FA(s).replace(/[۰-۹]/g,d=>'⁰¹²³⁴⁵⁶⁷⁸⁹'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]);
 const M=s=>FA(s).replace(/`([^`]+)`/g,'<bdi dir="ltr" class="m">$1</bdi>');
 const $=id=>document.getElementById(id);
 let mem={};
@@ -17,7 +18,7 @@ T=C.topics.map(t=>[t.title,t.desc]);L2=C.topics.map(t=>t.html);WG=C.topics.map(t
 // nav
 const secs=[['home','🏠 خانه'],['learn','📚 آموزش'],['quiz','🎯 آزمون'],['prog','📈 پیشرفت']];
 secs.forEach(([id,t])=>{const b=document.createElement('button');b.textContent=t;b.dataset.s=id;b.onclick=()=>go(id);$('nav').append(b)});
-function go(id){document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));if(id==='learn'&&!$('lbody').innerHTML)learn(0);if(id==='quiz')setup();if(id==='prog')prog();scrollTo(0,0)}
+function go(id){document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));if(id==='learn'&&!$('lbody').innerHTML)learn(0);if(id==='quiz'&&!S)setup();if(id==='prog')prog();scrollTo(0,0)}
 T.forEach((t,i)=>{const b=document.createElement('button');b.className='tp';b.innerHTML=`<b>${FA(i+1)}. ${t[0]}</b><span>${t[1]}</span>`;b.onclick=()=>{go('learn');learn(i)};$('tgrid').append(b)});
 
 function learn(i){
@@ -65,7 +66,7 @@ function ask(){
  const q=S.qs[S.i],o=shuf([q[3],...q[4]]);
  $('qbox').innerHTML=`<div class="bar"><i style="width:${S.i/S.qs.length*100}%"></i></div>
  <p style="color:var(--mu);margin-top:6px">سؤال ${FA(S.i+1)} از ${FA(S.qs.length)} — ${T[q[0]][0]}</p>
- <h2>${M(q[2])}</h2>${q[7]||''}<div id="os">${o.map(x=>`<button class="opt">${M(x)}</button>`).join('')}</div><div id="fb"></div>`;
+ <h2>${M(q[2])}</h2>${q[7]||''}<div id="os">${o.map(x=>`<button class="opt">${M(x)}</button>`).join('')}</div><div id="fb" aria-live="polite"></div>`;
  document.querySelectorAll('.opt').forEach((b,k)=>b.onclick=()=>pick(b,o[k]===q[3],q,o.indexOf(q[3])));
 }
 function pick(b,ok,q,ri){
@@ -157,7 +158,7 @@ function gcdTool(){const el=$('gt');if(!el)return;
  el.innerHTML='<div class="row"><label>عدد اول <input type="number" id="gA" value="24" min="1" max="10000" style="width:100px"></label><label>عدد دوم <input type="number" id="gB" value="80" min="1" max="10000" style="width:100px"></label></div><div id="go"></div>';
  const dv=n=>{const r=[];for(let i=1;i<=n;i++)if(n%i===0)r.push(i);return r},
  fc=n=>{const f={};for(let p=2;p*p<=n;p++)while(n%p===0){f[p]=(f[p]||0)+1;n/=p}if(n>1)f[n]=(f[n]||0)+1;return f},
- fs=n=>n===1?'1':Object.entries(fc(n)).map(([p,e])=>FA(p)+(e>1?'^'+FA(e):'')).join(' × '),
+ fs=n=>n===1?'1':Object.entries(fc(n)).map(([p,e])=>FA(p)+(e>1?SP(e):'')).join(' × '),
  g=(a,b)=>b?g(b,a%b):a,L=l=>l.map(FA).join('، ');
  const u=()=>{const a=+$('gA').value,b=+$('gB').value;
   if(!(Number.isInteger(a)&&Number.isInteger(b)&&a>=1&&b>=1&&a<=10000&&b<=10000)){$('go').textContent='دو عدد طبیعی بین ۱ تا ۱۰۰۰۰ وارد کن.';return}
@@ -171,7 +172,7 @@ function ptest(){const el=$('pt');if(!el)return;
  const u=()=>{const n=+$('pn').value;if(!(Number.isInteger(n)&&n>=2&&n<=10000)){$('po').textContent='یک عدد طبیعی بین ۲ تا ۱۰۰۰۰ وارد کن.';return}
   const s=Math.sqrt(n),ps=[];for(let p=2;p<=s;p++)if(isP(p))ps.push(p);let first=null;
   const rows=ps.map(p=>{const r=n%p;if(r===0&&first===null)first=p;return '<p style="margin:2px 0"><bdi dir="ltr">'+FA(n)+' ÷ '+FA(p)+'</bdi> ⇒ باقی‌مانده <b>'+FA(r)+'</b> '+(r===0?'✗ بخش‌پذیر':'✓')+'</p>'}).join('');
-  $('po').innerHTML='<p>جذر تقریبی '+FA(n)+' برابر <b>'+FA(s.toFixed(1)).replace('.','٫')+'</b> است؛ پس بر عددهای اول <b>کوچک‌تر از جذر</b> تقسیم می‌کنیم'+(ps.length?': <bdi dir="ltr">'+ps.map(FA).join('، ')+'</bdi>':' (عدد اولی کوچک‌تر از جذر وجود ندارد)')+'.</p>'+rows+'<div class="tip">'+(first===null?'بر هیچ‌کدام بخش‌پذیر نیست ⇒ <b>'+FA(n)+' اول است.</b>':FA(n)+' بر '+FA(first)+' بخش‌پذیر است ⇒ <b>مرکب است</b> (<bdi dir="ltr">'+FA(n)+' = '+FA(first)+' × '+FA(n/first)+'</bdi>).')+'</div>'};
+  $('po').innerHTML='<p>جذر تقریبی '+FA(n)+' برابر <b>'+FA(s.toFixed(1)).replace('.','٫')+'</b> است؛ پس بر عددهای اول <b>تا جذر</b> (کوچک‌تر یا مساوی جذر) تقسیم می‌کنیم'+(ps.length?': <bdi dir="ltr">'+ps.map(FA).join('، ')+'</bdi>':' (عدد اولی کوچک‌تر از جذر وجود ندارد)')+'.</p>'+rows+'<div class="tip">'+(first===null?'بر هیچ‌کدام بخش‌پذیر نیست ⇒ <b>'+FA(n)+' اول است.</b>':FA(n)+' بر '+FA(first)+' بخش‌پذیر است ⇒ <b>مرکب است</b> (<bdi dir="ltr">'+FA(n)+' = '+FA(first)+' × '+FA(n/first)+'</bdi>).')+'</div>'};
  $('pn').oninput=u;u()}
 function treeTool(){const el=$('tr');if(!el)return;
  el.innerHTML='<div class="row"><label>یک عدد بنویس (۲ تا ۹۹۹) <input type="number" id="tn" value="80" min="2" max="999" style="width:100px"></label></div><div id="to"></div>';
@@ -184,7 +185,7 @@ function treeTool(){const el=$('tr');if(!el)return;
    s+='<line x1="'+x+'" y1="'+(y+15)+'" x2="'+(x-35)+'" y2="'+(y+38)+'" stroke="#64748b"/><line x1="'+x+'" y1="'+(y+15)+'" x2="'+(x+45)+'" y2="'+(y+35)+'" stroke="#64748b"/>'+node(x,y,cur,false)+node(x-35,y+55,p,true);cur/=p;x+=45;y+=50}
    s+=node(x,y,cur,true)}
   const cnt={};f.forEach(p=>cnt[p]=(cnt[p]||0)+1);
-  const pw=Object.entries(cnt).map(([p,e])=>FA(p)+(e>1?'^'+FA(e):'')).join(' × ');
+  const pw=Object.entries(cnt).map(([p,e])=>FA(p)+(e>1?SP(e):'')).join(' × ');
   $('to').innerHTML='<svg viewBox="0 0 '+(st?w:120)+' '+(st?h:80)+'" style="width:100%;max-width:'+(st?w+40:200)+'px;display:block;margin:6px auto;background:#0f1a30;border-radius:12px" role="img" aria-label="نمودار درختی">'+s+'</svg>'+
    (st?'<div class="tip"><bdi dir="ltr">'+FA(n)+' = '+f.map(FA).join(' × ')+(pw!==f.map(FA).join(' × ')?' = '+pw:'')+'</bdi></div>':'<div class="tip">'+FA(n)+' خودش اول است و تجزیه‌ای ندارد.</div>')};
  $('tn').oninput=u;u()}
