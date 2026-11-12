@@ -159,11 +159,12 @@ function gcdTool(){const el=$('gt');if(!el)return;
  const dv=n=>{const r=[];for(let i=1;i<=n;i++)if(n%i===0)r.push(i);return r},
  fc=n=>{const f={};for(let p=2;p*p<=n;p++)while(n%p===0){f[p]=(f[p]||0)+1;n/=p}if(n>1)f[n]=(f[n]||0)+1;return f},
  fs=n=>n===1?'1':Object.entries(fc(n)).map(([p,e])=>FA(p)+(e>1?SP(e):'')).join(' × '),
- g=(a,b)=>b?g(b,a%b):a,L=l=>l.map(FA).join('، ');
+ g=(a,b)=>b?g(b,a%b):a,L=l=>l.map(FA).join('، '),
+ LB=x=>'<span dir="ltr" style="display:inline-block;max-width:100%;text-align:left;unicode-bidi:isolate">'+x+'</span>';
  const u=()=>{const a=+$('gA').value,b=+$('gB').value;
   if(!(Number.isInteger(a)&&Number.isInteger(b)&&a>=1&&b>=1&&a<=10000&&b<=10000)){$('go').textContent='دو عدد طبیعی بین ۱ تا ۱۰۰۰۰ وارد کن.';return}
   const da=dv(a),db=dv(b),cm=da.filter(x=>b%x===0),G=g(a,b),Lc=a/G*b;
-  $('go').innerHTML='<p>شمارنده‌های '+FA(a)+': <bdi dir="ltr">'+L(da)+'</bdi></p><p>شمارنده‌های '+FA(b)+': <bdi dir="ltr">'+L(db)+'</bdi></p><p>شمارنده‌های مشترک: <bdi dir="ltr">'+L(cm)+'</bdi></p><p>تجزیه: <bdi dir="ltr">'+FA(a)+' = '+fs(a)+'</bdi> ، <bdi dir="ltr">'+FA(b)+' = '+fs(b)+'</bdi></p><div class="tip">ب.م.م = <b>'+FA(G)+'</b> | ک.م.م = <b>'+FA(Lc)+'</b>'+(G===1?' | نسبت به هم اول‌اند ✓':'')+'<br>بررسی: <bdi dir="ltr">'+FA(G)+' × '+FA(Lc)+' = '+FA(a)+' × '+FA(b)+' = '+FA(a*b)+'</bdi></div>'};
+  $('go').innerHTML='<p>شمارنده‌های '+FA(a)+': '+LB(L(da))+'</p><p>شمارنده‌های '+FA(b)+': '+LB(L(db))+'</p><p>شمارنده‌های مشترک: '+LB(L(cm))+'</p><p>تجزیه: <bdi dir="ltr">'+FA(a)+' = '+fs(a)+'</bdi> ، <bdi dir="ltr">'+FA(b)+' = '+fs(b)+'</bdi></p><div class="tip">ب.م.م = <b>'+FA(G)+'</b> | ک.م.م = <b>'+FA(Lc)+'</b>'+(G===1?' | نسبت به هم اول‌اند ✓':'')+'<br>بررسی: <bdi dir="ltr">'+FA(G)+' × '+FA(Lc)+' = '+FA(a)+' × '+FA(b)+' = '+FA(a*b)+'</bdi></div>'};
  $('gA').oninput=u;$('gB').oninput=u;u()}
 
 function ptest(){const el=$('pt');if(!el)return;
