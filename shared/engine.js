@@ -24,7 +24,7 @@ T.forEach((t,i)=>{const b=document.createElement('button');b.className='tp';b.in
 function learn(i){
  $('lbody').innerHTML=`<div class="card"><div class="row">${T.map((t,j)=>`<button class="btn ${j===i?'pri':''}" onclick="learn(${j})">${FA(j+1)}</button>`).join('')}</div><h2>${FA(i+1)}. ${T[i][0]}</h2>${L2[i]}</div>`;
  if(WG[i]==='subsets'){Object.assign($('sl'),{min:0,max:8,value:3});const u=()=>{const n=+$('sl').value;$('sn').textContent=FA(n);$('sa').textContent=FA(2**n);$('sb').textContent=FA(2**n-1);$('sc').textContent=FA(2**n-1)};$('sl').oninput=u;u()}
- if(WG[i]==='venn3')venn();if(WG[i]==='dice')dice();{const w=(WG[i]||'').split('+');if(w.includes('sieve'))sieve();if(w.includes('gcd'))gcdTool();if(w.includes('ptest'))ptest();if(w.includes('tree'))treeTool()}
+ if(WG[i]==='venn3')venn();if(WG[i]==='dice')dice();{const w=(WG[i]||'').split('+');if(w.includes('sieve'))sieve();if(w.includes('gcd'))gcdTool();if(w.includes('ptest'))ptest();if(w.includes('tree'))treeTool();if(w.includes('dec'))decTool()}
 }
 // Venn
 const VX=[['A ∪ B',(a,b,c)=>a||b],['A ∩ B',(a,b)=>a&&b],['A − B',(a,b)=>a&&!b],['B − A',(a,b)=>b&&!a],['(A ∪ B) − C',(a,b,c)=>(a||b)&&!c],['(A ∩ B) − C',(a,b,c)=>a&&b&&!c],['A − (B ∪ C)',(a,b,c)=>a&&!b&&!c],['(B ∩ C) − A',(a,b,c)=>b&&c&&!a],['(B ∪ C) − A',(a,b,c)=>(b||c)&&!a],['A ∩ B ∩ C',(a,b,c)=>a&&b&&c]];
@@ -190,6 +190,25 @@ function treeTool(){const el=$('tr');if(!el)return;
   $('to').innerHTML='<svg viewBox="0 0 '+(st?w:120)+' '+(st?h:80)+'" style="width:100%;max-width:'+(st?w+40:200)+'px;display:block;margin:6px auto;background:#0f1a30;border-radius:12px" role="img" aria-label="نمودار درختی">'+s+'</svg>'+
    (st?'<div class="tip"><bdi dir="ltr">'+FA(n)+' = '+f.map(FA).join(' × ')+(pw!==f.map(FA).join(' × ')?' = '+pw:'')+'</bdi></div>':'<div class="tip">'+FA(n)+' خودش اول است و تجزیه‌ای ندارد.</div>')};
  $('tn').oninput=u;u()}
+
+function decTool(){const el=$('dc');if(!el)return;
+ el.innerHTML='<div class="row" dir="ltr"><input id="dP" type="number" value="7" style="width:90px"> / <input id="dQ" type="number" value="12" style="width:90px"></div><div id="dO"></div>';
+ const g=(a,b)=>b?g(b,a%b):a;
+ const u=()=>{let p=Math.trunc(+$('dP').value),q=Math.trunc(+$('dQ').value);const o=$('dO');
+  if(!q||!Number.isFinite(p)||!Number.isFinite(q)){o.textContent='مخرج نباید صفر باشد.';return}
+  if(Math.abs(p)>1e6||Math.abs(q)>1e6){o.textContent='عددهای کوچک‌تر از ۱۰۰۰۰۰۰ وارد کن.';return}
+  if(q<0){p=-p;q=-q}
+  const d=g(Math.abs(p),q)||1;p/=d;q/=d;
+  const a=Math.abs(p),ip=Math.floor(a/q);let r=a%q;const ds=[],seen={};
+  while(r&&seen[r]===undefined&&ds.length<200){seen[r]=ds.length;r*=10;ds.push(Math.floor(r/q));r%=q}
+  let x=q;while(x%2===0)x/=2;while(x%5===0)x/=5;
+  const ty=x===1?'مختوم':(q%2===0||q%5===0)?'متناوب مرکب':'متناوب ساده';
+  let t=(p<0?'−':'')+FA(ip)+'٫';
+  if(!r)t+=FA(ds.join('')||'0');
+  else{const st=seen[r];t+=FA(ds.slice(0,st).join(''))+'<span style="text-decoration:overline">'+FA(ds.slice(st).join(''))+'</span>'}
+  if(q===1)t=(p<0?'−':'')+FA(ip);
+  o.innerHTML='<p>کسر ساده‌شده: <bdi dir="ltr">'+FA(p)+'/'+FA(q)+'</bdi></p><p>اعشار: <bdi dir="ltr">'+t+'</bdi></p><div class="tip">نوع: <b>'+(q===1?'عدد صحیح (اعشار مختوم)':ty)+'</b></div>'};
+ $('dP').oninput=u;$('dQ').oninput=u;u()}
 
 window.learn=learn;
 })();
