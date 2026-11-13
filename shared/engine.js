@@ -37,6 +37,11 @@ function learn(i){
  if(w.includes('sq')){const e=$('sqn');if(e)e.oninput=sqTool;sqTool()}
  if(w.includes('axis')){['axl','axh','axil','axih'].forEach(id=>{const e=$(id);if(e)e.oninput=axisTool});axisTool()}
  if(w.includes('abs')){const e=$('abn');if(e)e.oninput=absTool;absTool()}
+if(w.includes('evalexpr')){const e=$('evx');if(e){e.oninput=evalExpr;evalExpr()}}
+if(w.includes('nth')){const e=$('nthn');if(e){e.oninput=nthTerm;nthTerm()}}
+if(w.includes('eqcheck')){const btn=$('eqbtn');if(btn)btn.onclick=checkEq;['eqx'].forEach(id=>{const e=$(id);if(e)e.oninput=()=>{}})}
+if(w.includes('simterms')){simTermsGame()}
+
 }
 // Venn
 const VX=[['A ∪ B',(a,b,c)=>a||b],['A ∩ B',(a,b)=>a&&b],['A − B',(a,b)=>a&&!b],['B − A',(a,b)=>b&&!a],['(A ∪ B) − C',(a,b,c)=>(a||b)&&!c],['(A ∩ B) − C',(a,b,c)=>a&&b&&!c],['A − (B ∪ C)',(a,b,c)=>a&&!b&&!c],['(B ∩ C) − A',(a,b,c)=>b&&c&&!a],['(B ∪ C) − A',(a,b,c)=>(b||c)&&!a],['A ∩ B ∩ C',(a,b,c)=>a&&b&&c]];
@@ -298,13 +303,29 @@ function absTool(){
  <p>${n<0?`چون ${FN(n)} منفی است، قدرمطلقِ آن قرینه‌اش می‌شود: <bdi dir="ltr">|${FN(n)}| = −(${FN(n)}) = ${FN(-n)}</bdi>.`:`چون ${FN(n)} نامنفی است، قدرمطلقِ آن خودش است.`}</p>
  <p class="tip">قاعده: <bdi dir="ltr">√a² = |a|</bdi> — همیشه جواب نامنفی می‌شود!</p>`;
 }
-const CLS=[['π','گنگ','π اعشاری نامتناهی و بدون دورهٔ تناوب است.'],['√۲','گنگ','۲ مربع کامل نیست.'],['√۴','گویا','√۴ = ۲ و ۲ = ۲/۱.'],['−۳/۷','گویا','کسر با صورت و مخرج صحیح است.'],['۰٫۱۲۳۴۵۶۷۸۹۱۰۱۱…','گنگ','رقم‌ها تکرار نمی‌شوند (اعشار نامتناهی غیرمتناوب).'],['۰٫۰۹','گویا','۰٫۰۹ = ۹/۱۰۰.'],['√۰٫۲۵','گویا','√۰٫۲۵ = ۰٫۵ = ۱/۲.'],['۲/۳','گویا','کسر است؛ اعشار آن ۰٫۶۶۶… متناوب است.'],['√۳','گنگ','۳ مربع کامل نیست.'],['۰٫۳۳۳…','گویا','اعشار متناوب است و برابر ۱/۳ می‌شود.'],['√۵','گنگ','۵ مربع کامل نیست.'],['−۲','گویا','−۲ = −۲/۱.'],['√۱٫۴۴','گویا','√۱٫۴۴ = ۱٫۲ = ۶/۵.'],['۰٫۱۰۱۱۰۱۱۱۰۱۱۱۱…','گنگ','تعداد رقم‌های ۱ هر بار بیشتر می‌شود؛ دورهٔ تناوب ندارد.']];
+const CLS=[
+['۳x + ۵','عبارت جبری','هیچ تساوی‌ای ندارد؛ فقط یک عبارت است.'],
+['۲x − ۱ = ۷','معادله','تساوی شامل متغیر است و جواب دارد.'],
+['۴a و −a','متشابه','قسمت حرفی هر دو a است.'],
+['۳x و ۳y','نامتشابه','قسمت حرفی متفاوت است (x در برابر y).'],
+['x² و x','نامتشابه','توان‌ها فرق دارند.'],
+['۵xy و −۲xy','متشابه','قسمت حرفی xy یکسان است.'],
+['۲(x + ۳)','عبارت جبری','حاصل‌ضرب عدد در پرانتز؛ هنوز معادله نیست.'],
+['x + ۳ = ۲x','معادله','دو طرف با هم مساوی قرار گرفته‌اند.'],
+['۷','عدد ثابت','هیچ متغیری ندارد.'],
+['−x','عبارت جبری','ضریب −۱ دارد و متغیر x.'],
+['۳x − x','قابل ساده‌سازی','جملات متشابه هستند و می‌شوند ۲x.'],
+['۲x + ۳y','غیرقابل ساده‌سازی بیشتر','جملات نامتشابه؛ ساده‌تر نمی‌شود.']
+];
 let clsLast=-1;
 function clsGame(){
  const q=$('clsq'),r=$('clsres');if(!q||!r)return;
  let k;do{k=Math.random()*CLS.length|0}while(k===clsLast);clsLast=k;
  const g=CLS[k];
- q.innerHTML=`<bdi dir="ltr" class="m" style="font-size:1.2rem;color:#818cf8">${g[0]}</bdi> گویاست یا گنگ؟ <button class="btn" data-a="گویا">گویا</button> <button class="btn" data-a="گنگ">گنگ</button>`;
+ // collect unique categories for buttons
+ const cats=[...new Set(CLS.map(x=>x[1]))];
+ q.innerHTML=`<bdi dir="ltr" class="m" style="font-size:1.15rem;color:#818cf8">${g[0]}</bdi><br><span style="font-size:.9rem;color:var(--mu)">این کدام است؟</span><br>`+
+   cats.map(c=>`<button class="btn" data-a="${c}" style="margin:3px">${c}</button>`).join(' ');
  r.innerHTML='';
  q.querySelectorAll('button').forEach(b=>b.onclick=()=>{
   q.querySelectorAll('button').forEach(x=>x.disabled=true);
@@ -313,5 +334,64 @@ function clsGame(){
   $('clsnx').onclick=clsGame;$('clsnx').focus();
  });
 }
+
+function evalExpr(){
+ const x=+$('evx').value||0;
+ const res=2*x+3; // sample expression 2x+3, can be extended
+ $('evres').textContent=FA(res);
+ $('evshow').textContent='۲×'+FA(x)+' + ۳ = '+FA(res);
+}
+function nthTerm(){
+ const n=Math.max(1,+$('nthn').value||1);
+ const a1=2, d=3;
+ const res=a1+(n-1)*d;
+ $('nthres').textContent=FA(res);
+ $('nthshow').textContent='۲ + ('+FA(n)+'−۱)×۳ = '+FA(res);
+}
+
+
+function checkEq(){
+  const x = +$('eqx').value;
+  const left = 2*x + 1;
+  const right = 7;
+  const ok = left === right;
+  $('eqres').innerHTML = ok
+    ? `<span style="color:#4ade80">✓ درست! ${FA(left)} = ${FA(right)}</span> — x=${FA(x)} جواب معادله ۲x+۱=۷ است.`
+    : `<span style="color:#f87171">✗ نادرست. سمت چپ = ${FA(left)} و سمت راست = ${FA(right)}</span>`;
+}
+let simLast = -1;
+const SIM = [
+  ['۳x', '−۵x', true, 'هر دو قسمت حرفی x دارند.'],
+  ['۲a', '۲b', false, 'حروف متفاوت‌اند (a و b).'],
+  ['x²', '۳x²', true, 'قسمت حرفی x² یکسان است.'],
+  ['۴xy', 'xy', true, 'قسمت حرفی xy یکسان است.'],
+  ['۲x', '۲x²', false, 'توان‌ها متفاوت است.'],
+  ['−۷m', 'm', true, 'قسمت حرفی m یکسان است.'],
+  ['۳ab', '۳ba', true, 'ab و ba یکسان‌اند (خاصیت جابجایی ضرب).'],
+  ['۵x', '۵', false, 'یکی متغیر دارد و دیگری عدد ثابت است.'],
+  ['y', '−y', true, 'هر دو y هستند.'],
+  ['۲x+۱', '۳x', false, 'یکی دو جمله دارد و دیگری یک جمله.'],
+];
+function simTermsGame(){
+  const q = $('simq'), r = $('simres');
+  if(!q || !r) return;
+  let k; do { k = Math.random()*SIM.length|0 } while(k === simLast);
+  simLast = k;
+  const g = SIM[k];
+  q.innerHTML = `<bdi dir="ltr" class="m" style="font-size:1.15rem;color:#818cf8">${g[0]}</bdi> و <bdi dir="ltr" class="m" style="font-size:1.15rem;color:#818cf8">${g[1]}</bdi><br>
+    <span style="font-size:.9rem;color:var(--mu)">آیا متشابه‌اند؟</span><br>
+    <button class="btn" data-a="yes">بله متشابه</button>
+    <button class="btn" data-a="no">خیر نامتشابه</button>`;
+  r.innerHTML = '';
+  q.querySelectorAll('button').forEach(b => b.onclick = () => {
+    q.querySelectorAll('button').forEach(x => x.disabled = true);
+    const ok = (b.dataset.a === 'yes') === g[2];
+    r.innerHTML = `<span style="color:${ok?'#4ade80':'#f87171'}">${ok?'✓ درست!':'✗ نه!'}</span> — ${g[3]}
+      <button class="btn" id="simnx">بعدی</button>`;
+    $('simnx').onclick = simTermsGame;
+    $('simnx').focus();
+  });
+}
+
 window.learn=learn;
 })();
