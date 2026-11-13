@@ -1,0 +1,139 @@
+Riazi 789 Online — Proprietary Source-Available License
+
+Copyright (c) 2026 Ali Reza Hooman (علیرضا هومان). All rights reserved.
+
+Official service: https://hoomanquant.github.io/riazi_789-online/
+Contact: https://www.linkedin.com/in/ali-reza-hooman-a8047425/
+
+PLEASE READ. By accessing, copying or using this repository or the service
+you agree to these terms. If you do not agree, do not use them.
+
+1. DEFINITIONS
+
+"Owner"          Ali Reza Hooman.
+"Software"       The source code in this repository: HTML, CSS, JavaScript,
+                 configuration and tooling files.
+"Content"        All lessons, explanations, exercises, quiz questions and
+                 answers, solutions, illustrations, interactive tools, games,
+                 chapter structure and data files (including JSON files)
+                 created by the Owner.
+"Free Chapters"  Chapters the Owner makes available without payment through
+                 the Official Service.
+"Paid Content"   All other Content, available only to subscribers or under a
+                 written agreement with the Owner.
+"Official Service"  The website above and any successor site operated by the
+                 Owner.
+
+2. PERMITTED USE
+
+You may:
+(a) read the Software in this repository for review, learning and security
+    evaluation;
+(b) use the Free Chapters through the Official Service for personal,
+    non-commercial educational purposes (students, and teachers within
+    their own classes);
+(c) run a local copy of the Software for private evaluation and security
+    testing only, without making it available to others;
+(d) use Paid Content and class-management features only as a subscriber or
+    under a written agreement with the Owner.
+
+3. RESTRICTIONS
+
+Unless the Owner gives prior written permission, you may NOT:
+(a) copy, republish, mirror, host or redistribute the Software or Content,
+    in whole or in part, including on other websites, apps, messaging
+    channels, books or printed material;
+(b) sell, rent, sublicense or otherwise commercialize the Software or
+    Content, or use them to build a competing product or service;
+(c) scrape, bulk-download or systematically extract Content, including
+    through automated tools;
+(d) use the Software or Content to train, fine-tune or evaluate machine
+    learning models;
+(e) create derivative works, translations or adaptations;
+(f) remove or alter copyright, license or attribution notices;
+(g) bypass, disable or interfere with authentication, access controls,
+    subscription checks, payment systems, rate limits or security measures;
+(h) share account credentials, class codes or Paid Content with people who
+    have not been granted access;
+(i) access, collect or disclose data belonging to other users;
+(j) use the Owner's name or the name "Riazi 789 Online" in a way that
+    suggests endorsement or affiliation.
+
+4. THIRD-PARTY MATERIALS
+
+This license covers only original material created by the Owner. Official
+school textbooks, curriculum documents and other third-party materials that
+the Content may refer to belong to their respective owners and are not
+licensed by this document. Third-party components (for example the Vazirmatn
+font, distributed under the SIL Open Font License) remain under their own
+licenses.
+
+5. CONTRIBUTIONS
+
+If you submit a contribution (code, text, questions, corrections), you grant
+the Owner a perpetual, worldwide, non-exclusive, royalty-free, irrevocable
+and sublicensable license to use, modify and distribute it as part of the
+Software or Content. You confirm that you have the right to submit it and
+that it does not infringe anyone else's rights. The Owner is not obliged to
+accept any contribution.
+
+6. SECURITY RESEARCH
+
+Good-faith security research that follows the rules in SECURITY.md is
+welcome and will not be treated as a violation of section 3(g). Testing that
+accesses real users' personal data, degrades the service, or continues after
+a vulnerability is found is not covered.
+
+7. PRIVACY
+
+Personal data is handled as described in the README and in any privacy policy
+published on the Official Service. This license does not grant rights over
+any user's personal data.
+
+8. TERMINATION
+
+Your rights under this license end automatically if you breach it. Upon
+termination you must stop using the Software and Content and delete your
+copies. The Owner may also suspend access to the Official Service.
+
+9. NO WARRANTY
+
+THE SOFTWARE AND CONTENT ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY AND
+NON-INFRINGEMENT. The Content is an educational aid and does not replace
+official textbooks, school instruction or a teacher.
+
+10. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE OWNER SHALL NOT BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM OR RELATED TO THE SOFTWARE,
+THE CONTENT OR THEIR USE. Nothing in this license limits any right or
+liability that cannot be limited under applicable law.
+
+11. GENERAL
+
+If any provision is held unenforceable, the rest remains in effect. The Owner
+reserves all rights not expressly granted. The Owner may update these terms;
+the version in this repository at the time of your use applies.
+
+---------------------------------------------------------------------------
+خلاصه فارسی (برای راحتی؛ متن انگلیسی بالا مرجع است)
+---------------------------------------------------------------------------
+
+© ۲۰۲۶ علیرضا هومان — همه حقوق محفوظ است.
+
+- می‌توانید کد را برای مطالعه و بررسی امنیتی ببینید، و فصل‌های رایگان را از
+  طریق سرویس رسمی برای آموزش شخصی و غیرتجاری استفاده کنید.
+- محتوای پولی فقط برای مشترکان یا طبق قرارداد کتبی با سازنده است.
+- بدون اجازه‌ی کتبی سازنده مجاز نیست: کپی، بازنشر یا میزبانی در جای دیگر،
+  فروش، ساخت محصول رقیب یا اثر مشتق، خزیدن/دانلود انبوه محتوا، استفاده برای
+  آموزش مدل‌های هوش مصنوعی، حذف اعلان‌های حق نشر، دور زدن ورود/اشتراک/پرداخت/
+  محدودیت‌های امنیتی، و اشتراک‌گذاری حساب یا محتوای پولی با دیگران.
+- کتاب‌های درسی رسمی و مطالب دیگران متعلق به صاحبان آن‌هاست و مشمول این مجوز
+  نیست. فونت وزیرمتن تحت مجوز SIL OFL خودش است.
+- پژوهش امنیتی با حسن نیت و طبق SECURITY.md پذیرفته است.
+- هر مشارکتی (کد، سؤال، اصلاح) را که بفرستید، اجازه‌ی استفاده از آن در پروژه
+  را به سازنده می‌دهید.
+- محتوا ابزار کمک‌آموزشی است و جایگزین معلم و کتاب درسی نیست؛ سازنده تضمینی
+  برای نبود خطا نمی‌دهد.
