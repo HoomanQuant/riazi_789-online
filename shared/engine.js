@@ -397,8 +397,8 @@ function npolyTool(){
   const n = Math.max(3, +$('npn').value || 3);
   const sum = (n-2)*180;
   const each = Math.round(sum/n*10)/10;
-  $('npsum').textContent = FA(sum) + '°';
-  $('npeach').textContent = FA(each) + '°';
+  if($('npsum')) $('npsum').innerHTML = '<bdi dir="ltr">' + FA(sum) + '°</bdi>';
+  if($('npeach')) $('npeach').innerHTML = '<bdi dir="ltr">' + FA(each) + '°</bdi>';
 }
 
 window.learn=learn;
