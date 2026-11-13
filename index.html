@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ریاضی ۷، ۸ و ۹ | آموزش و آزمون تعاملی</title>
+<title>ریاضی — اپ آموزش و آزمون</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/style.css">
 <style>
-:root{--bg:#0b1224;--card:#152238;--bd:#2a3f5f;--tx:#f1f5f9;--mu:#94a3b8;--gr:linear-gradient(135deg,#6366f1,#a855f7 45%,#ec4899)}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--tx);line-height:1.8;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
-.w{max-width:960px;margin:0 auto}
-header{text-align:center;padding:30px 8px 14px}
-h1{font-size:2.1rem;font-weight:800;background:var(--gr);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-header p{color:var(--mu)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:22px 0}
-.g{background:var(--card);border:1px solid var(--bd);border-top:4px solid #6366f1;border-radius:18px;padding:20px}
-.g h2{font-size:1.4rem;margin-bottom:4px}
-.g .n{font-size:2.4rem;font-weight:800;background:var(--gr);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
-.ch{display:block;text-decoration:none;color:var(--tx);background:#1b2c47;border:2px solid var(--bd);border-radius:12px;padding:10px 14px;margin:10px 0;font-weight:600}
-.ch:hover,.ch:focus-visible{border-color:#818cf8;outline:none;background:#223656}
-.ch small{display:block;color:var(--mu);font-weight:400}
-.soon{color:var(--mu);font-size:.9rem;margin-top:8px}
-.how{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px 20px;margin-bottom:16px}
-footer{text-align:center;color:var(--mu);font-size:.85rem;padding:14px}footer a{color:var(--mu)}
+.grade{margin-bottom:26px}
+.grade h2{font-size:1.15rem;color:#fbbf24;margin:14px 4px 8px}
+.chap{display:block;text-decoration:none;color:var(--tx);background:var(--card);border:1px solid rgba(99,102,241,.25);border-right:4px solid var(--pr);border-radius:14px;padding:14px 16px;margin:8px 0;transition:.15s}
+.chap:hover{transform:translateY(-2px);border-color:#818cf8}
+.chap b{font-size:1.05rem}
+.chap span{display:block;color:var(--mu);font-size:.9rem}
+.chap .tp-line{margin-top:6px;font-size:.8rem;color:#a5b4fc}
+.hero{background:var(--gr);border-radius:20px;padding:26px;text-align:center;margin-bottom:8px}
+.hero h1{color:#fff;-webkit-text-fill-color:#fff}
+.hero p{color:rgba(255,255,255,.9)}
 </style>
 </head>
-<body><div class="w">
-<header><h1>📐 ریاضی هفتم، هشتم و نهم</h1><p>یاد بگیر، تمرین کن و پیشرفتت را ببین</p></header>
-<div class="grid" id="g"></div>
-<div class="how"><b>چطور شروع کنم؟</b><br>۱) پایه و فصل خودت را انتخاب کن. ۲) با کد کلاس، نام و رمز ۴ رقمی وارد شو تا معلمت پیشرفتت را ببیند (یا «ادامه بدون ورود» را بزن). ۳) درس را بخوان و آزمون بده.</div>
-<footer>معلم هستید؟ <a href="teacher/">ورود به داشبورد معلم</a></footer>
+<body>
+<div class="wrap">
+ <div class="hero"><h1>📐 اپ ریاضی</h1><p>آموزش تعاملی + آزمون هوشمند + پیگیری پیشرفت</p></div>
+ <div id="app"><p style="text-align:center;color:var(--mu)">در حال بارگذاری…</p></div>
 </div>
 <script>
 const FA=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-fetch('chapters.json').then(r=>r.json()).then(j=>{
- document.getElementById('g').innerHTML=j.grades.map(g=>`<section class="g"><div class="n">${FA(g.n)}</div><h2>${esc(g.t)}</h2>`+
-  g.chapters.map(c=>`<a class="ch" href="${esc(c.url)}">${esc(c.title)}<small>${esc(c.sub)}</small></a>`).join('')+
-  '<div class="soon">فصل‌های بعدی به‌زودی اضافه می‌شوند.</div></section>').join('')
-}).catch(()=>{document.getElementById('g').textContent='فهرست فصل‌ها بارگذاری نشد. صفحه را دوباره باز کن.'});
+(async()=>{let C;try{C=await (await fetch('chapters.json')).json()}catch(e){document.getElementById('app').innerHTML='<div class="tip">فایل chapters.json پیدا نشد.</div>';return}
+ const g2=Object.fromEntries(C.grades.map(g=>[g.n,g.t]));
+ document.getElementById('app').innerHTML=C.grades.map(g=>`<div class="grade"><h2>${g.t}</h2>${g.chapters.map(c=>`<a class="chap" href="${c.url}"><b>${c.title} — ${c.sub}</b><span>درس‌نامه، ابزارهای تعاملی، آزمون و بازی</span><div class="tp-line">${Object.values(c.topics||{}).slice(0,8).join(' • ')}</div></a>`).join('')}</div>`).join('');})();
 </script>
 </body>
 </html>

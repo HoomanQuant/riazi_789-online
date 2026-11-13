@@ -24,7 +24,9 @@ T.forEach((t,i)=>{const b=document.createElement('button');b.className='tp';b.in
 function learn(i){
  $('lbody').innerHTML=`<div class="card"><div class="row">${T.map((t,j)=>`<button class="btn ${j===i?'pri':''}" onclick="learn(${j})">${FA(j+1)}</button>`).join('')}</div><h2>${FA(i+1)}. ${T[i][0]}</h2>${L2[i]}</div>`;
  if(WG[i]==='subsets'){Object.assign($('sl'),{min:0,max:8,value:3});const u=()=>{const n=+$('sl').value;$('sn').textContent=FA(n);$('sa').textContent=FA(2**n);$('sb').textContent=FA(2**n-1);$('sc').textContent=FA(2**n-1)};$('sl').oninput=u;u()}
- if(WG[i]==='venn3')venn();if(WG[i]==='dice')dice();{const w=(WG[i]||'').split('+');if(w.includes('sieve'))sieve();if(w.includes('gcd'))gcdTool();if(w.includes('ptest'))ptest();if(w.includes('tree'))treeTool();if(w.includes('dec'))decTool()}
+ if(WG[i]==='venn3')venn();if(WG[i]==='dice')dice();{const w=(WG[i]||'').split('+');if(w.includes('sieve'))sieve();if(w.includes('gcd'))gcdTool();if(w.includes('ptest'))ptest();if(w.includes('tree'))treeTool();if(w.includes('dec'))decTool();if(w.includes('between')){}if(w.includes('sq'))sqTool();if(w.includes('axis'))axisTool();if(w.includes('abs'))absTool();if(w.includes('cls'))clsGame();if(w.includes('between')){const fb=$('fb');if(fb)fb.onchange=fracBetween;const fa=$('fa');if(fa)fa.onchange=fracBetween;const fb2=$('fbtn');if(fb2)fb2.onclick=fracBetween}if(w.includes('sq')){const s=$('sqn');if(s)s.onchange=sqTool}if(w.includes('axis')){['axl','axh','axil','axih'].forEach(id=>{const e=$(id);if(e)e.onchange=axisTool});axisTool()}if(w.includes('abs')){const e=$('abn');if(e)e.onchange=absTool}}
+const _origLearn=learn;
+learn=function(i){_origLearn(i);if((WG[i]||'').split('+').includes('between'))fracBetween();if((WG[i]||'').split('+').includes('sq'))sqTool();if((WG[i]||'').split('+').includes('abs'))absTool();};
 }
 // Venn
 const VX=[['A ∪ B',(a,b,c)=>a||b],['A ∩ B',(a,b)=>a&&b],['A − B',(a,b)=>a&&!b],['B − A',(a,b)=>b&&!a],['(A ∪ B) − C',(a,b,c)=>(a||b)&&!c],['(A ∩ B) − C',(a,b,c)=>a&&b&&!c],['A − (B ∪ C)',(a,b,c)=>a&&!b&&!c],['(B ∩ C) − A',(a,b,c)=>b&&c&&!a],['(B ∪ C) − A',(a,b,c)=>(b||c)&&!a],['A ∩ B ∩ C',(a,b,c)=>a&&b&&c]];
@@ -210,5 +212,69 @@ function decTool(){const el=$('dc');if(!el)return;
   o.innerHTML='<p>کسر ساده‌شده: <bdi dir="ltr">'+FA(p)+'/'+FA(q)+'</bdi></p><p>اعشار: <bdi dir="ltr">'+t+'</bdi></p><div class="tip">نوع: <b>'+(q===1?'عدد صحیح (اعشار مختوم)':ty)+'</b></div>'};
  $('dP').oninput=u;$('dQ').oninput=u;u()}
 
+
+// ============ Grade 9 Chapter 2 widgets (interactive) ============
+// GCD-ish helpers
+function fracBetween(){
+ const a=$('fa'),b=$('fb'),out=$('fout');
+ if(!a||!b)return;
+ const parse=s=>{const m=s.trim().match(/^(-?\d+)\s*\/\s*(\d+)$/);if(m)return[+m[1],+m[2]];const f=+s;if(Number.isFinite(f)){const n=Math.round(f*60);return[n,60]}return null};
+ let A=parse(a.value),B=parse(b.value);out.innerHTML='';
+ if(!A||!B){out.innerHTML='<span style="color:#f87171">دو کسر مثل <bdi dir="ltr">2/5</bdi> یا عدد وارد کن.</span>';return}
+ const av=A[0]/A[1],bv=B[0]/B[1];let lo,hi;if(av>bv)[lo,hi]=[B,A];else[lo,hi]=[A,B];
+ // mediant + fine-tune
+ let n1=lo[0]*hi[1],d1=lo[1]*hi[1],n2=hi[0]*lo[1];
+ let mn=n1+n2,md=2*d1;
+ // reduce
+ const g=(x,y)=>y?g(y,x%y):x;const gg=g(Math.abs(mn),md);mn/=gg;md/=gg;
+ const show=(lo[1]===1&&hi[1]===1)?`(${FA(lo[0])}+${FA(hi[0])})/(${FA(2)})`:`((${FA(lo[0])}×${FA(hi[1])})+(${FA(hi[0])}×${FA(lo[1])}))/(2×${FA(lo[1])}×${FA(hi[1])})`;
+ out.innerHTML=`<p>مخرج مشترک: <bdi dir="ltr" class="m">${show}</bdi></p><p>یک عدد بین آن‌ها: <bdi dir="ltr" class="m" style="color:#4ade80;font-size:1.2rem">${FA(mn)}/${FA(md)}</bdi> <span style="color:var(--mu)">(${FA((mn/md).toFixed(4))})</span></p><p class="tip">راه مدرسه: <bdi dir="ltr">${FA(lo[0])}/${FA(lo[1])} &lt; ${FA(mn)}/${FA(md)} &lt; ${FA(hi[0])}/${FA(hi[1])}</bdi> چون صورتش بزرگ‌تر از صورتِ اول و مخرجش کوچک‌تر از مخرجِ دوم است. بین هر دو عدد گویا، بی‌نهایت عدد گویا وجود دارد!</p>`;
+}
+function sqTool(){
+ const n=+($('sqn')? $('sqn').value:0);const out=$('sqo');if(!out)return;
+ if(!(n>=0)||!Number.isInteger(n)){out.innerHTML='<span style="color:#f87171">یک عدد صحیح نامنفی وارد کن.</span>';return}
+ const r=Math.sqrt(n);const lo=Math.floor(r);
+ out.innerHTML=`<p><bdi dir="ltr" class="m" style="font-size:1.3rem">√${FA(n)}</bdi> ≈ <bdi dir="ltr">${FA(r.toFixed(4))}</bdi></p>`+
+ `<p>چون <bdi dir="ltr">${FA(lo)}² = ${FA(lo*lo)} ≤ ${FA(n)} &lt; ${FA((lo+1)*(lo+1))} = ${FA(lo+1)}²</bdi></p>`+
+ `<p>پس <bdi dir="ltr" class="m" style="color:#4ade80">${FA(lo)} &lt; √${FA(n)} &lt; ${FA(lo+1)}</bdi></p>`+
+ `<svg viewBox="0 0 320 60" style="width:100%;max-width:340px;direction:ltr" xmlns="http://www.w3.org/2000/svg">
+  ${[lo,lo+1].map(k=>{const x=40+(k-lo)*120;const on=(k*k===n);return `<circle cx="${x}" cy="30" r="${on?6:6}" fill="${on?'#4ade80':'var(--card)'}" stroke="${on?'#4ade80':'#818cf8'}" stroke-width="2"/><text x="${x}" y="52" text-anchor="middle" fill="var(--tx)" font-size="12">${k}</text>`}).join('')}
+  <circle cx="${40+(r-lo)*120}" cy="30" r="4" fill="#f59e0b"/>
+  <text x="${40+(r-lo)*120}" y="14" text-anchor="middle" fill="#f59e0b" font-size="11">√${n}</text>
+  <line x1="30" y1="30" x2="290" y2="30" stroke="#818cf8" stroke-width="1.5"/></svg>`;
+}
+function axisTool(){
+ const lo=+$('axl').value,hi=+$('axh').value;const inclL=$('axil').checked,inclH=$('axih').checked;const out=$('axo');if(!out)return;
+ if(!(lo<hi)){out.innerHTML='<span style="color:#f87171">کران چپ باید کوچک‌تر از کران راست باشد.</span>';return}
+ const w=320,m=30,px=x=>m+(x-lo)/(hi-lo)*(w-2*m);
+ const step=(hi-lo)<=10?1:(hi-lo)<=20?2:5;
+ let ticks='';for(let k=Math.ceil(lo);k<=hi;k+=step)ticks+=`<line x1="${px(k)}" y1="26" x2="${px(k)}" y2="34" stroke="#818cf8"/><text x="${px(k)}" y="50" text-anchor="middle" font-size="11" fill="var(--mu)">${k}</text>`;
+ out.innerHTML=`<svg viewBox="0 0 320 70" style="width:100%;max-width:360px;direction:ltr" xmlns="http://www.w3.org/2000/svg">
+ <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#818cf8"/></marker></defs>
+ <line x1="8" y1="30" x2="312" y2="30" stroke="#818cf8" stroke-width="2" marker-end="url(#ah)"/>${ticks}
+ <line x1="${px(lo)}" y1="30" x2="${px(hi)}" y2="30" stroke="#f59e0b" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+ <circle cx="${px(lo)}" cy="30" r="8" fill="${inclL?'#f59e0b':'#fff'}" stroke="#f59e0b" stroke-width="3"/>
+ <circle cx="${px(hi)}" cy="30" r="8" fill="${inclH?'#f59e0b':'#fff'}" stroke="#f59e0b" stroke-width="3"/></svg>
+ <p style="text-align:center;margin:4px 0 0"><bdi dir="ltr" class="m">${inclL?'[':'('}${FA(lo)} , ${FA(hi)}${inclH?']':')'}</bdi> — دایرهٔ توپُر یعنی «به‌علاوهٔ خودِ عدد»، توخالی یعنی «بدون خودِ عدد».</p>`;
+}
+function absTool(){
+ const n=+$('abn').value;const out=$('abo');if(!out)return;
+ if(!Number.isInteger(n)){out.innerHTML='<span style="color:#f87171">یک عدد صحیح وارد کن.</span>';return}
+ out.innerHTML=`<p><bdi dir="ltr" class="m" style="font-size:1.25rem">√(${FA(n)})² = |${FA(n)}| = <span style="color:#4ade80">${FA(Math.abs(n))}</span></bdi></p>
+ <p>${n<0?`چون ${FA(n)} منفی است، قدرمطلقِ آن قرینه‌اش می‌شود: |${FA(n)}| = −(${FA(n)}) = ${FA(-n)}.`:`چون ${FA(n)} نامنفی است، قدرمطلقِ خودش است.`}</p>
+ <p class="tip">قاعده: <bdi dir="ltr">√a² = |a|</bdi> — همیشه جواب نامنفی می‌شود!</p>`;
+}
+function clsGame(){
+ const items=[['π','گنگ'],['√۲','گنگ'],['√۴','گویا'],['−۳/۷','گویا'],['۰٫۱۲۳۴۵۶… (بدون تکرار)','گنگ'],['۰٫۰۹','گویا'],['√۰٫۲۵','گویا'],['۲/۳','گویا'],['√۳','گنگ'],['۰٫۳۳۳…','گویا'],['√۵','گنگ'],['−۲','گویا'],['√۱٫۴۴','گویا'],['۰٫۱۰۱۱۰۰۱۱۱۰…','گنگ']];
+ const g=items[Math.floor(Math.random()*items.length)];
+ $('clsq').innerHTML=`<span style="font-size:1.2rem;color:#818cf8">${g[0]}</span> گویاست یا گنگ؟ <button class="btn" onclick="clsfAns('گویا')">گویا</button> <button class="btn" onclick="clsfAns('گنگ')">گنگ</button>`;
+ window._clsg=g[1];
+}
+function clsfAns(a){
+ const ok=a===window._clsg;
+ $('clsres').innerHTML=`<span style="color:${ok?'#4ade80':'#f87171'}">${ok?'✓ درست!':'✗ نه! درست: '+window._clsg}</span> <button class="btn" onclick="clsGame()">بعدی</button>`;
+ clsGame();
+}
+// extend dispatch inside learn() — patch string
 window.learn=learn;
 })();
