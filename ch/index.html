@@ -12,13 +12,13 @@
  <header><h1>…</h1><p></p></header>
  <nav id="nav"></nav>
  <p id="who" style="text-align:center;color:var(--mu);margin:0 0 10px"></p>
- <section id="home" class="sec">
+ <section id="home" class="sec on">
   <div class="card" id="rules"></div>
   <div class="grid" id="tgrid"></div>
-  <div class="card" style="margin-top:14px;text-align:center">
+  <div class="card" id="gameCard" style="margin-top:14px;text-align:center;display:none">
    <h2>🎮 بازی فصل</h2>
-   <p style="color:var(--mu)">مهارتت را روی محور اعداد و اعداد گویا و گنگ محک بزن.</p>
-   <button class="btn pri" onclick="location.href='../content/game-real.html'">شروع بازی «نشانه بگیر»</button>
+   <p id="gameDesc" style="color:var(--mu)"></p>
+   <button class="btn pri" id="gameBtn">شروع بازی</button>
   </div>
  </section>
  <section id="learn" class="sec"><div id="lbody"></div></section>
@@ -34,6 +34,29 @@
  <p id="lgm"></p>
  <div class="row"><button class="btn pri" id="lgo">ورود</button><button class="btn" id="lgs">بعداً</button></div>
 </div></div>
+<script>
+// نمایش بازی فقط برای فصل‌هایی که بازی اختصاصی دارند
+(function(){
+  const id = new URLSearchParams(location.search).get('c') || '';
+  const games = {
+    'g9-c2': {
+      desc: 'مهارتت را روی محور اعداد و اعداد گویا و گنگ محک بزن.',
+      href: '../content/game-real.html',
+      label: 'شروع بازی «نشانه بگیر»'
+    }
+    // g9-c3 و سایر فصل‌های هندسه فعلاً بازی اختصاصی ندارند
+  };
+  const g = games[id];
+  if (g) {
+    const card = document.getElementById('gameCard');
+    card.style.display = 'block';
+    document.getElementById('gameDesc').textContent = g.desc;
+    const btn = document.getElementById('gameBtn');
+    btn.textContent = g.label;
+    btn.onclick = () => location.href = g.href;
+  }
+})();
+</script>
 <script src="../shared/engine.js"></script>
 </body>
 </html>
