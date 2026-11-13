@@ -6,99 +6,143 @@
 <title>بازی «نشانه بگیر» — اعداد حقیقی</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f6fb;--card:#fff;--tx:#1e2433;--mu:#5b6478;--pr:#6366f1;--ok:#16a34a;--bad:#dc2626;--bd:#e2e8f0}
-.dark{--bg:#0b1120;--card:#151c31;--tx:#e5e9f2;--mu:#94a3b8;--bd:#26304d}
+:root{--bg:#f4f6fb;--card:#fff;--tx:#1e2433;--mu:#5b6478;--pr:#6366f1;--bd:#e2e8f0}
+body.dark{--bg:#0b1120;--card:#151c31;--tx:#e5e9f2;--mu:#94a3b8;--bd:#26304d}
 *{box-sizing:border-box}
-body{margin:0;font-family:Vazirmatn,system-ui;background:var(--bg);color:var(--tx);min-height:100vh;transition:.2s}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font-family:Vazirmatn,Tahoma,system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;transition:background .2s}
 .wrap{max-width:640px;margin:0 auto;padding:16px}
 header{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:12px}
 h1{font-size:1.3rem;margin:0;background:linear-gradient(90deg,#818cf8,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;box-shadow:0 4px 18px rgba(2,6,23,.05)}
-#target{font-size:1.9rem;text-align:center;font-weight:800;color:#818cf8;margin:8px 0}
-#hint{text-align:center;color:var(--mu);font-size:.95rem;min-height:1.5em;margin:2px 0 10px}
-#axis{width:100%;touch-action:manipulation;cursor:crosshair;display:block}
+#target{font-size:1.9rem;text-align:center;font-weight:800;color:#818cf8;margin:8px 0;min-height:2.6rem}
+#target bdi{direction:ltr;unicode-bidi:isolate}
+#lvname{text-align:center;color:var(--mu);font-size:.85rem}
+#hint{text-align:center;color:var(--mu);font-size:.95rem;min-height:1.6em;margin:2px 0 10px}
+#axis{width:100%;touch-action:manipulation;cursor:crosshair;display:block;direction:ltr}
 .bar{display:flex;justify-content:space-between;align-items:center;margin:12px 0 4px;gap:8px;flex-wrap:wrap}
-.btn{font-family:Vazirmatn;border:none;border-radius:12px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:.95rem;background:var(--pr);color:#fff;transition:.15s}
+.btn{font-family:inherit;border:none;border-radius:12px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:.95rem;background:var(--pr);color:#fff;text-decoration:none;display:inline-block;transition:transform .15s}
 .btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}
 .btn.ghost{background:transparent;border:1px solid var(--bd);color:var(--tx)}
 #fb{text-align:center;min-height:1.6em;font-weight:700;margin-top:6px}
 .score{font-variant-numeric:tabular-nums;font-weight:800}
-.dot{position:absolute}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
+ <a class="btn ghost" href="../ch/?c=g9-c2">⬅ فصل</a>
  <h1>🎯 نشانه بگیر</h1>
- <button class="btn ghost" id="th">🌙</button>
+ <button class="btn ghost" id="th" aria-label="تغییر پوسته">🌙</button>
 </header>
 <div class="card">
  <div class="bar"><span>مرحله <b id="lv" class="score">۱</b>/۴</span><span>امتیاز: <b id="sc" class="score">۰</b></span><span>دقت: <b id="acc" class="score">—</b></span></div>
+ <div id="lvname"></div>
  <div id="target">؟</div>
- <div id="hint"></div>
- <svg id="axis" viewBox="0 0 600 110" xmlns="http://www.w3.org/2000/svg"></svg>
- <div id="fb"></div>
- <div class="bar"><button class="btn" id="go">شروع</button><button class="btn ghost" id="skip">ردکردن</button></div>
+ <div id="hint" aria-live="polite"></div>
+ <svg id="axis" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="محور اعداد"></svg>
+ <div id="fb" aria-live="polite"></div>
+ <div class="bar"><button class="btn" id="go">شروع</button><button class="btn ghost" id="hb" disabled>💡 راهنما</button><button class="btn ghost" id="skip" disabled>ردکردن</button></div>
 </div>
-<p style="text-align:center;color:var(--mu);font-size:.85rem">عدد نشان‌داده‌شده را روی محور لمس/کلیک کن. اعداد رادیکالی را بین دو مربع کامل پیدا کن!</p>
+<p style="text-align:center;color:var(--mu);font-size:.85rem">عدد نشان‌داده‌شده را روی محور لمس/کلیک کن. عددهای رادیکالی را بین دو مربع کامل پیدا کن!</p>
 </div>
 <script>
 const FA=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const FD=s=>FA(s).replace('.','٫');
+const FN=n=>(n<0?'−':'')+FD(Math.abs(n));
 const $=id=>document.getElementById(id);
 if(matchMedia('(prefers-color-scheme: dark)').matches)document.body.classList.add('dark');
 $('th').onclick=()=>document.body.classList.toggle('dark');
-const LO=[[-6,6,1,'اعداد صحیح و نیم'],[-6,6,2,'اعداد گویا با مخرج ۳'],[-4,10,0,'ریشه‌ها (√n)'],[-10,4,0,'ریشه‌های منفی و کسرها']];
-let rnd=0,score=0,hits=0,tries=0,ans=0,busy=false,targets=[];
-function mkTargets(lv){
- const pool=[[['√۲',Math.SQRT2,'بین ۱ و ۴ ← بین ۱ و ۲'],['√۳',Math.sqrt(3),'بین ۱ و ۴ ← بین ۱ و ۲'],['√۵',Math.sqrt(5),'بین ۴ و ۹ ← بین ۲ و ۳'],['√۶',Math.sqrt(6),'بین ۴ و ۹ ← بین ۲ و ۳'],['√۷',Math.sqrt(7),'بین ۴ و ۹ ← بین ۲ و ۳'],['√۸',Math.sqrt(8),'بین ۴ و ۹ ← بین ۲ و ۳'],['√۱۰',Math.sqrt(10),'بین ۹ و ۱۶ ← بین ۳ و ۴'],['√۱۱',Math.sqrt(11),'بین ۹ و ۱۶ ← بین ۳ و ۴']],
- [['−√۲',-Math.SQRT2,'بین −۴ و −۱'],['−√۵',-Math.sqrt(5),'بetween −۹ و −۴'],['−√۷',-Math.sqrt(7),'between −۹ و −۴'],['−۳/۴',-0.75,''],['−۷/۳',-7/3,''],['−√۳',-Math.sqrt(3),''],['√۳/۲',Math.sqrt(3)/2,'']]];
- const pools=[[1,2,3,4,5,-1,-2,-3,-4,-5,2.5,-2.5,3.5,-3.5],[1/3,2/3,4/3,5/3,7/3,8/3,-1/3,-2/3,-4/3,-5/3,-7/3,-8/3,1.2,-1.2]];
- const src=lv<2?pools[lv]:pool[lv-2];
- targets=src.slice().sort(()=>Math.random()-.5).slice(0,6);
+
+const PER=2,W=600,H=120,MX=30,AY=62;
+const LV=[
+ {lo:-6,hi:6,minor:.5,name:'عددهای صحیح و نیم'},
+ {lo:-3,hi:3,minor:1/3,name:'کسرهایی با مخرج ۳'},
+ {lo:0,hi:4,minor:.5,name:'ریشه‌های دوم (√n)'},
+ {lo:-4,hi:4,minor:.5,name:'ریشه‌های منفی و ترکیبی'}];
+const N=LV.length*PER;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const bdi=t=>'<bdi dir="ltr">'+t+'</bdi>';
+
+function rootHint(n,sign,add){
+ const f=Math.floor(Math.sqrt(n));
+ let s=`${FA(n)} بین مربع‌های ${FA(f*f)} و ${FA((f+1)*(f+1))} است ⇒ √${FA(n)} بین ${FA(f)} و ${FA(f+1)}`;
+ if(sign<0&&!add)s+=` ⇒ −√${FA(n)} بین ${FN(-(f+1))} و ${FN(-f)}`;
+ else if(sign>0&&add)s+=` ⇒ ${FN(add)} + √${FA(n)} بین ${FN(add+f)} و ${FN(add+f+1)}`;
+ else if(sign<0&&add)s+=` ⇒ ${FN(add)} − √${FA(n)} بین ${FN(add-f-1)} و ${FN(add-f)}`;
+ return s;
 }
-function draw(lo,hi,frac){
- const s=$('axis'),W=600,H=110,mx=30;const px=v=>mx+(v-lo)/(hi-lo)*(W-2*mx);
+function pool(lv){
+ if(lv===0){const r=[];for(let i=-10;i<=10;i++){if(!i)continue;const v=i/2;r.push({label:bdi(FN(v)),val:v,hint:Number.isInteger(v)?'عددی صحیح است.':`وسطِ ${FN(Math.floor(v))} و ${FN(Math.ceil(v))}`})}return r}
+ if(lv===1){return[1,2,4,5,7,8,-1,-2,-4,-5,-7,-8].map(n=>({label:bdi((n<0?'−':'')+FA(Math.abs(n))+'/'+FA(3)),val:n/3,hint:'هر واحد روی محور را به ۳ بخش مساوی تقسیم کن.'}))}
+ if(lv===2){return[2,3,5,6,7,8,10,11,12,13,14,15].map(n=>({label:bdi('√'+FA(n)),val:Math.sqrt(n),hint:rootHint(n,1,0)}))}
+ const r=[2,3,5,7,10,11,13].map(n=>({label:bdi('−√'+FA(n)),val:-Math.sqrt(n),hint:rootHint(n,-1,0)}));
+ r.push({label:bdi('۱ + √۲'),val:1+Math.SQRT2,hint:rootHint(2,1,1)},{label:bdi('۲ − √۵'),val:2-Math.sqrt(5),hint:rootHint(5,-1,2)},{label:bdi('−۱ − √۳'),val:-1-Math.sqrt(3),hint:rootHint(3,-1,-1)});
+ return r;
+}
+
+let st='idle',rnd=0,score=0,hits=0,played=0,targets=[],cur=null;
+const lvOf=i=>Math.min(LV.length-1,Math.floor(i/PER));
+const px=(v,L)=>MX+(v-L.lo)/(L.hi-L.lo)*(W-2*MX);
+
+function draw(L,guess,truth){
  let h=`<defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#818cf8"/></marker></defs>
- <line x1="8" y1="55" x2="592" y2="55" stroke="#818cf8" stroke-width="2.2" marker-end="url(#ah)"/>`;
- const step=frac? (1/frac):1;
- for(let v=Math.ceil(lo*frac)/frac;v<=hi+1e-9;v+=step){const x=px(v);
-  h+=`<line x1="${x}" y1="48" x2="${x}" y2="62" stroke="#818cf8" stroke-width="${frac?1:1.6}"/><text x="${x}" y="82" text-anchor="middle" font-size="${frac?10:12}" fill="#94a3b8">${FA(v%1? (Math.round(v*frac)):v)}</text>`}
- h+=`<line x1="${px(0)}" y1="42" x2="${px(0)}" y2="68" stroke="#f59e0b" stroke-width="2"/>`;
- s.innerHTML=h;}
-function next(){
- if(rnd>=6)return end();
- const[lo,hi,frac]=LO[Math.min(3,Math.floor(rnd/2))];
- draw(lo,hi,frac);
- const t=targets[rnd];ans=t[1];
- $('target').textContent=t[0];
- $('hint').textContent=t[2]||'';
- $('fb').textContent='';busy=false;
- $('go').textContent='دیدن جواب';
+ <line x1="8" y1="${AY}" x2="${W-8}" y2="${AY}" stroke="#818cf8" stroke-width="2.2" marker-end="url(#ah)"/>`;
+ const mn=Math.round((L.hi-L.lo)/L.minor);
+ for(let i=0;i<=mn;i++){const v=L.lo+i*L.minor;if(Math.abs(v-Math.round(v))<1e-9)continue;const x=px(v,L);h+=`<line x1="${x}" y1="${AY-6}" x2="${x}" y2="${AY+6}" stroke="#818cf8" stroke-width="1" opacity=".6"/>`}
+ for(let k=L.lo;k<=L.hi;k++){const x=px(k,L);h+=`<line x1="${x}" y1="${AY-10}" x2="${x}" y2="${AY+10}" stroke="#818cf8" stroke-width="1.8"/><text x="${x}" y="${AY+32}" text-anchor="middle" font-size="13" fill="#94a3b8">${FN(k)}</text>`}
+ if(L.lo<=0&&L.hi>=0)h+=`<line x1="${px(0,L)}" y1="${AY-16}" x2="${px(0,L)}" y2="${AY+16}" stroke="#f59e0b" stroke-width="2.4"/>`;
+ if(truth!=null)h+=`<circle cx="${px(truth,L)}" cy="${AY}" r="7" fill="#16a34a" stroke="#fff" stroke-width="2"/><text x="${px(truth,L)}" y="${AY-16}" text-anchor="middle" font-size="12" fill="#16a34a">جواب</text>`;
+ if(guess!=null)h+=`<circle cx="${px(guess,L)}" cy="${AY}" r="7" fill="#f97316" stroke="#fff" stroke-width="2"/><text x="${px(guess,L)}" y="${AY-30}" text-anchor="middle" font-size="12" fill="#f97316">حدس تو</text>`;
+ $('axis').innerHTML=h;
 }
-function guess(clientX){
- if(busy||!targets.length)return;busy=true;tries++;
- const r=$('axis').getBoundingClientRect();
- const[lo,hi]=LO[Math.min(3,Math.floor(rnd/2))];
- const v=lo+(clientX-r.left)/r.width*(hi-lo);
- const err=Math.abs(v-ans);
- const pts=Math.max(0,Math.round(100-err*60));
- score+=pts;
- if(err<0.35)hits++;
- $('fb').innerHTML=`<span style="color:${pts>70?'#16a34a':pts>30?'#d97706':'#dc2626'}">${pts>70?'عالی!':pts>30?'قابل قبول':'دوری!'} (±${FA(err.toFixed(2))})</span> — جواب: <b>${FA(ans.toFixed(3))}</b>`;
- upd();rnd++;setTimeout(next,1400);
+function upd(){
+ $('sc').textContent=FA(score);
+ $('lv').textContent=FA(Math.min(LV.length,lvOf(Math.min(rnd,N-1))+1));
+ $('acc').textContent=played?FA(Math.round(hits/played*100))+'٪':'—';
 }
-$('axis').addEventListener('pointerdown',e=>guess(e.clientX));
-$('go').onclick=()=>{if(busy||!targets.length)return;busy=true;$('fb').innerHTML=`جواب: <b>${FA(ans.toFixed(3))}</b>`;rnd++;setTimeout(next,1200)};
-$('skip').onclick=()=>{rnd++;next()};
-function upd(){$('sc').textContent=FA(score);$('lv').textContent=FA(Math.min(4,Math.floor(rnd/2)+1));$('acc').textContent=tries?FA(Math.round(hits/tries*100))+'٪':'—'}
+function start(){
+ targets=[];for(let lv=0;lv<LV.length;lv++)shuffle(pool(lv)).slice(0,PER).forEach(t=>targets.push({...t,lv}));
+ rnd=0;score=0;hits=0;played=0;showQ();
+}
+function showQ(){
+ cur=targets[rnd];st='asking';const L=LV[cur.lv];
+ draw(L);
+ $('target').innerHTML=cur.label;$('lvname').textContent=L.name;$('hint').textContent='';$('fb').textContent='';
+ $('go').textContent='دیدن جواب';$('skip').disabled=false;$('hb').disabled=false;upd();
+}
+function finishRound(g){
+ const L=LV[cur.lv];let pts=0,msg='';
+ played++;
+ if(g!=null){
+  const err=Math.abs(g-cur.val);pts=Math.max(0,Math.round(100-err/(L.hi-L.lo)*400));
+  if(pts>=80)hits++;score+=pts;
+  msg=`<span style="color:${pts>=80?'#16a34a':pts>=40?'#d97706':'#dc2626'}">${pts>=80?'عالی!':pts>=40?'قابل قبول':'دور بود!'} (${FA(pts)} امتیاز، خطا ${FD(err.toFixed(2))})</span> — `;
+ }
+ $('fb').innerHTML=msg+`جواب: <b dir="ltr">${FN(+cur.val.toFixed(3))}</b>`;
+ draw(L,g,cur.val);st='shown';
+ $('go').textContent=rnd===N-1?'دیدن نتیجه':'مرحلهٔ بعد';$('skip').disabled=true;$('hb').disabled=true;upd();
+}
+function advance(){rnd++;if(rnd>=N)end();else showQ()}
 function end(){
- $('target').textContent='پایان بازی 🏁';
- $('hint').textContent='';
- $('fb').innerHTML=`امتیاز نهایی: <b style="font-size:1.3rem">${FA(score)}</b> از ${FA(600)} — ${score>=450?'فوق‌العاده! محور برای تو آبِ نبات شده 😎':score>=300?'خیلی خوب!':'بیشتر تمرین کن، می‌تونی!'}`;
- $('go').textContent='دوباره';
- $('go').onclick=()=>{rnd=0;score=0;hits=0;tries=0;mkTargets(0);upd();$('go').textContent='دیدن جواب';$('go').onclick=arguments.callee;next()};
+ st='over';rnd=N-1;upd();
+ $('target').textContent='پایان بازی 🏁';$('hint').textContent='';$('lvname').textContent='';
+ const mx=N*100;
+ $('fb').innerHTML=`امتیاز نهایی: <b style="font-size:1.3rem">${FA(score)}</b> از ${FA(mx)} — ${score>=mx*.75?'فوق‌العاده! محور برای تو آب‌خوردن شده 😎':score>=mx*.5?'خیلی خوب!':'بیشتر تمرین کن، می‌توانی!'}`;
+ $('go').textContent='دوباره';$('skip').disabled=true;$('hb').disabled=true;
 }
-$('go').onclick=()=>{mkTargets(0);next()};
+$('axis').addEventListener('pointerdown',e=>{
+ if(st!=='asking')return;
+ const s=$('axis'),pt=s.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;
+ const p=pt.matrixTransform(s.getScreenCTM().inverse()),L=LV[cur.lv];
+ finishRound(L.lo+(p.x-MX)/(W-2*MX)*(L.hi-L.lo));
+});
+$('go').onclick=()=>{if(st==='idle'||st==='over')start();else if(st==='asking')finishRound(null);else if(st==='shown')advance()};
+$('skip').onclick=()=>{if(st!=='asking')return;played++;upd();advance()};
+$('hb').onclick=()=>{if(st==='asking')$('hint').textContent=cur.hint||''};
+draw(LV[0]);upd();
 </script>
 </body>
 </html>

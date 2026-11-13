@@ -23,10 +23,20 @@ T.forEach((t,i)=>{const b=document.createElement('button');b.className='tp';b.in
 
 function learn(i){
  $('lbody').innerHTML=`<div class="card"><div class="row">${T.map((t,j)=>`<button class="btn ${j===i?'pri':''}" onclick="learn(${j})">${FA(j+1)}</button>`).join('')}</div><h2>${FA(i+1)}. ${T[i][0]}</h2>${L2[i]}</div>`;
- if(WG[i]==='subsets'){Object.assign($('sl'),{min:0,max:8,value:3});const u=()=>{const n=+$('sl').value;$('sn').textContent=FA(n);$('sa').textContent=FA(2**n);$('sb').textContent=FA(2**n-1);$('sc').textContent=FA(2**n-1)};$('sl').oninput=u;u()}
- if(WG[i]==='venn3')venn();if(WG[i]==='dice')dice();{const w=(WG[i]||'').split('+');if(w.includes('sieve'))sieve();if(w.includes('gcd'))gcdTool();if(w.includes('ptest'))ptest();if(w.includes('tree'))treeTool();if(w.includes('dec'))decTool();if(w.includes('between')){}if(w.includes('sq'))sqTool();if(w.includes('axis'))axisTool();if(w.includes('abs'))absTool();if(w.includes('cls'))clsGame();if(w.includes('between')){const fb=$('fb');if(fb)fb.onchange=fracBetween;const fa=$('fa');if(fa)fa.onchange=fracBetween;const fb2=$('fbtn');if(fb2)fb2.onclick=fracBetween}if(w.includes('sq')){const s=$('sqn');if(s)s.onchange=sqTool}if(w.includes('axis')){['axl','axh','axil','axih'].forEach(id=>{const e=$(id);if(e)e.onchange=axisTool});axisTool()}if(w.includes('abs')){const e=$('abn');if(e)e.onchange=absTool}}
-const _origLearn=learn;
-learn=function(i){_origLearn(i);if((WG[i]||'').split('+').includes('between'))fracBetween();if((WG[i]||'').split('+').includes('sq'))sqTool();if((WG[i]||'').split('+').includes('abs'))absTool();};
+ const w=(WG[i]||'').split('+');
+ if(w.includes('subsets')){Object.assign($('sl'),{min:0,max:8,value:3});const u=()=>{const n=+$('sl').value;$('sn').textContent=FA(n);$('sa').textContent=FA(2**n);$('sb').textContent=FA(2**n-1);$('sc').textContent=FA(2**n-1)};$('sl').oninput=u;u()}
+ if(w.includes('venn3'))venn();
+ if(w.includes('dice'))dice();
+ if(w.includes('sieve'))sieve();
+ if(w.includes('gcd'))gcdTool();
+ if(w.includes('ptest'))ptest();
+ if(w.includes('tree'))treeTool();
+ if(w.includes('dec'))decTool();
+ if(w.includes('cls'))clsGame();
+ if(w.includes('between')){['fra','frb'].forEach(id=>{const e=$(id);if(e)e.oninput=fracBetween});const bt=$('fbtn');if(bt)bt.onclick=fracBetween;fracBetween()}
+ if(w.includes('sq')){const e=$('sqn');if(e)e.oninput=sqTool;sqTool()}
+ if(w.includes('axis')){['axl','axh','axil','axih'].forEach(id=>{const e=$(id);if(e)e.oninput=axisTool});axisTool()}
+ if(w.includes('abs')){const e=$('abn');if(e)e.oninput=absTool;absTool()}
 }
 // Venn
 const VX=[['A ∪ B',(a,b,c)=>a||b],['A ∩ B',(a,b)=>a&&b],['A − B',(a,b)=>a&&!b],['B − A',(a,b)=>b&&!a],['(A ∪ B) − C',(a,b,c)=>(a||b)&&!c],['(A ∩ B) − C',(a,b,c)=>a&&b&&!c],['A − (B ∪ C)',(a,b,c)=>a&&!b&&!c],['(B ∩ C) − A',(a,b,c)=>b&&c&&!a],['(B ∪ C) − A',(a,b,c)=>(b||c)&&!a],['A ∩ B ∩ C',(a,b,c)=>a&&b&&c]];
@@ -61,14 +71,14 @@ function setup(){
 }
 function shuf(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
 function start(l){
- const tp=+$('qt').value;let p=(l==3?Q:Q.filter(q=>q[1]==l)).filter(q=>tp<0||q[0]==tp);if(!p.length){$('qbox').insertAdjacentHTML('beforeend','<div class="tip">برای این ترکیب سؤالی نداریم؛ سطح یا مبحث دیگری انتخاب کن.</div>');return}const n=Math.min(+$('qn').value,p.length);
+ const tp=+$('qt').value;let p=(l==3?Q:Q.filter(q=>q[1]==l)).filter(q=>tp<0||q[0]==tp);if(!p.length){$('qbox').querySelectorAll('.tip').forEach(e=>e.remove());$('qbox').insertAdjacentHTML('beforeend','<div class="tip">برای این ترکیب سؤالی نداریم؛ سطح یا مبحث دیگری انتخاب کن.</div>');return}const n=Math.min(+$('qn').value,p.length);
  S={l,qs:shuf(p).slice(0,n),i:0,ok:0,t:{},w:[]};ask();
 }
 function ask(){
  const q=S.qs[S.i],o=shuf([q[3],...q[4]]);
  $('qbox').innerHTML=`<div class="bar"><i style="width:${S.i/S.qs.length*100}%"></i></div>
  <p style="color:var(--mu);margin-top:6px">سؤال ${FA(S.i+1)} از ${FA(S.qs.length)} — ${T[q[0]][0]}</p>
- <h2>${M(q[2])}</h2>${q[7]||''}<div id="os">${o.map(x=>`<button class="opt">${M(x)}</button>`).join('')}</div><div id="fb" aria-live="polite"></div>`;
+ <h2>${M(q[2])}</h2>${q[7]||''}<div id="os">${o.map(x=>`<button class="opt">${M(x)}</button>`).join('')}</div><div id="qfb" aria-live="polite"></div>`;
  document.querySelectorAll('.opt').forEach((b,k)=>b.onclick=()=>pick(b,o[k]===q[3],q,o.indexOf(q[3])));
 }
 function pick(b,ok,q,ri){
@@ -77,7 +87,7 @@ function pick(b,ok,q,ri){
  document.querySelectorAll('.opt')[ri].classList.add('right');
  const t=S.t[q[0]]||(S.t[q[0]]=[0,0]);t[1]++;if(ok){S.ok++;t[0]++}else S.w.push(q);
  const last=S.i==S.qs.length-1;
- $('fb').innerHTML=`<div class="tip">${ok?'✅ آفرین!':'❌ نادرست.'} ${M(q[5])}</div>${q[8]||''}<button class="btn pri" id="nx">${last?'دیدن نتیجه':'سؤال بعدی'}</button>`;
+ $('qfb').innerHTML=`<div class="tip">${ok?'✅ آفرین!':'❌ نادرست.'} ${M(q[5])}</div>${q[8]||''}<button class="btn pri" id="nx">${last?'دیدن نتیجه':'سؤال بعدی'}</button>`;
  $('nx').onclick=()=>{S.i++;last?finish():ask()};$('nx').focus();
 }
 function finish(){
@@ -91,7 +101,7 @@ function finish(){
 }
 function prog(){
  prof();
- $('clr').onclick=()=>{ls.set(HK,'[]');prog()};
+ $('clr').onclick=()=>{if(confirm('تاریخچهٔ آزمون‌ها پاک شود؟')){ls.set(HK,'[]');prog()}};
  const h=JSON.parse(ls.get(HK)||'[]');
  if(!h.length){$('pbody').innerHTML='<div class="tip">هنوز آزمونی نداده‌ای. از بخش «آزمون» شروع کن.</div>';return}
  const ta={};h.forEach(r=>Object.entries(r.t).forEach(([k,v])=>{const a=ta[k]||(ta[k]=[0,0]);a[0]+=v[0];a[1]+=v[1]}));
@@ -214,67 +224,94 @@ function decTool(){const el=$('dc');if(!el)return;
 
 
 // ============ Grade 9 Chapter 2 widgets (interactive) ============
-// GCD-ish helpers
+// number helpers: Persian digits, real minus sign, Persian decimal separator
+const FD=s=>FA(s).replace('.','٫');
+const FN=n=>(n<0?'−':'')+FD(Math.abs(n));
+const gcdN=(a,b)=>b?gcdN(b,a%b):Math.abs(a);
+const normDigits=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[٫,،]/g,'.').replace(/[−–—]/g,'-').replace(/[⁄÷]/g,'/').replace(/\s+/g,'');
+function parseFrac(s){
+ s=normDigits(s);let m=s.match(/^(-?\d+)\/(-?\d+)$/),n,d;
+ if(m){n=+m[1];d=+m[2]}
+ else{m=s.match(/^(-?)(\d*)(?:\.(\d+))?$/);if(!m||!(m[2]||m[3]))return null;const k=(m[3]||'').length;if(k>6)return null;n=+((m[2]||'0')+(m[3]||''));d=10**k;if(m[1])n=-n}
+ if(!d)return null;if(d<0){n=-n;d=-d}
+ const g=gcdN(n,d)||1;return[n/g,d/g];
+}
 function fracBetween(){
- const a=$('fa'),b=$('fb'),out=$('fout');
- if(!a||!b)return;
- const parse=s=>{const m=s.trim().match(/^(-?\d+)\s*\/\s*(\d+)$/);if(m)return[+m[1],+m[2]];const f=+s;if(Number.isFinite(f)){const n=Math.round(f*60);return[n,60]}return null};
- let A=parse(a.value),B=parse(b.value);out.innerHTML='';
- if(!A||!B){out.innerHTML='<span style="color:#f87171">دو کسر مثل <bdi dir="ltr">2/5</bdi> یا عدد وارد کن.</span>';return}
- const av=A[0]/A[1],bv=B[0]/B[1];let lo,hi;if(av>bv)[lo,hi]=[B,A];else[lo,hi]=[A,B];
- // mediant + fine-tune
- let n1=lo[0]*hi[1],d1=lo[1]*hi[1],n2=hi[0]*lo[1];
- let mn=n1+n2,md=2*d1;
- // reduce
- const g=(x,y)=>y?g(y,x%y):x;const gg=g(Math.abs(mn),md);mn/=gg;md/=gg;
- const show=(lo[1]===1&&hi[1]===1)?`(${FA(lo[0])}+${FA(hi[0])})/(${FA(2)})`:`((${FA(lo[0])}×${FA(hi[1])})+(${FA(hi[0])}×${FA(lo[1])}))/(2×${FA(lo[1])}×${FA(hi[1])})`;
- out.innerHTML=`<p>مخرج مشترک: <bdi dir="ltr" class="m">${show}</bdi></p><p>یک عدد بین آن‌ها: <bdi dir="ltr" class="m" style="color:#4ade80;font-size:1.2rem">${FA(mn)}/${FA(md)}</bdi> <span style="color:var(--mu)">(${FA((mn/md).toFixed(4))})</span></p><p class="tip">راه مدرسه: <bdi dir="ltr">${FA(lo[0])}/${FA(lo[1])} &lt; ${FA(mn)}/${FA(md)} &lt; ${FA(hi[0])}/${FA(hi[1])}</bdi> چون صورتش بزرگ‌تر از صورتِ اول و مخرجش کوچک‌تر از مخرجِ دوم است. بین هر دو عدد گویا، بی‌نهایت عدد گویا وجود دارد!</p>`;
+ const a=$('fra'),b=$('frb'),out=$('fout');if(!a||!b||!out)return;
+ const err=t=>{out.innerHTML='<span style="color:#f87171">'+t+'</span>'};
+ const A=parseFrac(a.value),B=parseFrac(b.value);
+ if(!A||!B){err('دو کسر مثل <bdi dir="ltr">2/5</bdi> یا عدد اعشاری مثل <bdi dir="ltr">0.4</bdi> وارد کن (مخرج نباید صفر باشد).');return}
+ if([...A,...B].some(x=>Math.abs(x)>1e6)){err('عددهای کوچک‌تر از ۱۰۰۰۰۰۰ وارد کن.');return}
+ const cmp=A[0]*B[1]-B[0]*A[1];
+ if(cmp===0){err('این دو عدد برابرند؛ دو عدد متفاوت وارد کن.');return}
+ const lo=cmp<0?A:B,hi=cmp<0?B:A;
+ const F=(n,d)=>d===1?FN(n):FN(n)+'/'+FA(d),P=(n,d)=>n<0?'('+F(n,d)+')':F(n,d);
+ let mn=lo[0]*hi[1]+hi[0]*lo[1],md=2*lo[1]*hi[1];let g=gcdN(mn,md)||1;mn/=g;md/=g;
+ let pn=lo[0]+hi[0],pd=lo[1]+hi[1];g=gcdN(pn,pd)||1;pn/=g;pd/=g;
+ out.innerHTML=
+  `<p>کسر کوچک‌تر: <bdi dir="ltr" class="m">${F(lo[0],lo[1])}</bdi> | کسر بزرگ‌تر: <bdi dir="ltr" class="m">${F(hi[0],hi[1])}</bdi></p>`+
+  `<p>روش میانگین: <bdi dir="ltr" class="m">(${F(lo[0],lo[1])} + ${P(hi[0],hi[1])}) ÷ ۲ = <span style="color:#4ade80">${F(mn,md)}</span></bdi> <span style="color:var(--mu)">(≈ ${FN(+(mn/md).toFixed(4))})</span></p>`+
+  `<p>روش کتاب (جمع صورت‌ها و مخرج‌ها): <bdi dir="ltr" class="m">(${FN(lo[0])} + ${P(hi[0],1)})/(${FA(lo[1])} + ${FA(hi[1])}) = <span style="color:#4ade80">${F(pn,pd)}</span></bdi></p>`+
+  `<p class="tip">بررسی: <bdi dir="ltr">${F(lo[0],lo[1])} &lt; ${F(mn,md)} &lt; ${F(hi[0],hi[1])}</bdi> و <bdi dir="ltr">${F(lo[0],lo[1])} &lt; ${F(pn,pd)} &lt; ${F(hi[0],hi[1])}</bdi>. بین هر دو عدد گویا بی‌نهایت عدد گویا وجود دارد!</p>`;
 }
 function sqTool(){
- const n=+($('sqn')? $('sqn').value:0);const out=$('sqo');if(!out)return;
- if(!(n>=0)||!Number.isInteger(n)){out.innerHTML='<span style="color:#f87171">یک عدد صحیح نامنفی وارد کن.</span>';return}
- const r=Math.sqrt(n);const lo=Math.floor(r);
- out.innerHTML=`<p><bdi dir="ltr" class="m" style="font-size:1.3rem">√${FA(n)}</bdi> ≈ <bdi dir="ltr">${FA(r.toFixed(4))}</bdi></p>`+
- `<p>چون <bdi dir="ltr">${FA(lo)}² = ${FA(lo*lo)} ≤ ${FA(n)} &lt; ${FA((lo+1)*(lo+1))} = ${FA(lo+1)}²</bdi></p>`+
- `<p>پس <bdi dir="ltr" class="m" style="color:#4ade80">${FA(lo)} &lt; √${FA(n)} &lt; ${FA(lo+1)}</bdi></p>`+
- `<svg viewBox="0 0 320 60" style="width:100%;max-width:340px;direction:ltr" xmlns="http://www.w3.org/2000/svg">
-  ${[lo,lo+1].map(k=>{const x=40+(k-lo)*120;const on=(k*k===n);return `<circle cx="${x}" cy="30" r="${on?6:6}" fill="${on?'#4ade80':'var(--card)'}" stroke="${on?'#4ade80':'#818cf8'}" stroke-width="2"/><text x="${x}" y="52" text-anchor="middle" fill="var(--tx)" font-size="12">${k}</text>`}).join('')}
-  <circle cx="${40+(r-lo)*120}" cy="30" r="4" fill="#f59e0b"/>
-  <text x="${40+(r-lo)*120}" y="14" text-anchor="middle" fill="#f59e0b" font-size="11">√${n}</text>
-  <line x1="30" y1="30" x2="290" y2="30" stroke="#818cf8" stroke-width="1.5"/></svg>`;
+ const el=$('sqn'),out=$('sqo');if(!el||!out)return;
+ const n=+el.value;
+ if(el.value===''||!Number.isInteger(n)||n<0||n>1e6){out.innerHTML='<span style="color:#f87171">یک عدد صحیح نامنفی (حداکثر ۱۰۰۰۰۰۰) وارد کن.</span>';return}
+ const r=Math.sqrt(n),lo=Math.floor(r),perfect=lo*lo===n;
+ const px=v=>40+(v-lo)*240;
+ const svg=`<svg viewBox="0 0 320 64" style="width:100%;max-width:340px;direction:ltr;display:block;margin:6px auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="محور">
+  <line x1="24" y1="34" x2="300" y2="34" stroke="#818cf8" stroke-width="1.5"/>
+  ${[lo,lo+1].map(k=>`<circle cx="${px(k)}" cy="34" r="6" style="fill:${perfect&&k===lo?'#4ade80':'var(--card)'}" stroke="${perfect&&k===lo?'#4ade80':'#818cf8'}" stroke-width="2"/><text x="${px(k)}" y="56" text-anchor="middle" style="fill:var(--tx)" font-size="12">${FA(k)}</text>`).join('')}
+  <circle cx="${px(r)}" cy="34" r="4.5" fill="#f59e0b"/>
+  <text x="${px(r)}" y="18" text-anchor="middle" fill="#f59e0b" font-size="12">√${FA(n)}</text></svg>`;
+ if(perfect){
+  out.innerHTML=`<p><bdi dir="ltr" class="m" style="font-size:1.3rem">√${FA(n)} = ${FA(lo)}</bdi></p><p>چون <bdi dir="ltr">${FA(lo)}² = ${FA(n)}</bdi> مربع کامل است، <bdi dir="ltr">√${FA(n)}</bdi> عددی <b>گویا</b> است (نه گنگ).</p>`+svg;return}
+ out.innerHTML=`<p><bdi dir="ltr" class="m" style="font-size:1.3rem">√${FA(n)}</bdi> ≈ <bdi dir="ltr">${FD(r.toFixed(4))}</bdi></p>`+
+  `<p>چون <bdi dir="ltr">${FA(lo)}² = ${FA(lo*lo)} &lt; ${FA(n)} &lt; ${FA((lo+1)*(lo+1))} = ${FA(lo+1)}²</bdi></p>`+
+  `<p>پس <bdi dir="ltr" class="m" style="color:#4ade80">${FA(lo)} &lt; √${FA(n)} &lt; ${FA(lo+1)}</bdi> و چون ${FA(n)} مربع کامل نیست، <b>گنگ</b> است.</p>`+svg;
 }
 function axisTool(){
- const lo=+$('axl').value,hi=+$('axh').value;const inclL=$('axil').checked,inclH=$('axih').checked;const out=$('axo');if(!out)return;
+ const out=$('axo');if(!out)return;
+ const lE=$('axl'),hE=$('axh');
+ if(lE.value===''||hE.value===''){out.innerHTML='<span style="color:#f87171">هر دو کران را وارد کن.</span>';return}
+ const lo=+lE.value,hi=+hE.value,inclL=$('axil').checked,inclH=$('axih').checked;
+ if(!Number.isFinite(lo)||!Number.isFinite(hi)||Math.abs(lo)>1e6||Math.abs(hi)>1e6){out.innerHTML='<span style="color:#f87171">عددهای معتبر و کوچک‌تر از ۱۰۰۰۰۰۰ وارد کن.</span>';return}
  if(!(lo<hi)){out.innerHTML='<span style="color:#f87171">کران چپ باید کوچک‌تر از کران راست باشد.</span>';return}
- const w=320,m=30,px=x=>m+(x-lo)/(hi-lo)*(w-2*m);
- const step=(hi-lo)<=10?1:(hi-lo)<=20?2:5;
- let ticks='';for(let k=Math.ceil(lo);k<=hi;k+=step)ticks+=`<line x1="${px(k)}" y1="26" x2="${px(k)}" y2="34" stroke="#818cf8"/><text x="${px(k)}" y="50" text-anchor="middle" font-size="11" fill="var(--mu)">${k}</text>`;
- out.innerHTML=`<svg viewBox="0 0 320 70" style="width:100%;max-width:360px;direction:ltr" xmlns="http://www.w3.org/2000/svg">
+ const w=320,m=34,px=x=>m+(x-lo)/(hi-lo)*(w-2*m);
+ const step=Math.max(1,Math.ceil((hi-lo)/10));
+ let ticks='';for(let k=Math.ceil(lo/step)*step;k<=hi;k+=step)ticks+=`<line x1="${px(k)}" y1="26" x2="${px(k)}" y2="34" stroke="#818cf8"/><text x="${px(k)}" y="54" text-anchor="middle" font-size="11" style="fill:var(--mu)">${FN(k)}</text>`;
+ out.innerHTML=`<svg viewBox="0 0 320 72" style="width:100%;max-width:360px;direction:ltr;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="بازه روی محور">
  <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#818cf8"/></marker></defs>
  <line x1="8" y1="30" x2="312" y2="30" stroke="#818cf8" stroke-width="2" marker-end="url(#ah)"/>${ticks}
  <line x1="${px(lo)}" y1="30" x2="${px(hi)}" y2="30" stroke="#f59e0b" stroke-width="7" stroke-linecap="round" opacity=".85"/>
- <circle cx="${px(lo)}" cy="30" r="8" fill="${inclL?'#f59e0b':'#fff'}" stroke="#f59e0b" stroke-width="3"/>
- <circle cx="${px(hi)}" cy="30" r="8" fill="${inclH?'#f59e0b':'#fff'}" stroke="#f59e0b" stroke-width="3"/></svg>
- <p style="text-align:center;margin:4px 0 0"><bdi dir="ltr" class="m">${inclL?'[':'('}${FA(lo)} , ${FA(hi)}${inclH?']':')'}</bdi> — دایرهٔ توپُر یعنی «به‌علاوهٔ خودِ عدد»، توخالی یعنی «بدون خودِ عدد».</p>`;
+ <circle cx="${px(lo)}" cy="30" r="8" style="fill:${inclL?'#f59e0b':'var(--card)'}" stroke="#f59e0b" stroke-width="3"/>
+ <circle cx="${px(hi)}" cy="30" r="8" style="fill:${inclH?'#f59e0b':'var(--card)'}" stroke="#f59e0b" stroke-width="3"/>
+ <text x="${px(lo)}" y="14" text-anchor="middle" font-size="11" fill="#f59e0b">${FN(lo)}</text><text x="${px(hi)}" y="14" text-anchor="middle" font-size="11" fill="#f59e0b">${FN(hi)}</text></svg>
+ <p style="text-align:center;margin:4px 0 0"><bdi dir="ltr" class="m">${inclL?'[':'('}${FN(lo)} , ${FN(hi)}${inclH?']':')'}</bdi> — دایرهٔ توپُر یعنی «به‌علاوهٔ خودِ عدد»، توخالی یعنی «بدون خودِ عدد».</p>`;
 }
 function absTool(){
- const n=+$('abn').value;const out=$('abo');if(!out)return;
- if(!Number.isInteger(n)){out.innerHTML='<span style="color:#f87171">یک عدد صحیح وارد کن.</span>';return}
- out.innerHTML=`<p><bdi dir="ltr" class="m" style="font-size:1.25rem">√(${FA(n)})² = |${FA(n)}| = <span style="color:#4ade80">${FA(Math.abs(n))}</span></bdi></p>
- <p>${n<0?`چون ${FA(n)} منفی است، قدرمطلقِ آن قرینه‌اش می‌شود: |${FA(n)}| = −(${FA(n)}) = ${FA(-n)}.`:`چون ${FA(n)} نامنفی است، قدرمطلقِ خودش است.`}</p>
+ const el=$('abn'),out=$('abo');if(!el||!out)return;
+ const n=+el.value;
+ if(el.value===''||!Number.isFinite(n)||Math.abs(n)>1e9){out.innerHTML='<span style="color:#f87171">یک عدد وارد کن.</span>';return}
+ out.innerHTML=`<p><bdi dir="ltr" class="m" style="font-size:1.25rem">√(${FN(n)})² = |${FN(n)}| = <span style="color:#4ade80">${FN(Math.abs(n))}</span></bdi></p>
+ <p>${n<0?`چون ${FN(n)} منفی است، قدرمطلقِ آن قرینه‌اش می‌شود: <bdi dir="ltr">|${FN(n)}| = −(${FN(n)}) = ${FN(-n)}</bdi>.`:`چون ${FN(n)} نامنفی است، قدرمطلقِ آن خودش است.`}</p>
  <p class="tip">قاعده: <bdi dir="ltr">√a² = |a|</bdi> — همیشه جواب نامنفی می‌شود!</p>`;
 }
+const CLS=[['π','گنگ','π اعشاری نامتناهی و بدون دورهٔ تناوب است.'],['√۲','گنگ','۲ مربع کامل نیست.'],['√۴','گویا','√۴ = ۲ و ۲ = ۲/۱.'],['−۳/۷','گویا','کسر با صورت و مخرج صحیح است.'],['۰٫۱۲۳۴۵۶۷۸۹۱۰۱۱…','گنگ','رقم‌ها تکرار نمی‌شوند (اعشار نامتناهی غیرمتناوب).'],['۰٫۰۹','گویا','۰٫۰۹ = ۹/۱۰۰.'],['√۰٫۲۵','گویا','√۰٫۲۵ = ۰٫۵ = ۱/۲.'],['۲/۳','گویا','کسر است؛ اعشار آن ۰٫۶۶۶… متناوب است.'],['√۳','گنگ','۳ مربع کامل نیست.'],['۰٫۳۳۳…','گویا','اعشار متناوب است و برابر ۱/۳ می‌شود.'],['√۵','گنگ','۵ مربع کامل نیست.'],['−۲','گویا','−۲ = −۲/۱.'],['√۱٫۴۴','گویا','√۱٫۴۴ = ۱٫۲ = ۶/۵.'],['۰٫۱۰۱۱۰۱۱۱۰۱۱۱۱…','گنگ','تعداد رقم‌های ۱ هر بار بیشتر می‌شود؛ دورهٔ تناوب ندارد.']];
+let clsLast=-1;
 function clsGame(){
- const items=[['π','گنگ'],['√۲','گنگ'],['√۴','گویا'],['−۳/۷','گویا'],['۰٫۱۲۳۴۵۶… (بدون تکرار)','گنگ'],['۰٫۰۹','گویا'],['√۰٫۲۵','گویا'],['۲/۳','گویا'],['√۳','گنگ'],['۰٫۳۳۳…','گویا'],['√۵','گنگ'],['−۲','گویا'],['√۱٫۴۴','گویا'],['۰٫۱۰۱۱۰۰۱۱۱۰…','گنگ']];
- const g=items[Math.floor(Math.random()*items.length)];
- $('clsq').innerHTML=`<span style="font-size:1.2rem;color:#818cf8">${g[0]}</span> گویاست یا گنگ؟ <button class="btn" onclick="clsfAns('گویا')">گویا</button> <button class="btn" onclick="clsfAns('گنگ')">گنگ</button>`;
- window._clsg=g[1];
+ const q=$('clsq'),r=$('clsres');if(!q||!r)return;
+ let k;do{k=Math.random()*CLS.length|0}while(k===clsLast);clsLast=k;
+ const g=CLS[k];
+ q.innerHTML=`<bdi dir="ltr" class="m" style="font-size:1.2rem;color:#818cf8">${g[0]}</bdi> گویاست یا گنگ؟ <button class="btn" data-a="گویا">گویا</button> <button class="btn" data-a="گنگ">گنگ</button>`;
+ r.innerHTML='';
+ q.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  q.querySelectorAll('button').forEach(x=>x.disabled=true);
+  const ok=b.dataset.a===g[1];
+  r.innerHTML=`<span style="color:${ok?'#4ade80':'#f87171'}">${ok?'✓ درست!':'✗ نه! درست: '+g[1]}</span> — ${g[2]} <button class="btn" id="clsnx">بعدی</button>`;
+  $('clsnx').onclick=clsGame;$('clsnx').focus();
+ });
 }
-function clsfAns(a){
- const ok=a===window._clsg;
- $('clsres').innerHTML=`<span style="color:${ok?'#4ade80':'#f87171'}">${ok?'✓ درست!':'✗ نه! درست: '+window._clsg}</span> <button class="btn" onclick="clsGame()">بعدی</button>`;
- clsGame();
-}
-// extend dispatch inside learn() — patch string
 window.learn=learn;
 })();
